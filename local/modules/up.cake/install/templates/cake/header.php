@@ -40,16 +40,33 @@
 
 				<div class="header-two">
 					<?php global $USER;
-					if (!$USER->IsAuthorized()): ?>
-					<a href="/register" class="button-header button-register button-header-two">Регистрация</a>
-					<a href="/login" class="button-header button-header-two">Войти</a>
-					<?php else: ?>
-					<a href="/profile" class="button-header-two">
-						<img class="profile-image " src="local/modules/up.cake/install/templates/cake/images/profile.png" alt="/">
-					</a>
-					<?php endif; ?>
+					// if (!$USER->IsAuthorized()): ?>
+						<a href="/register" class="button-header button-register button-header-two">Регистрация</a>
+						<a href="/login" class="button-header button-header-two">Войти</a>
+					<?php //else: ?>
+						<a href="/add" class="button-header button-header-two">+ добавить рецепт</a>
+						<a href="/profile" class="button-header-two">
+							<img class="profile-image " src="local/modules/up.cake/install/templates/cake/images/profile.png" alt="/">
+						</a>
+						<a href="/logout" class="button-header button-header-two button-delete">Выйти</a>
+					<?php //endif; ?>
 				</div>
 
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="layout">
+		<div class="header header-filter">
+			<div class="collection-filter">
+				<a href="/tag/salad" class="header-tag">салаты</a>
+				<a href="/tag/bakery" class="header-tag">выпечка</a>
+				<a href="/tag/soup" class="header-tag">супы</a>
+				<a href="/tag/hotter" class="header-tag">горячие блюда</a>
+				<a href="/tag/snacks" class="header-tag">закуски</a>
+				<a href="/tag/vegan" class="header-tag"></a>
 			</div>
 		</div>
 	</div>
