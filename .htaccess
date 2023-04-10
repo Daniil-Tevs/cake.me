@@ -1,4 +1,4 @@
-Options -Indexes 
+Options -Indexes
 ErrorDocument 404 /404.php
 
 <IfModule mod_php.c>
@@ -28,8 +28,8 @@ RewriteRule ^(.*)$ /bitrix/virtual_file_system.php [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME} !/bitrix/urlrewrite.php$
-  RewriteRule ^(.*)$ /bitrix/urlrewrite.php [L]
+  RewriteCond %{REQUEST_FILENAME} !/index.php$
+  RewriteRule ^(.)$ /index.php [L]
   RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization}]
 </IfModule>
 
@@ -43,5 +43,5 @@ RewriteRule ^(.*)$ /bitrix/virtual_file_system.php [L]
   ExpiresByType image/gif "access plus 3 day"
   ExpiresByType image/png "access plus 3 day"
   ExpiresByType text/css "access plus 3 day"
-  ExpiresByType application/javascript "access plus 3 day"  
+  ExpiresByType application/javascript "access plus 3 day"
 </IfModule>

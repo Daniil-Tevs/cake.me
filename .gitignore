@@ -2,4 +2,8 @@
 .editorconfig
 /bitrix
 /upload
+/local/components
+/local/routes
+/local/lang
+/local/templates
 
