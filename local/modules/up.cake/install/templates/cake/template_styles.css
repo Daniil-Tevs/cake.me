@@ -34,7 +34,7 @@ body{
 }
 
 .logo-name {
-	color: rgba(44, 0, 45, 0.74);
+	color: rgb(255, 255, 255);
 	margin-left: 5px;
 	font-size: 30px;
 	font-style: italic;
