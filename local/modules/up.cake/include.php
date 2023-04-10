@@ -14,11 +14,6 @@ function db(): Connection
 	return Application::getConnection();
 }
 
-function checkIntValue($value): bool
-{
-	return is_numeric($value) && (int)$value > 0;
-}
-
 if (file_exists(__DIR__ . '/module_updater.php'))
 {
 	include(__DIR__ . '/module_updater.php');

@@ -30,18 +30,6 @@
 	flex-grow: 0;
 }
 
-.is-hight {
-	background-color: #fd8484;
-}
-
-.is-medium {
-	background-color: #8e94ff;
-}
-
-.is-low {
-	background-color: #71ff91;
-}
-
 .container-flex {
 	display: flex;
 	flex-wrap: wrap;

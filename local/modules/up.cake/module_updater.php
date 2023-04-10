@@ -25,12 +25,3 @@ function __cakeMigrate(int $nextVersion, callable $callback)
 		Option::set($moduleId, '~database_schema_version', $nextVersion);
 	}
 }
-
-__cakeMigrate(2, function($updater, $DB)
-{
-	if ($updater->CanUpdateDatabase())
-	{
-		$DB->query("INSERT IGNORE INTO up_tasks_priority(NAME)
-		VALUES ('Hight'),('Medium'),('Low');");
-	}
-});

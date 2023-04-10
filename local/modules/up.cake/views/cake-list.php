@@ -3,10 +3,12 @@
  * @var CMain $APPLICATION
  */
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Tasks");
+$APPLICATION->SetTitle("Cake");
 
 $APPLICATION->IncludeComponent('up:cake.list', '', [
-	'DATE_FORMAT' => 'd.M H:i',
+	'COUNT_ELEMENTS' => 3,
+	'LENGTH_DESCRIPTION' => 200,
+	'ENCODING' => 'UTF-8',
 ]);
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");?>
