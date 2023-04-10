@@ -18,70 +18,42 @@
 <body>
 <?php $APPLICATION->ShowPanel(); ?>
 
-<section class="section">
+<div class="centrator">
 	<div class="container">
-		<nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
-			<div class="navbar-brand">
-				<a class="navbar-item has-text-weight-semibold is-size-4 logo" href="/">
-					<span>🔥</span> Tasks 365
-				</a>
+		<div class="layout">
 
-				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-				</a>
-			</div>
-
-			<div id="navbarBasicExample" class="navbar-menu">
-				<div class="navbar-start">
-					<a class="navbar-item">
-						Home
-					</a>
-
-					<a class="navbar-item">
-						Documentation
-					</a>
-
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link">
-							More
+			<div class="header">
+				<div class="header-one">
+					<div class="logo-container">
+						<a href="/" class="logo-link">
+							<img src="local/modules/up.cake/install/templates/cake/images/logo.png" alt="/">
+														<div class="logo-name">Cake.Me</div>
 						</a>
-
-						<div class="navbar-dropdown">
-							<a class="navbar-item">
-								About
-							</a>
-							<a class="navbar-item">
-								Jobs
-							</a>
-							<a class="navbar-item">
-								Contact
-							</a>
-							<hr class="navbar-divider">
-							<a class="navbar-item">
-								Report an issue
-							</a>
-						</div>
+					</div>
+					<div class="search-container">
+						<form action="/find" class="search-form" >
+							<input type="text" name="search-string" class="search-input" placeholder="найти">
+							<img class="search-form-image" src="local/modules/up.cake/install/templates/cake/images/search.png" alt="/">
+						</form>
 					</div>
 				</div>
 
-				<div class="navbar-end">
-					<div class="navbar-item">
-						<div class="buttons">
-							<a class="button is-success">
-								<strong>Sign up</strong>
-							</a>
-							<a class="button is-light">
-								Log in
-							</a>
-						</div>
-					</div>
+				<div class="header-two">
+					<?php global $USER;
+					if (!$USER->IsAuthorized()): ?>
+					<a href="/register" class="button-header button-register button-header-two">Регистрация</a>
+					<a href="/login" class="button-header button-header-two">Войти</a>
+					<?php else: ?>
+					<a href="/profile" class="button-header-two">
+						<img class="profile-image " src="local/modules/up.cake/install/templates/cake/images/profile.png" alt="/">
+					</a>
+					<?php endif; ?>
 				</div>
+
 			</div>
-		</nav>
+		</div>
 	</div>
-</section>
+</div>
 
 <section class="section">
 	<div class="container">
