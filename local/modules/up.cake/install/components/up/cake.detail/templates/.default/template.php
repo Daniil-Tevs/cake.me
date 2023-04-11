@@ -13,15 +13,11 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 }
 
 Loc::loadMessages(__FILE__);
+$recipe = $arResult['RECIPE'];
+var_dump($recipe);
 ?>
 
 
-<?php
-$i = 0;
-foreach ($arResult['RECIPES'] as $recipe): ?>
-	<?php
-	echo ($i % $arParams['COUNT_ELEMENTS'] === 0) ? '<div class="columns">' : '';
-	$i++; ?>
 	<div class="column">
 		<div class="card">
 			<div class="card-image">
@@ -31,19 +27,17 @@ foreach ($arResult['RECIPES'] as $recipe): ?>
 			</div>
 			<div class="card-content">
 				<div class="content">
-					<a class="title mb-2" href="/detail/1/"><?=$recipe['NAME']?> </a>
+					<a class="title mb-2" href="#"><?=$recipe['name']?> </a>
 					<hr>
-					<p><?=mb_strcut($recipe['DESCRIPTION'],0,$arParams['LENGTH_DESCRIPTION'],$arParams['ENCODING'])?></p>
+					<p><?=$recipe['description']?></p>
 				</div>
 			</div>
 			<footer class="card-footer">
-				<div class="card-footer-item">🕔 90 min</div>
+				<div class="card-footer-item">🕔 <?=$recipe['time']?></div>
 				<div class="card-footer-item">🔥 135 calories</div>
-				<div class="card-footer-item "><a href="#">👨‍🍳 Nikita Pavlodarov</a></div>
+				<div class="card-footer-item "><a href="#">👨‍🍳 <?=$recipe['user']?></a></div>
 			</footer>
 		</div>
 	</div>
-	<?= ($i % 3 === 0) ? '</div>' : ''; ?>
-<?php
-endforeach; ?>
+
 </div>
