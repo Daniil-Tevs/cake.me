@@ -31,15 +31,15 @@ foreach ($arResult['RECIPES'] as $recipe): ?>
 			</div>
 			<div class="card-content">
 				<div class="content">
-					<a class="title mb-2" href="/detail/1/"><?=$recipe['NAME']?> </a>
+					<a class="title mb-2" href="/detail/1/"><?=htmlspecialcharsbx($recipe->getName())?> </a>
 					<hr>
-					<p><?=mb_strcut($recipe['DESCRIPTION'],0,$arParams['LENGTH_DESCRIPTION'],$arParams['ENCODING'])?></p>
+					<p><?=htmlspecialcharsbx(mb_strcut($recipe->getDescription(),0,$arParams['LENGTH_DESCRIPTION'],$arParams['ENCODING']))?></p>
 				</div>
 			</div>
 			<footer class="card-footer">
-				<div class="card-footer-item">🕔 90 min</div>
+				<div class="card-footer-item">🕔 <?=htmlspecialcharsbx($recipe->getTime())?></div>
 				<div class="card-footer-item">🔥 135 calories</div>
-				<div class="card-footer-item "><a href="#">👨‍🍳 Nikita Pavlodarov</a></div>
+				<div class="card-footer-item "><a href="/users/<?=htmlspecialcharsbx($recipe->getUser()->getID())?>">👨‍🍳 <?=htmlspecialcharsbx($recipe->getUser()->getName() . $recipe->getUser()->getLastName())?></a></div>
 			</footer>
 		</div>
 	</div>
