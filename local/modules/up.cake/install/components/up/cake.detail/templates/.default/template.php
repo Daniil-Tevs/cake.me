@@ -14,7 +14,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 Loc::loadMessages(__FILE__);
 $recipe = $arResult['RECIPE'];
-// var_dump($recipe);
 ?>
 
 
@@ -29,9 +28,9 @@ $recipe = $arResult['RECIPE'];
 			</div>
 			<div class="card-content">
 				<div class="content is-size-6">
-					<div class="title mb-2"><?=$recipe['name']?> </div>
+					<div class="title mb-2"><?=htmlspecialcharsbx($recipe->getName())?> </div>
 					<hr>
-					<p ><?=$recipe['description']?></p>
+					<p ><?=htmlspecialcharsbx($recipe->getDescription())?></p>
 				</div>
 			</div>
 
@@ -43,13 +42,13 @@ $recipe = $arResult['RECIPE'];
 						</figure>
 					</div>
 					<div class="media-content">
-						<p class="title is-4"><a href="#"> <?=$recipe['user']?> </a></p>
+						<p class="title is-4"><a href="#"> <?=htmlspecialcharsbx($recipe->getUser()->getName() . $recipe->getUser()->getLastName())?> </a></p>
 					</div>
 				</div>
 			</div>
 
 			<footer class="card-footer">
-				<div class="card-footer-item is-size-6">Время приготовления: <?=$recipe['time']?> минут</div>
+				<div class="card-footer-item is-size-6">Время приготовления: <?=htmlspecialcharsbx($recipe->getTime())?> минут</div>
 				<div class="card-footer-item is-size-6">Калории: 135 calories</div>
 			</footer>
 			<hr>
@@ -62,24 +61,23 @@ $recipe = $arResult['RECIPE'];
 				</tr>
 				</thead>
 				<tbody>
-				<?php $countIngredient = 0;
-				foreach ($recipe['ingredient'] as $ingredient): ?>
-				<tr>
-					<th><?= $countIngredient + 1  ?></th>
-					<td><?= $ingredient[0] ?></td>
-					<td><?= $ingredient[1] ?> <?= $ingredient[2] ?></td>
-				</tr>
-				<?php $countIngredient++; endforeach; ?>
+				<?php //$countIngredient = 0;
+				// foreach ($recipe['ingredient'] as $ingredient): ?>
+				<!--<tr>-->
+				<!--	<th>--><?//= $countIngredient + 1  ?><!--</th>-->
+				<!--	<td>--><?//= $ingredient[0] ?><!--</td>-->
+				<!--	<td>--><?//= $ingredient[1] ?><!-- --><?//= $ingredient[2] ?><!--</td>-->
+				<!--</tr>-->
+				<?php //$countIngredient++; endforeach; ?>
 				</tbody>
 			</table>
 
-			<?php $stepInstructions = 1;
-			foreach ($recipe['instructions'] as $instructions):?>
+			<?php foreach ($recipe->getInstructions() as $instruction):?>
 				<div class="box is-size-6">
 					<div class="content ml-2">
-						<h2>Шаг <?php echo $stepInstructions; $stepInstructions++; ?> </h2>
+						<h2>Шаг <?= htmlspecialcharsbx($instruction->getStep())?> </h2>
 					</div>
-				<?= $instructions ?>
+				<?= htmlspecialcharsbx($instruction->getDescription()) ?>
 			</div>
 			<?php endforeach; ?>
 		</div>

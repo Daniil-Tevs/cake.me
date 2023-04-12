@@ -10,6 +10,6 @@ class CakeListComponent extends CBitrixComponent
 
 	protected function fetchRecipes(): void
 	{
-		$this->arResult['RECIPES'] = \UP\Cake\Model\RecipeTable::query()->setSelect(['*','USER'])->fetchCollection();
+		$this->arResult['RECIPES'] = \Up\Cake\Service\RecipeService::get();
 	}
 }

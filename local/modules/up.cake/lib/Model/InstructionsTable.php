@@ -11,37 +11,13 @@ use Bitrix\Main\ORM\Query\Join;
 
 Loc::loadMessages(__FILE__);
 
-/**
- * Class InstructionsTable
- *
- * Fields:
- * <ul>
- * <li> ID int mandatory
- * <li> DESCRIPTION string(510) mandatory
- * <li> STEP int mandatory
- * <li> RECIPE_ID int optional
- * </ul>
- *
- * @package Bitrix\Cake
- **/
-
 class InstructionsTable extends DataManager
 {
-	/**
-	 * Returns DB table name for entity.
-	 *
-	 * @return string
-	 */
 	public static function getTableName()
 	{
 		return 'up_cake_instructions';
 	}
 
-	/**
-	 * Returns entity map definition.
-	 *
-	 * @return array
-	 */
 	public static function getMap()
 	{
 		return [

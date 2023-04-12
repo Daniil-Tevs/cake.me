@@ -9,35 +9,13 @@ use Bitrix\Main\Localization\Loc,
 
 Loc::loadMessages(__FILE__);
 
-/**
- * Class TagTable
- *
- * Fields:
- * <ul>
- * <li> ID int mandatory
- * <li> NAME string(255) mandatory
- * </ul>
- *
- * @package Bitrix\Cake
- **/
-
 class TagTable extends DataManager
 {
-	/**
-	 * Returns DB table name for entity.
-	 *
-	 * @return string
-	 */
 	public static function getTableName()
 	{
 		return 'up_cake_tag';
 	}
 
-	/**
-	 * Returns entity map definition.
-	 *
-	 * @return array
-	 */
 	public static function getMap()
 	{
 		return [
@@ -60,11 +38,6 @@ class TagTable extends DataManager
 		];
 	}
 
-	/**
-	 * Returns validators for NAME field.
-	 *
-	 * @return array
-	 */
 	public static function validateName()
 	{
 		return [
