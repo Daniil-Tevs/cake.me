@@ -3,6 +3,7 @@
 namespace UP\Cake\Model;
 
 use Bitrix\Main\Localization\Loc, Bitrix\Main\ORM\Data\DataManager, Bitrix\Main\ORM\Fields\DatetimeField, Bitrix\Main\ORM\Fields\IntegerField, Bitrix\Main\ORM\Fields\StringField, Bitrix\Main\ORM\Fields\Validators\LengthValidator;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Bitrix\Main\ORM\Query\Join;
 use Bitrix\Main\Type\DateTime;
@@ -64,6 +65,12 @@ class RecipeTable extends DataManager
 				\Bitrix\Main\UserTable::class,
 				Join::on('this.USER_ID','ref.ID')
 			))->configureJoinType('inner'),
+
+			'INSTRUCTIONS' => new OneToMany(
+				'INSTRUCTIONS',
+				InstructionsTable::class,
+				'RECIPE'
+			)
 		];
 	}
 

@@ -23,6 +23,8 @@ class CakeDetailComponent extends CBitrixComponent
 
 	protected function fetchRecipeDetail(): void
 	{
+		// $this->arResult['DB'] = \Up\Cake\Service\RecipeService::getRecipeDetailById(1);
+		// print_r($this->arResult['DB']);
 		$this->arResult['RECIPE'] = [
 			'name' => 'Брауни',
 			'description' => 'Один из самых популярных десертов в мире — брауни — был придуман в 1893 году на кухне 
@@ -39,9 +41,9 @@ class CakeDetailComponent extends CBitrixComponent
 				'сладкое',
 			],
 			'ingredient' => [
-				'мука' => 30,
-				'яйца' => 4,
-				'какао' => 10
+				['мука', 30, 'грамм'],
+				['яйца', 4, 'шт.'],
+				['какао', 1, 'чайная ложка']
 			],
 			'instructions' => [
 				'Шоколад разломать на кусочки и вместе со сливочным маслом растопить на водяной бане, не переставая 

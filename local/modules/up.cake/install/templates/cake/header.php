@@ -26,14 +26,14 @@
 				<div class="header-one">
 					<div class="logo-container">
 						<a href="/" class="logo-link">
-							<img src="local/modules/up.cake/install/templates/cake/images/logo.png" alt="/">
+							<img src="/local/modules/up.cake/install/templates/cake/images/logo.png">
 														<div class="logo-name">Cake.Me</div>
 						</a>
 					</div>
 					<div class="search-container">
 						<form action="/find" class="search-form" >
 							<input type="text" name="search-string" class="search-input" placeholder="найти">
-							<img class="search-form-image" src="local/modules/up.cake/install/templates/cake/images/search.png" alt="/">
+							<img class="search-form-image" src="/local/modules/up.cake/install/templates/cake/images/search.png" alt="/">
 						</form>
 					</div>
 				</div>
@@ -46,7 +46,7 @@
 					<?php //else: ?>
 						<a href="/add" class="button-header button-header-two">+ добавить рецепт</a>
 						<a href="/profile" class="button-header-two">
-							<img class="profile-image " src="local/modules/up.cake/install/templates/cake/images/profile.png" alt="/">
+							<img class="profile-image " src="/local/modules/up.cake/install/templates/cake/images/profile.png" alt="/">
 						</a>
 						<a href="/logout" class="button-header button-header-two button-delete">Выйти</a>
 					<?php //endif; ?>
