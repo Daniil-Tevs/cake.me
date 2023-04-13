@@ -20,10 +20,16 @@ class RecipeTagTable extends DataManager
 	{
 		return [
 			new IntegerField(
-				'RECIPE_ID'
+				'RECIPE_ID',
+				[
+					'primary' => true,
+				]
 			),
 			new IntegerField(
-				'TAG_ID'
+				'TAG_ID',
+				[
+					'primary' => true,
+				]
 			),
 
 			'TAG' => new Reference(

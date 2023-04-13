@@ -7,6 +7,7 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
 use Bitrix\Main\ORM\Fields\Relations\ManyToMany;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
 
 Loc::loadMessages(__FILE__);
 
@@ -35,10 +36,15 @@ class IngredientTable extends DataManager
 				]
 			),
 
-			(new ManyToMany(
-				'RECIPES',
-				RecipeTable::class)
-			)->configureTableName('up_cake_recipe_ingredient'),
+			// (new ManyToMany(
+			// 	'RECIPES',
+			// 	RecipeTable::class)
+			// )->configureTableName('up_cake_recipe_ingredient'),
+
+			(new OneToMany(
+				'RECIPE_INGREDIENT',
+				RecipeIngredientTable::class,
+				'INGREDIENT')),
 		];
 	}
 

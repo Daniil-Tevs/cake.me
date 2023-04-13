@@ -91,10 +91,15 @@ class RecipeTable extends DataManager
 				 TagTable::class)
 			 )->configureTableName('up_cake_recipe_tag'),
 
-			(new ManyToMany(
-				'INGREDIENTS',
-				IngredientTable::class)
-			)->configureTableName('up_cake_recipe_ingredient'),
+			// (new ManyToMany(
+			// 	'INGREDIENTS',
+			// 	IngredientTable::class)
+			// )->configureTableName('up_cake_recipe_ingredient'),
+
+			(new OneToMany(
+				'RECIPE_INGREDIENT',
+				RecipeIngredientTable::class,
+				'RECIPE')),
 
 		];
 	}

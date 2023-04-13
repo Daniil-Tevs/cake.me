@@ -21,10 +21,16 @@ class RecipeIngredientTable extends DataManager
 	{
 		return [
 			new IntegerField(
-				'RECIPE_ID'
+				'RECIPE_ID',
+				[
+					'primary' => true,
+				]
 			),
 			new IntegerField(
-				'INGREDIENT_ID'
+				'INGREDIENT_ID',
+				[
+					'primary' => true,
+				]
 			),
 			new FloatField(
 				'COUNT'
@@ -33,17 +39,30 @@ class RecipeIngredientTable extends DataManager
 				'TYPE_ID'
 			),
 
-			'INGREDIENT' => new Reference(
+			// 'INGREDIENT' => new Reference(
+			// 	'INGREDIENT',
+			// 	IngredientTable::class,
+			// 	Join::on('this.INGREDIENT_ID', 'ref.ID')
+			// ),
+			//
+			// 'RECIPE' => new Reference(
+			// 	'RECIPE',
+			// 	RecipeTable::class,
+			// 	Join::on('this.RECIPE_ID', 'ref.ID')
+			// ),
+
+			(new Reference(
 				'INGREDIENT',
 				IngredientTable::class,
 				Join::on('this.INGREDIENT_ID', 'ref.ID')
-			),
+			))->configureJoinType('inner'),
 
-			'RECIPE' => new Reference(
+			(new Reference(
 				'RECIPE',
 				RecipeTable::class,
 				Join::on('this.RECIPE_ID', 'ref.ID')
-			),
+			))->configureJoinType('inner'),
+
 		];
 	}
 }

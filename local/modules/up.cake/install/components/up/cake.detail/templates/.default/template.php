@@ -14,6 +14,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 Loc::loadMessages(__FILE__);
 $recipe = $arResult['RECIPE'];
+// var_dump($recipe->getRecipeIngredient());
 ?>
 
 
@@ -54,7 +55,8 @@ $recipe = $arResult['RECIPE'];
 
 			<footer class="card-footer">
 				<div class="card-footer-item is-size-6">Время приготовления: <?=htmlspecialcharsbx($recipe->getTime())?> минут</div>
-				<div class="card-footer-item is-size-6">Калории: 135 calories</div>
+				<div class="card-footer-item is-size-6">Калории: <?=htmlspecialcharsbx($recipe->getCalories())?></div>
+				<div class="card-footer-item is-size-6">Количество порций: <?=htmlspecialcharsbx($recipe->getPortionCount())?></div>
 			</footer>
 			<hr>
 			<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -67,11 +69,11 @@ $recipe = $arResult['RECIPE'];
 				</thead>
 				<tbody>
 				<?php $countIngredient = 0;
-				foreach ($recipe->getIngredients() as $ingredient): ?>
+				foreach ($recipe->getRecipeIngredient() as $ingredient): ?>
 				<tr>
 					<th><?= $countIngredient + 1  ?></th>
-					<td><?= htmlspecialcharsbx($ingredient->getName()) ?></td>
-					<td>заглушка</td>
+					<td><?= htmlspecialcharsbx($ingredient->getRecipeId()) ?></td>
+					<td><?= htmlspecialcharsbx($ingredient->getCount()) ?></td>
 				</tr>
 				<?php $countIngredient++; endforeach; ?>
 				</tbody>
