@@ -66,14 +66,14 @@ $recipe = $arResult['RECIPE'];
 				</tr>
 				</thead>
 				<tbody>
-				<?php //$countIngredient = 0;
-				// foreach ($recipe['ingredient'] as $ingredient): ?>
-				<!--<tr>-->
-				<!--	<th>--><?//= $countIngredient + 1  ?><!--</th>-->
-				<!--	<td>--><?//= $ingredient[0] ?><!--</td>-->
-				<!--	<td>--><?//= $ingredient[1] ?><!-- --><?//= $ingredient[2] ?><!--</td>-->
-				<!--</tr>-->
-				<?php //$countIngredient++; endforeach; ?>
+				<?php $countIngredient = 0;
+				foreach ($recipe->getIngredients() as $ingredient): ?>
+				<tr>
+					<th><?= $countIngredient + 1  ?></th>
+					<td><?= htmlspecialcharsbx($ingredient->getName()) ?></td>
+					<td>заглушка</td>
+				</tr>
+				<?php $countIngredient++; endforeach; ?>
 				</tbody>
 			</table>
 

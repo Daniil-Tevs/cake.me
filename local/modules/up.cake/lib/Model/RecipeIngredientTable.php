@@ -34,7 +34,7 @@ class RecipeIngredientTable extends DataManager
 			),
 
 			'INGREDIENT' => new Reference(
-				'TAG',
+				'INGREDIENT',
 				IngredientTable::class,
 				Join::on('this.INGREDIENT_ID', 'ref.ID')
 			),

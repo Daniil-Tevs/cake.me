@@ -25,7 +25,6 @@ class IngredientTable extends DataManager
 				[
 					'primary' => true,
 					'autocomplete' => true,
-					'title' => Loc::getMessage('INGREDIENT_ENTITY_ID_FIELD')
 				]
 			),
 			new StringField(
@@ -33,21 +32,6 @@ class IngredientTable extends DataManager
 				[
 					'required' => true,
 					'validation' => [__CLASS__, 'validateName'],
-					'title' => Loc::getMessage('INGREDIENT_ENTITY_NAME_FIELD')
-				]
-			),
-			new StringField(
-				'TYPE',
-				[
-					'required' => true,
-					'validation' => [__CLASS__, 'validateType'],
-					'title' => Loc::getMessage('INGREDIENT_ENTITY_TYPE_FIELD')
-				]
-			),
-			new IntegerField(
-				'CALORIES',
-				[
-					'title' => Loc::getMessage('INGREDIENT_ENTITY_CALORIES_FIELD')
 				]
 			),
 
@@ -62,13 +46,6 @@ class IngredientTable extends DataManager
 	{
 		return [
 			new LengthValidator(null, 255),
-		];
-	}
-
-	public static function validateType()
-	{
-		return [
-			new LengthValidator(null, 100),
 		];
 	}
 }
