@@ -6,15 +6,15 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
-use Bitrix\Main\ORM\Fields\Relations\ManyToMany;
 
 Loc::loadMessages(__FILE__);
 
-class TagTable extends DataManager
+class TypeTable extends DataManager
 {
+
 	public static function getTableName()
 	{
-		return 'up_cake_tag';
+		return 'up_cake_type';
 	}
 
 	public static function getMap()
@@ -25,7 +25,6 @@ class TagTable extends DataManager
 				[
 					'primary' => true,
 					'autocomplete' => true,
-					'title' => Loc::getMessage('TAG_ENTITY_ID_FIELD')
 				]
 			),
 			new StringField(
@@ -33,14 +32,8 @@ class TagTable extends DataManager
 				[
 					'required' => true,
 					'validation' => [__CLASS__, 'validateName'],
-					'title' => Loc::getMessage('TAG_ENTITY_NAME_FIELD')
 				]
 			),
-
-			(new ManyToMany(
-				'RECIPES',
-				RecipeTable::class)
-			)->configureTableName('up_cake_recipe_tag'),
 		];
 	}
 

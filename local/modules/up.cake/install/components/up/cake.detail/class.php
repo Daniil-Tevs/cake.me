@@ -23,10 +23,6 @@ class CakeDetailComponent extends CBitrixComponent
 	{
 		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById(1);
 
-		// 	'tag' => [
-		// 		'выпечка',
-		// 		'сладкое',
-		// 	],
 		// 	'ingredient' => [
 		// 		['мука', 30, 'грамм'],
 		// 		['яйца', 4, 'шт.'],

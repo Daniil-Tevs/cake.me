@@ -11,6 +11,7 @@ class RecipeService
 
 	public static function getRecipeDetailById(int $id)
 	{
-		return \UP\Cake\Model\RecipeTable::query()->setSelect(['*','USER','INSTRUCTIONS'])->where('ID', $id)->fetchObject();
+		return \UP\Cake\Model\RecipeTable::query()->setSelect(['*','USER','INSTRUCTIONS', 'TAGS'])
+												  ->where('ID', $id)->fetchObject();
 	}
 }

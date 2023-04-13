@@ -30,6 +30,11 @@ $recipe = $arResult['RECIPE'];
 				<div class="content is-size-6">
 					<div class="title mb-2"><?=htmlspecialcharsbx($recipe->getName())?> </div>
 					<hr>
+					<div class="tags are-large">
+						<?php foreach ($recipe->getTags() as $tag):?>
+						<span class="tag is-danger is-light"><?= htmlspecialcharsbx($tag->getName()) ?></span>
+						<?php endforeach; ?>
+					</div>
 					<p ><?=htmlspecialcharsbx($recipe->getDescription())?></p>
 				</div>
 			</div>

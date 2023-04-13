@@ -6,40 +6,17 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\IntegerField,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
+use Bitrix\Main\ORM\Fields\Relations\ManyToMany;
 
 Loc::loadMessages(__FILE__);
 
-/**
- * Class IngredientTable
- *
- * Fields:
- * <ul>
- * <li> ID int mandatory
- * <li> NAME string(255) mandatory
- * <li> TYPE string(100) mandatory
- * <li> CALORIES int optional
- * </ul>
- *
- * @package Bitrix\Cake
- **/
-
 class IngredientTable extends DataManager
 {
-	/**
-	 * Returns DB table name for entity.
-	 *
-	 * @return string
-	 */
 	public static function getTableName()
 	{
 		return 'up_cake_ingredient';
 	}
 
-	/**
-	 * Returns entity map definition.
-	 *
-	 * @return array
-	 */
 	public static function getMap()
 	{
 		return [
@@ -73,14 +50,14 @@ class IngredientTable extends DataManager
 					'title' => Loc::getMessage('INGREDIENT_ENTITY_CALORIES_FIELD')
 				]
 			),
+
+			(new ManyToMany(
+				'RECIPES',
+				RecipeTable::class)
+			)->configureTableName('up_cake_recipe_ingredient'),
 		];
 	}
 
-	/**
-	 * Returns validators for NAME field.
-	 *
-	 * @return array
-	 */
 	public static function validateName()
 	{
 		return [
@@ -88,11 +65,6 @@ class IngredientTable extends DataManager
 		];
 	}
 
-	/**
-	 * Returns validators for TYPE field.
-	 *
-	 * @return array
-	 */
 	public static function validateType()
 	{
 		return [
