@@ -21,7 +21,7 @@ class CakeDetailComponent extends CBitrixComponent
 
 	protected function fetchRecipeDetail(): void
 	{
-		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById(1);
+		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById($this->arParams['ID']);
 
 		// 	'ingredient' => [
 		// 		['мука', 30, 'грамм'],

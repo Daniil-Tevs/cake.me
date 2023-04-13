@@ -13,7 +13,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 }
 
 Loc::loadMessages(__FILE__);
-$recipe = $arResult['RECIPE'];
+$recipe = $arResult['RECIPE'][0];
+$testIngredients = $arResult['RECIPE'][1];
 // var_dump($recipe->getRecipeIngredient());
 ?>
 
@@ -69,11 +70,11 @@ $recipe = $arResult['RECIPE'];
 				</thead>
 				<tbody>
 				<?php $countIngredient = 0;
-				foreach ($recipe->getRecipeIngredient() as $ingredient): ?>
+				foreach ($testIngredients as $ingredient): ?>
 				<tr>
 					<th><?= $countIngredient + 1  ?></th>
-					<td><?= htmlspecialcharsbx($ingredient->getRecipeId()) ?></td>
-					<td><?= htmlspecialcharsbx($ingredient->getCount()) ?></td>
+					<td><?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?></td>
+					<td><?= htmlspecialcharsbx($ingredient->getCount()) ?> <?= htmlspecialcharsbx($ingredient->getTypeId()) ?></td>
 				</tr>
 				<?php $countIngredient++; endforeach; ?>
 				</tbody>
