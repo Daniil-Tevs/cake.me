@@ -15,19 +15,12 @@ class CakeDetailComponent extends CBitrixComponent
 		{
 			throw new Exception('Invalid recipe ID');
 		}
-
 		return $arParams;
 	}
 
 	protected function fetchRecipeDetail(): void
 	{
 		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById($this->arParams['ID']);
-
-		// 	'ingredient' => [
-		// 		['мука', 30, 'грамм'],
-		// 		['яйца', 4, 'шт.'],
-		// 		['какао', 1, 'чайная ложка']
-		// 	],
-
+		$this->arResult['IMAGES'] = \Up\Cake\Service\ImageService::getById($this->arParams['ID']);
 	}
 }
