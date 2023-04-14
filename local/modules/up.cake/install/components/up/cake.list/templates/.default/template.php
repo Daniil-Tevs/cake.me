@@ -13,8 +13,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 }
 
 Loc::loadMessages(__FILE__);
+$images = $arResult['IMAGES'];
 ?>
-
 
 <?php
 $i = 0;
@@ -22,11 +22,11 @@ foreach ($arResult['RECIPES'] as $recipe): ?>
 	<?php
 	echo ($i % $arParams['COUNT_ELEMENTS'] === 0) ? '<div class="columns">' : '';
 	$i++; ?>
-	<div class="column">
+	<div class="column mt-5">
 		<div class="card">
 			<div class="card-image">
-				<figure class="image is-4by3">
-					<img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+				<figure class="image">
+					<img src="<?php echo $images["up.cake_" . $recipe->getId() . "_1"]??'https://bulma.io/images/placeholders/1280x960.png' ?>" alt="Placeholder image">
 				</figure>
 			</div>
 			<div class="card-content">
@@ -37,7 +37,7 @@ foreach ($arResult['RECIPES'] as $recipe): ?>
 				</div>
 			</div>
 			<footer class="card-footer">
-				<div class="card-footer-item">🕔 <?=htmlspecialcharsbx($recipe->getTime())?></div>
+				<div class="card-footer-item">🕔 <?=htmlspecialcharsbx($recipe->getTime())?> min</div>
 				<div class="card-footer-item">🔥 135 calories</div>
 				<div class="card-footer-item "><a href="/users/<?=htmlspecialcharsbx($recipe->getUser()->getID())?>">👨‍🍳 <?=htmlspecialcharsbx($recipe->getUser()->getName() . $recipe->getUser()->getLastName())?></a></div>
 			</footer>
