@@ -31,7 +31,7 @@ foreach ($arResult['RECIPES'] as $recipe): ?>
 			</div>
 			<div class="card-content">
 				<div class="content">
-					<a class="title mb-2" href="/detail/1/"><?=htmlspecialcharsbx($recipe->getName())?> </a>
+					<a class="title mb-2" href="/detail/<?=htmlspecialcharsbx($recipe->getId())?>/"><?=htmlspecialcharsbx($recipe->getName())?> </a>
 					<hr>
 					<p><?=htmlspecialcharsbx(mb_strcut($recipe->getDescription(),0,$arParams['LENGTH_DESCRIPTION'],$arParams['ENCODING']))?></p>
 				</div>

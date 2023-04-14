@@ -4,7 +4,9 @@ namespace UP\Cake\Model;
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
 	Bitrix\Main\ORM\Fields\FloatField,
-	Bitrix\Main\ORM\Fields\IntegerField;
+	Bitrix\Main\ORM\Fields\IntegerField,
+	Bitrix\Main\ORM\Fields\StringField,
+	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Bitrix\Main\ORM\Query\Join;
 
@@ -24,19 +26,28 @@ class RecipeIngredientTable extends DataManager
 				'RECIPE_ID',
 				[
 					'primary' => true,
+					'title' => Loc::getMessage('RECIPE_INGREDIENT_ENTITY_RECIPE_ID_FIELD')
 				]
 			),
 			new IntegerField(
 				'INGREDIENT_ID',
 				[
 					'primary' => true,
+					'title' => Loc::getMessage('RECIPE_INGREDIENT_ENTITY_INGREDIENT_ID_FIELD')
 				]
 			),
 			new FloatField(
-				'COUNT'
+				'COUNT',
+				[
+					'title' => Loc::getMessage('RECIPE_INGREDIENT_ENTITY_COUNT_FIELD')
+				]
 			),
-			new IntegerField(
-				'TYPE_ID'
+			new StringField(
+				'TYPE_ID',
+				[
+					'validation' => [__CLASS__, 'validateTypeId'],
+					'title' => Loc::getMessage('RECIPE_INGREDIENT_ENTITY_TYPE_ID_FIELD')
+				]
 			),
 
 			// 'INGREDIENT' => new Reference(
@@ -63,6 +74,18 @@ class RecipeIngredientTable extends DataManager
 				Join::on('this.RECIPE_ID', 'ref.ID')
 			))->configureJoinType('inner'),
 
+			// 'TYPE' => (new Reference(
+			// 	'TYPE',
+			// 	TypeTable::class,
+			// 	Join::on('this.TYPE_ID','ref.ID')
+			// ))->configureJoinType('inner')
+		];
+	}
+
+	public static function validateTypeId()
+	{
+		return [
+			new LengthValidator(null, 50),
 		];
 	}
 }
