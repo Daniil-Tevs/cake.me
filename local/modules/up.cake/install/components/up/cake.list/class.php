@@ -11,5 +11,6 @@ class CakeListComponent extends CBitrixComponent
 	protected function fetchRecipes(): void
 	{
 		$this->arResult['RECIPES'] = \Up\Cake\Service\RecipeService::get();
+		$this->arResult['IMAGES'] = \Up\Cake\Service\ImageService::get();
 	}
 }
