@@ -14,11 +14,19 @@ class RecipeService
 	public static function getRecipeDetailById(int $id)
 	{
 		$recipe = \UP\Cake\Model\RecipeTable::query()
-										 ->setSelect(['*','USER','INSTRUCTIONS', 'TAGS', 'RECIPE_INGREDIENT'])
-										 ->where('ID', $id)->fetchObject();
-		$ingredientsIds = array_map(function($item) {return $item->getRecipeId();}, $recipe->getRecipeIngredient());
+											->setSelect(['*','USER','INSTRUCTIONS', 'TAGS', 'RECIPE_INGREDIENT.RECIPE_ID'])
+											->where('ID', $id)->fetchObject();
+
+		$recipeId = [];
+		foreach ($recipe->getRecipeIngredient() as $item)
+		{
+			$recipeId[] = $item->getRecipeId();
+		}
 		$ingredients = RecipeIngredientTable::query()->setSelect(['INGREDIENT.NAME', 'COUNT', 'TYPE_ID'])
-													 ->whereIn('RECIPE_ID', $ingredientsIds)->fetchCollection();
-		return [$recipe, $ingredients];
+											->whereIn('RECIPE_ID', $recipeId)->fetchCollection();
+
+
+		$testArray = [$recipe, $ingredients];
+		return $testArray;
 	}
 }
