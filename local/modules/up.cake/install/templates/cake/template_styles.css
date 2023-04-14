@@ -7,37 +7,30 @@ body{
 	color: #283542;
 }
 
-.centrator{
-	display: flex;
-	justify-content: center;
-}
-.container{
-	width: 100%;
-	/*max-width: 1400px;*/
-}
-.layout{
-	display: inline-flex;
-	flex-wrap: wrap;
-	float: left;
+.navbar{
+	position: fixed;
 	width: 100%;
 }
-/*----------------------------------*/
 
 .header{
-	background: #9b1b9b;
-	border-bottom: 2px solid #f0f0f0;
+	background: rgba(255, 255, 255, 0.91);
+	border-bottom: 2px solid #f1baf95c;
 	width: 100%;
-	height: 58px;
+	height: 63px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
 .logo-name {
-	color: rgb(255, 255, 255);
+	color: rgb(70, 70, 70);
 	margin-left: 5px;
 	font-size: 30px;
 	font-style: italic;
+}
+
+.mt-95{
+	margin-top:95px;
 }
 
 .header-one
@@ -95,18 +88,26 @@ body{
 }
 .search-input{
 	outline: none;
-	border: 1px solid #fe9524;
+	border: 1px solid #eab8f1;
 	height: 30px;
 	border-radius: 5px;
 	width: 70%;
 	padding-left: 10px;
-	font-size: 18px;
-
+	font-size: 14px;
 }
+
+.profile{
+	background: #fdbeff;
+}
+
 .search-form{
 	border: none;
 	outline: none;
 	width: 100%;
+}
+
+.section{
+	background: #ff9ff61a;
 }
 
 .button-header {
