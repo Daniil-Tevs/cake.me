@@ -33,6 +33,10 @@ body{
 	margin-top:95px;
 }
 
+.card-list{
+	width: 432px;
+}
+
 .card-image{
 	border-bottom: solid 2px #eea0ff8a;
 }

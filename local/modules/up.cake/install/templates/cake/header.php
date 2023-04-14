@@ -34,7 +34,7 @@ $APPLICATION->ShowPanel(); ?>
 		</div>
 
 		<div class="search-container">
-			<form action="/" class="search-form">
+			<form action="/search/" class="search-form" method="get">
 				<input type="text" name="search-string" class="search-input" placeholder="Search">
 				<img class="search-form-image" src="/local/modules/up.cake/install/templates/cake/images/search.png" alt="/">
 			</form>
@@ -69,7 +69,7 @@ $APPLICATION->ShowPanel(); ?>
 			<div class="header header-filter p-1">
 				<div class="collection-filter">
 					<?php foreach (\Up\Cake\Service\TagService::get() as $tag):?>
-					<a href="/tag/<?=htmlspecialcharsbx($tag->getId())?>/" class="header-tag"><strong><?=htmlspecialcharsbx($tag->getName())?></strong></a>
+					<a href="/search/?filter=<?=htmlspecialcharsbx($tag->getId())?>" class="header-tag"><strong><?=htmlspecialcharsbx($tag->getName())?></strong></a>
 					<?php endforeach;?>
 				</div>
 			</div>

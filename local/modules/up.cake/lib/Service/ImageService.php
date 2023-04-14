@@ -16,7 +16,7 @@ class ImageService
 		return $images;
 	}
 
-	public static function getById($id): array
+	public static function getById(int $id): array
 	{
 		$images = [];
 		foreach (FileTable::query()->setSelect(['*'])->whereLike('MODULE_ID',"up.cake_{$id}_%")->fetchCollection() as $img)
@@ -25,4 +25,5 @@ class ImageService
 		}
 		return $images;
 	}
+
 }
