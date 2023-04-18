@@ -1,0 +1,26 @@
+.box-reg {
+	width: 30%;
+	margin-left: 1px;
+}
+
+.input-login-field {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.label-reg-name {
+	text-align: center;
+}
+
+.image-auth-form {
+
+}
+
+.reg-value-name {
+	margin-top: 10px;
+}
+
+.block-redirect-auth {
+	margin-top: 10px;
+	text-align: center;
+}
