@@ -37,7 +37,8 @@ $APPLICATION->ShowPanel(); ?>
 		<div class="search-container">
 			<form action="/search/" class="search-form" method="get">
 				<input type="text" name="search-string" class="search-input" placeholder="Search">
-				<img class="search-form-image" src="/local/modules/up.cake/install/templates/cake/images/search.png" alt="/">
+				<input type="image" class="search-form-image" name="search-string"  src="/local/modules/up.cake/install/templates/cake/images/search.png" alt="Submit Form" />
+
 			</form>
 		</div>
 
