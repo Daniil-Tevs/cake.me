@@ -27,7 +27,7 @@ $APPLICATION->IncludeComponent('bitrix:main.register', '', [
 	],
 	"AUTH" => "N",
 	"USE_BACKURL" => "N",
-	"SUCCESS_PAGE" => "/auth/",
+	"SUCCESS_PAGE" => "/auth/?success_reg=Y",
 	"SET_TITLE" => "N",
 	"USER_PROPERTY" => [],
 

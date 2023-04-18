@@ -3,6 +3,14 @@
 	margin-left: 1px;
 }
 
+.reg-success-message{
+	text-align: center;
+}
+
+.auth-error-message{
+	text-align: center;
+}
+
 .input-login-field {
 	margin-top: 10px;
 	margin-bottom: 10px;

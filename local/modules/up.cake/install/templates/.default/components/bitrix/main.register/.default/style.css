@@ -13,6 +13,10 @@
 	text-align: center;
 }
 
+.auth-error-message{
+	text-align: center;
+}
+
 .reg-value-name {
 	margin-top: 10px;
 }

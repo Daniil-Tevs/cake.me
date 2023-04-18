@@ -17,14 +17,9 @@ if (count($arResult["ERRORS"]) > 0):
 		if (intval($key) == 0 && $key !== 0)
 			$arResult["ERRORS"][$key] = str_replace("#FIELD_NAME#", "&quot;".GetMessage("REGISTER_FIELD_".$key)."&quot;", $error);
 ?>
-	<article class="message is-danger">
-		<div class="message-header">
-		</div>
-		<div class="message-body">
-			<div class="content"><h3><?php ShowError(implode("<br><br>", $arResult["ERRORS"])); ?></h3></div>
-		</div>
-	</article>
-
+	<div class="notification is-danger is-light auth-error-message">
+		<h3><?php ShowError(implode("<br>", $arResult["ERRORS"])); ?></h3>
+	</div>
 
 <?php elseif($arResult["USE_EMAIL_CONFIRMATION"] === "Y"):?>
 	<p><?= GetMessage("REGISTER_EMAIL_WILL_BE_SENT")?></p>

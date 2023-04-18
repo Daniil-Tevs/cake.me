@@ -11,30 +11,27 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
  * @var CBitrixComponent $component
  */
 
+if ($arParams["SUCCESS_REG"] === true): ?>
+	<div class="notification is-primary is-light reg-success-message">
+		<p><?=GetMessage("REG_SUCCESS_INFO")?></p>
+	</div>
+<?php endif; ?>
 
-if(!empty($arParams["~AUTH_RESULT"])):
+<?php if(!empty($arParams["~AUTH_RESULT"])):
 	$text = str_replace(array("<br>", "<br />"), "\n", $arParams["~AUTH_RESULT"]["MESSAGE"]);
 ?>
-		<article class="message is-danger">
-			<div class="message-header">
-			</div>
-			<div class="message-body">
-				<div class="content"><h3><?=nl2br(htmlspecialcharsbx($text))?></h3></div>
-			</div>
-		</article>
+	<div class="notification is-danger is-light auth-error-message">
+		<h3><?=nl2br(htmlspecialcharsbx($text))?></h3>
+	</div>
 <?endif?>
 
 <?
 if($arResult['ERROR_MESSAGE'] <> ''):
 	$text = str_replace(array("<br>", "<br />"), "\n", $arResult['ERROR_MESSAGE']);
 ?>
-		<article class="message is-danger">
-			<div class="message-header">
-			</div>
-			<div class="message-body">
-				<div class="content"><h3><?=nl2br(htmlspecialcharsbx($text))?></h3></div>
-			</div>
-		</article>
+	<div class="notification is-danger is-light auth-error-message">
+		<h3><?=nl2br(htmlspecialcharsbx($text))?></h3>
+	</div>
 <?endif?>
 
 <div class="content">
