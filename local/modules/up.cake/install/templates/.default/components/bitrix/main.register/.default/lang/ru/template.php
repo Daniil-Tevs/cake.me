@@ -59,3 +59,7 @@ $MESS["main_profile_time_zones_zones"] = "Часовой пояс:";
 $MESS["AUTH_SECURE_NOTE"] = "Перед отправкой формы пароль будет зашифрован в браузере. Это позволит избежать передачи пароля в открытом виде.";
 $MESS["AUTH_NONSECURE_NOTE"] = "Пароль будет отправлен в открытом виде. Включите JavaScript в браузере, чтобы зашифровать пароль перед отправкой.";
 $MESS["REGISTER_BUTTON_CANCEL"] = "Отмена";
+$MESS["REGISTER_INFO_FIELD"] = "Информация о себе";
+$MESS["REGISTER_EMAIL_FIELD"] = "Email";
+$MESS["REDIRECT_AUTH_MESSAGE"] = "Есть аккаунт?";
+$MESS["REDIRECT_AUTH_HREF"] = "Вход";

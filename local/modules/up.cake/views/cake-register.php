@@ -9,7 +9,7 @@ $APPLICATION->SetTitle("Регистрация");
 
 if ($USER->IsAuthorized())
 {
-	// LocalRedirect("/");
+	LocalRedirect("/");
 }
 
 $APPLICATION->IncludeComponent('bitrix:main.register', '', [

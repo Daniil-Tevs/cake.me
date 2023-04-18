@@ -78,12 +78,12 @@ if (count($arResult["ERRORS"]) > 0):
 					</div>
 				<? elseif ($FIELD === "PERSONAL_NOTES"): ?>
 					<div class="control">
-						<textarea class="textarea" name="REGISTER[<?=$FIELD?>]" placeholder="информация о себе"><?=$arResult["VALUES"][$FIELD]?></textarea>
+						<textarea class="textarea" name="REGISTER[<?=$FIELD?>]" placeholder="<?=GetMessage("REGISTER_INFO_FIELD")?>"><?=$arResult["VALUES"][$FIELD]?></textarea>
 					</div>
 
 				<? elseif ($FIELD === "EMAIL"): ?>
 					<div class="control">
-						<input class="input" name="REGISTER[<?=$FIELD?>]" type="email" placeholder="Email">
+						<input class="input" name="REGISTER[<?=$FIELD?>]" type="email" placeholder="<?=GetMessage("REGISTER_EMAIL_FIELD")?>">
 						<?=$arResult["VALUES"][$FIELD]?>
 					</div>
 				<? else: ?>
@@ -136,7 +136,9 @@ if (count($arResult["ERRORS"]) > 0):
 
 		</form>
 		<div class="block block-redirect-auth">
-			<p>Есть аккаунт? <a href="/auth/">Вход</a></p>
+			<p><?=GetMessage("REDIRECT_AUTH_MESSAGE")?> <a href="/auth/"><?=GetMessage("REDIRECT_AUTH_HREF")?></a></p>
 		</div>
+
+		<p><span class="starrequired">* </span><?=GetMessage("AUTH_REQ")?></p>
 	</div>
 
