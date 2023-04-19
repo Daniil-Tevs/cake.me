@@ -16,6 +16,8 @@ class CakeListComponent extends CBitrixComponent
 	protected function getMessage(): void
 	{
 		$successAuth = false;
+		$errorAuthUser = false;
+
 		$request = Context::getCurrent()->getRequest();
 
 		if ($request->get("success_auth") === "Y")
@@ -23,7 +25,14 @@ class CakeListComponent extends CBitrixComponent
 			$successAuth = true;
 		}
 
-		$this->arResult['AUTH_MESSAGE'] = $successAuth;
+		$this->arResult['SUCCESS_AUTH_MESSAGE'] = $successAuth;
+
+		if ($request->get("authUser") === "N")
+		{
+			$errorAuthUser = true;
+		}
+
+		$this->arResult['ERROR_AUTH_USER'] = $errorAuthUser;
 	}
 
 	protected function fetchRecipes(): void

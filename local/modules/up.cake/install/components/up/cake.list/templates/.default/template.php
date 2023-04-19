@@ -16,7 +16,13 @@ Loc::loadMessages(__FILE__);
 $images = $arResult['IMAGES'];
 ?>
 
-<?php if ($arResult["AUTH_MESSAGE"] === true): ?>
+<?php if ($arResult["ERROR_AUTH_USER"] === true): ?>
+	<div class="notification is-danger is-light auth-success-message">
+		<p>Чтобы добавить рецепт, вы должны авторизоваться!</p>
+	</div>
+<?php endif; ?>
+
+<?php if ($arResult["SUCCESS_AUTH_MESSAGE"] === true): ?>
 	<div class="notification is-primary is-light auth-success-message">
 		<p>Авторизация успешна!</p>
 	</div>
