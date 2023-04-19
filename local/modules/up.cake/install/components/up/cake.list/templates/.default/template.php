@@ -16,6 +16,12 @@ Loc::loadMessages(__FILE__);
 $images = $arResult['IMAGES'];
 ?>
 
+<?php if ($arResult["AUTH_MESSAGE"] === true): ?>
+	<div class="notification is-primary is-light auth-success-message">
+		<p>Авторизация успешна!</p>
+	</div>
+<?php endif; ?>
+
 <?php
 $i = 0;
 foreach ($arResult['RECIPES'] as $recipe): ?>
