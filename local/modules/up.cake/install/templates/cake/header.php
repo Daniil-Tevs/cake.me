@@ -2,6 +2,7 @@
 /**
  * @var CMain $APPLICATION
  * @var array $tags
+ * @global CUser $USER
  */
 ?><!doctype html>
 <html lang="<?= LANGUAGE_ID; ?>">
@@ -36,7 +37,8 @@ $APPLICATION->ShowPanel(); ?>
 		<div class="search-container">
 			<form action="/search/" class="search-form" method="get">
 				<input type="text" name="search-string" class="search-input" placeholder="Search">
-				<img class="search-form-image" src="/local/modules/up.cake/install/templates/cake/images/search.png" alt="/">
+				<input type="image" class="search-form-image" name="search-string"  src="/local/modules/up.cake/install/templates/cake/images/search.png" alt="Submit Form" />
+
 			</form>
 		</div>
 
@@ -46,14 +48,25 @@ $APPLICATION->ShowPanel(); ?>
 					<img class="profile-image " aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/profile.png">
 				</div>
 				<div class="dropdown-menu profile" id="dropdown-menu4" role="menu">
+
 					<div class="dropdown-content">
-						<a href="/login/" class="dropdown-item">
+						<?php if ($USER->IsAuthorized()): ?>
+							<a href="/profile/" class="dropdown-item">
+								профиль
+							</a>
+							<hr class="dropdown-divider">
+							<a href="/logout/" class="dropdown-item">
+								выйти
+							</a>
+						<?php else: ?>
+						<a href="/auth/" class="dropdown-item">
 							Log in
 						</a>
 						<hr class="dropdown-divider">
-						<a href="/registration/" class="dropdown-item">
+						<a href="/register/" class="dropdown-item">
 							Sign up
 						</a>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
