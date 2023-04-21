@@ -26,4 +26,18 @@ class ImageService
 		return $images;
 	}
 
+	public static function getByIdIn(array $ids): array
+	{
+		$images = [];
+		$ids = array_map(function($id){
+			$id = (int)$id;
+			return "up.cake_{$id}_1";
+		},$ids);
+		foreach (FileTable::query()->setSelect(['*'])->whereIN('MODULE_ID',$ids)->fetchCollection() as $img)
+		{
+			$images[$img->getModuleId()] = "/upload/{$img->getSubdir()}/{$img->getFileName()}";
+		}
+		return $images;
+	}
+
 }
