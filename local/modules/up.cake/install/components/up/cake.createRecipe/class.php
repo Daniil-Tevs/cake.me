@@ -1,27 +1,52 @@
 <?php
 
+use Bitrix\Main\Context;
+
 class CakeDetailComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
+		$request = Context::getCurrent()->getRequest();
+
+		$this->getTags();
+		$this->getTypes();
+
+		if ($request->isPost())
+		{
+			$this->createRecipe($request);
+
+		}
 
 		$this->includeComponentTemplate();
-		$this->createRecipe();
 	}
 
-	public function onPrepareComponentParams($arParams)
+	protected function getTags(): void
 	{
-		// $arParams['ID'] = (int)$arParams['ID'];
-		// if ($arParams['ID'] <= 0)
-		// {
-		// 	throw new Exception('Invalid recipe ID');
-		// }
-		// return $arParams;
+		$this->arResult['TAGS'] = \Up\Cake\Service\TagService::get();
 	}
 
-	protected function createRecipe(): void
+	protected function getTypes(): void
 	{
-		// $this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById($this->arParams['ID']);
-		// $this->arResult['IMAGES'] = \Up\Cake\Service\ImageService::getById($this->arParams['ID']);
+		$this->arResult['TYPES'] = \Up\Cake\Service\TypeService::get();
+	}
+
+	protected function createRecipe($request): void
+	{
+		global $USER;
+		$newRecipe = [
+			"RECIPE_NAME" => $request['RECIPE_NAME'],
+			"RECIPE_IMAGES_MAIN" => $_FILES['RECIPE_IMAGES_MAIN'],
+			"RECIPE_DESC" => $request['RECIPE_DESC'],
+			"RECIPE_PORTION" => (int)$request['RECIPE_PORTION'],
+			"RECIPE_TIME" => (int)$request['RECIPE_TIME'],
+			"RECIPE_CALORIES" => (int)$request['RECIPE_CALORIES'],
+			"RECIPE_TAGS" => $request['RECIPE_TAGS'],
+			"RECIPE_INGREDIENT" => $request['RECIPE_INGREDIENT'],
+			"RECIPE_INSTRUCTION" => $request['RECIPE_INSTRUCTION'],
+			"RECIPE_INSTRUCTION_IMAGES" => $_FILES['RECIPE_INSTRUCTION_IMAGES'],
+			"RECIPE_USER" => $USER->GetID(),
+		];
+
+		\Up\Cake\Service\RecipeService::addRecipe($newRecipe);
 	}
 }

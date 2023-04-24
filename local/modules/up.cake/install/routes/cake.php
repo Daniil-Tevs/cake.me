@@ -24,4 +24,5 @@ return function (RoutingConfigurator $routes) {
 
 	//рецепт
 	$routes->get('/recipe/create/', new PublicPageController('/local/modules/up.cake/views/cake-recipe-create.php'));
+	$routes->post('/recipe/create/', new PublicPageController('/local/modules/up.cake/views/cake-recipe-create.php'));
 };
