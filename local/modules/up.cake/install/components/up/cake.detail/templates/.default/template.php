@@ -15,6 +15,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 Loc::loadMessages(__FILE__);
 [$recipe, $ingredients] = $arResult['RECIPE'];
 $images = $arResult['IMAGES'];
+$mainImages = $arResult['RECIPE_MAIN_IMAGES'];
+$instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
 ?>
 
 <div class="column">
@@ -37,12 +39,13 @@ $images = $arResult['IMAGES'];
 		<div class="swiper">
 			<div class="swiper-wrapper">
 				<?php
-				foreach ($images as $image): ?>
+				for ($i = 0,$iMax = count($mainImages); $i < $iMax; $i++): ?>
 					<div class="swiper-slide">
-						<img src="<?= $image ?>" alt="">
+<!--						<img src="--><?//= $image ?><!--" alt="">-->
+
+						<?= CFile::ShowImage($mainImages[$i]['IMAGE_ID'], 200, 200, "border=0", "", true); ?>
 					</div>
-				<?php
-				endforeach; ?>
+				<?php endfor; ?>
 				<div class="swiper-pagination"></div>
 			</div>
 
@@ -101,14 +104,21 @@ $images = $arResult['IMAGES'];
 		</table>
 
 		<?php
+		$instructionCount = 0;
 		foreach ($recipe->getInstructions() as $instruction): ?>
-			<div class="box is-size-6">
+		<div class="field is-flex">
+			<div class="detail-instruction-image">
+				<?= CFile::ShowImage($instructionImages[$instructionCount]['IMAGE_ID'], 200, 200, "border=0", "", true); ?>
+			</div>
+			<div class="box is-size-6 detail-instruction-box">
 				<div class="content ml-2">
 					<h2>Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?> </h2>
 				</div>
 				<?= htmlspecialcharsbx($instruction->getDescription()) ?>
 			</div>
+		</div>
 		<?php
+			$instructionCount++;
 		endforeach; ?>
 	</div>
 </div>

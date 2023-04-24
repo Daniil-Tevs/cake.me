@@ -191,6 +191,13 @@ body{
 	display: flex;
 	justify-content: space-evenly;
 }
+.detail-instruction-image {
+	margin-left: 50px;
+}
+.detail-instruction-box {
+	margin-left: 40px;
+	width: 1000px;
+}
 
 /* swiper */
 

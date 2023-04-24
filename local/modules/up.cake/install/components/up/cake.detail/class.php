@@ -20,7 +20,12 @@ class CakeDetailComponent extends CBitrixComponent
 
 	protected function fetchRecipeDetail(): void
 	{
+		// \Up\Cake\Service\TestImageData::addTestData();
+		$imagesArray = \Up\Cake\Service\ImageService::getImageDetail($this->arParams['ID']);
+
+		$this->arResult['RECIPE_MAIN_IMAGES'] = $imagesArray ['RECIPE_MAIN_IMAGES'];
+		$this->arResult['RECIPE_INSTRUCTIONS_IMAGES'] = $imagesArray ['RECIPE_INSTRUCTIONS_IMAGES'];
 		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById($this->arParams['ID']);
-		$this->arResult['IMAGES'] = \Up\Cake\Service\ImageService::getById($this->arParams['ID']);
+		// $this->arResult['IMAGES'] = \Up\Cake\Service\ImageService::getById($this->arParams['ID']);
 	}
 }
