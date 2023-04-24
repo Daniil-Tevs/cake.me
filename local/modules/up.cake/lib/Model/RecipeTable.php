@@ -11,6 +11,7 @@ use Bitrix\Main\ORM\Fields\Relations\ManyToMany;
 use Bitrix\Main\ORM\Fields\Relations\OneToMany;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Bitrix\Main\ORM\Query\Join;
+use Bitrix\Main\Type\DateTime;
 use Up\Cake\Model\InstructionsTable;
 
 Loc::loadMessages(__FILE__);
@@ -68,8 +69,10 @@ class RecipeTable extends DataManager
 				'DATE_ADDED',
 				[
 					'required' => true,
-				]
-			),
+					'default_value' => function() {
+					return new DateTime();
+					}
+				]),
 			new DatetimeField(
 				'DATE_UPDATED'
 			),
