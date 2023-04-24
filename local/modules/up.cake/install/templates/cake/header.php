@@ -43,6 +43,9 @@ $APPLICATION->ShowPanel(); ?>
 		</div>
 
 		<div class="header-two">
+			<a href="/recipe/create/" class="dropdown-item">
+				➕
+			</a>
 			<div class="dropdown is-hoverable is-right">
 				<div class="dropdown-trigger">
 					<img class="profile-image " aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/profile.png">
