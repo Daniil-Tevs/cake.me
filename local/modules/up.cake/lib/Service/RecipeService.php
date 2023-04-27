@@ -12,16 +12,12 @@ class RecipeService
 	{
 		$recipes = \UP\Cake\Model\RecipeTable::query()->setSelect(
 			[
-				'ID',
-				'NAME',
+				'ID','NAME',
 				'DESCRIPTION',
-				'TIME',
-				'REACTION',
-				'CALORIES',
-				'PORTION_COUNT',
+				'TIME','REACTION',
+				'CALORIES','PORTION_COUNT',
 				'USER_ID',
-				'DATE_ADDED',
-				'DATE_UPDATED',
+				'DATE_ADDED','DATE_UPDATED',
 				'USER',
 			]
 		);
@@ -36,6 +32,21 @@ class RecipeService
 			$recipes->whereIn('TAGS.ID', $filter);
 		}
 		return $recipes->setOffset($offset)->setLimit($limit)->fetchAll();
+	}
+
+	public static function getRecipeByUserId(int $id,int $offset = 0, int $limit = 0)
+	{
+		return \UP\Cake\Model\RecipeTable::query()->setSelect(
+			[
+				'ID','NAME',
+				'DESCRIPTION',
+				'TIME','REACTION',
+				'CALORIES','PORTION_COUNT',
+				'USER_ID',
+				'DATE_ADDED','DATE_UPDATED',
+				'USER',
+			]
+		)->whereIn('USER_ID',$id)->setOffset($offset)->setLimit($limit)->fetchAll();
 	}
 
 	public static function getRecipeDetailById(int $id)
