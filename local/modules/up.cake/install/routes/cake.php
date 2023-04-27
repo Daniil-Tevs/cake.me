@@ -19,8 +19,9 @@ return function (RoutingConfigurator $routes) {
 	$routes->get('/logout/', new PublicPageController('/local/modules/up.cake/views/cake-logout.php'));
 
 	//профиль
-	$routes->get('/profile/edit/', new PublicPageController('/local/modules/up.cake/views/cake-profile.php'));
-	$routes->post('/profile/edit/', new PublicPageController('/local/modules/up.cake/views/cake-profile.php'));
+	$routes->get('/profile/', new PublicPageController('/local/modules/up.cake/views/cake-profile.php'));
+	$routes->get('/profile/edit/', new PublicPageController('/local/modules/up.cake/views/cake-profile-edit.php'));
+	$routes->post('/profile/edit/', new PublicPageController('/local/modules/up.cake/views/cake-profile-edit.php'));
 
 	//рецепт
 	$routes->get('/recipe/create/', new PublicPageController('/local/modules/up.cake/views/cake-recipe-create.php'));
