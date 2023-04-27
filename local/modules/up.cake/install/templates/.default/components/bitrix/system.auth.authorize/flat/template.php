@@ -34,6 +34,7 @@ if($arResult['ERROR_MESSAGE'] <> ''):
 	</div>
 <?endif?>
 
+<style> .tags {display: none;}</style>
 <div class="content">
 
 	<div class="field is-grouped is-grouped-centered">
