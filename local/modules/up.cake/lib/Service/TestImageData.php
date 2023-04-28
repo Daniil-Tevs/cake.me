@@ -10,23 +10,23 @@ class TestImageData
 {
 	public static function addTestData()
 	{
-		// $dir = 'local/modules/up.cake/images/brauni';
-		// self::addRecipeImages(7, 1, $dir);
-		//
-		// $dir = 'local/modules/up.cake/images/spagetti';
-		// self::addRecipeImages(6, 2, $dir);
+		$dir = 'local/modules/up.cake/images/brauni';
+		self::addRecipeImages(7, 1, $dir);
 
-		// $dir = 'local/modules/up.cake/images/sirniky';
-		// self::addRecipeImages(5, 3, $dir);
+		$dir = 'local/modules/up.cake/images/spagetti';
+		self::addRecipeImages(6, 2, $dir);
 
-		// $dir = 'local/modules/up.cake/images/limonad';
-		// self::addRecipeImages(2, 4, $dir);
-		//
-		// $dir = 'local/modules/up.cake/images/caesar';
-		// self::addRecipeImages(4, 5, $dir);
-		//
-		// $dir = 'local/modules/up.cake/images/italicSoupe';
-		// self::addRecipeImages(3, 6, $dir);
+		$dir = 'local/modules/up.cake/images/sirniky';
+		self::addRecipeImages(5, 3, $dir);
+
+		$dir = 'local/modules/up.cake/images/limonad';
+		self::addRecipeImages(2, 4, $dir);
+
+		$dir = 'local/modules/up.cake/images/caesar';
+		self::addRecipeImages(4, 5, $dir);
+
+		$dir = 'local/modules/up.cake/images/italicSoupe';
+		self::addRecipeImages(3, 6, $dir);
 
 		$dir = 'local/modules/up.cake/images/buter';
 		self::addRecipeImages(5, 7, $dir);
