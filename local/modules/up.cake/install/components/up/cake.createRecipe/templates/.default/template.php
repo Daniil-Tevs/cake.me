@@ -27,12 +27,15 @@ Loc::loadMessages(__FILE__); ?>
 		<hr>
 		<div class="create-page-main-label">Главное изображение:</div>
 		<div class="block is-flex add-form-recipe-main-image">
-			<label class="label create-page-main-label-image">Изображение 1:</label>
-			<input type="file" name="RECIPE_IMAGES_MAIN[1]" />
+			<div class="field update-image-delete-1">
+				<label class="label create-page-main-label-image">Изображение 1:</label>
+				<input type="file" name="RECIPE_IMAGES_MAIN[]" />
+			</div>
 		</div>
 
-		<div class="field is-flex add-form-recipe-tag-block">
-		<a class="image-button button">добавить изображение</a>
+		<div class="field is-flex add-form-recipe-image-buttons">
+			<a class="image-button button is-primary is-light">добавить изображение</a>
+			<a class="image-delete-button button is-danger is-light">Удалить изображение</a>
 		</div>
 
 		<hr>
@@ -75,7 +78,7 @@ Loc::loadMessages(__FILE__); ?>
 			<div class="field is-flex add-form-recipe-tag-block">
 			<label class="label create-page-label-tag">Категории блюда:</label>
 			<div class="control add-recipe-control-tags is-flex">
-				<div class="select add-recipe-tags-select">
+				<div class="select add-recipe-tags-select update-tag-delete-1">
 					<select name="RECIPE_TAGS[]">
 						<?php foreach ($tags as $tag): ?>
 						<option ><?= $tag->getName() ?></option>
@@ -84,7 +87,10 @@ Loc::loadMessages(__FILE__); ?>
 				</div>
 			</div>
 
-				<a class="tag-button button">добавить тег</a>
+				<div class="field">
+					<a class="tag-button button is-primary is-light">добавить тег</a>
+					<a class="tag-delete-button button is-danger is-light">Удалить тег</a>
+				</div>
 
 
 
@@ -100,13 +106,13 @@ Loc::loadMessages(__FILE__); ?>
 					</tr>
 					</thead>
 					<tbody class="table-add-recipe-ingredient">
-						<tr>
+						<tr class="update-ingredient-delete-1">
 							<th>1</th>
-							<td><input class="input" name="RECIPE_INGREDIENT[NAME][1]" type="text"></td>
-							<td><input class="input" name="RECIPE_INGREDIENT[VALUE][1]" type="number"></td>
+							<td><input class="input" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
+							<td><input class="input" name="RECIPE_INGREDIENT[VALUE][]" type="number"></td>
 							<td>
 								<div class="select add-recipe-tags-select">
-									<select name="RECIPE_INGREDIENT[TYPE][1]">
+									<select name="RECIPE_INGREDIENT[TYPE][]">
 										<?php foreach ($types as $type): ?>
 											<option ><?= $type->getId() ?></option>
 										<?php endforeach; ?>
@@ -119,7 +125,10 @@ Loc::loadMessages(__FILE__); ?>
 
 
 
-				<a class="table-button button">Добавить ингредиент</a>
+				<div class="field">
+					<a class="table-button button is-primary is-light">Добавить ингредиент</a>
+					<a class="ingredient-delete-button button is-danger is-light">Удалить ингредиент</a>
+				</div>
 
 				<hr>
 				<label class="label create-page-label-tag">Шаги:</label>
@@ -128,20 +137,26 @@ Loc::loadMessages(__FILE__); ?>
 
 
 				<div class="field add-recipe-instruction">
+
+					<div class="field update-instruction-delete-1">
 					<label class="label">Шаг 1:</label>
 
 					<div class="field is-flex  add-recipe-instruction-textarea">
-						<input type="file" name="RECIPE_INSTRUCTION_IMAGES[1]" />
+						<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]" />
 						<div class="field">
 							<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000" name="RECIPE_INSTRUCTION[1]" placeholder="Описание"></textarea>
+								<textarea class="textarea add-recipe-textarea-input" maxlength="1000" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
 							</div>
 						</div>
 					</div>
+					</div>
 
 				</div>
-					<a class="instruction-button button">Добавить шаг</a>
 
+				<div class="field">
+					<a class="instruction-button button is-primary is-light">Добавить шаг</a>
+					<a class="instruction-delete-button button is-danger is-light">Удалить шаг</a>
+				</div>
 
 
 				<div class="field is-grouped is-grouped-centered is-add-form-buttons">
@@ -164,8 +179,10 @@ Loc::loadMessages(__FILE__); ?>
 		{
 
 			const modalImage = $(`
-			<label class="label create-page-main-label-image">Изображение ${$countMainImage}:</label>
-			<input type="file" name="RECIPE_IMAGES_MAIN[${$countMainImage}]" />
+			<div class="field update-image-delete-${$countMainImage}">
+				<label class="label create-page-main-label-image">Изображение ${$countMainImage}:</label>
+				<input type="file" name="RECIPE_IMAGES_MAIN[]" />
+			</div>
 	`);
 			$countMainImage++;
 			$('.add-form-recipe-main-image').append(modalImage);
@@ -173,7 +190,7 @@ Loc::loadMessages(__FILE__); ?>
 		}
 
 		$('.image-button').on('click', () => {
-			if ($countMainImage <= 3)
+			if ($countMainImage <= 5)
 			{
 				openSelectMainImageModal();
 			}
@@ -193,17 +210,19 @@ Loc::loadMessages(__FILE__); ?>
 		{
 
 			const modalInstruction = $(`
+			<div class="field update-instruction-delete-${$countInstruction}">
 				<label class="label">Шаг ${$countInstruction}:</label>
 
 					<div class="field is-flex  add-recipe-instruction-textarea">
-						<input type="file" name="RECIPE_INSTRUCTION_IMAGES[${$countInstruction}]" />
+						<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]" />
 
 						<div class="field">
 							<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000" name="RECIPE_INSTRUCTION[${$countInstruction}]" placeholder="Описание"></textarea>
+								<textarea class="textarea add-recipe-textarea-input" maxlength="1000" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
 							</div>
 						</div>
 					</div>
+				</div>
 	`);
 			$countInstruction++;
 			$('.add-recipe-instruction').append(modalInstruction);
@@ -232,13 +251,13 @@ Loc::loadMessages(__FILE__); ?>
 		{
 
 			const modalTable = $(`
-				<tr>
+				<tr class="update-ingredient-delete-${$countTable}">
 							<th>${$countTable}</th>
-							<td><input class="input" name="RECIPE_INGREDIENT[NAME][${$countTable}]" type="text"></td>
-							<td><input class="input" name="RECIPE_INGREDIENT[VALUE][${$countTable}]" type="number"></td>
+							<td><input class="input" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
+							<td><input class="input" name="RECIPE_INGREDIENT[VALUE][]" type="number"></td>
 							<td>
 								<div class="select add-recipe-tags-select">
-									<select name="RECIPE_INGREDIENT[TYPE][${$countTable}]">
+									<select name="RECIPE_INGREDIENT[TYPE][]">
 										<?php foreach ($types as $type): ?>
 											<option ><?= $type->getId() ?></option>
 										<?php endforeach; ?>
@@ -273,7 +292,7 @@ Loc::loadMessages(__FILE__); ?>
 		{
 
 			const modalTag = $(`
-				<div class="select add-recipe-tags-select">
+				<div class="select add-recipe-tags-select update-tag-delete-${$countTags}">
 					<select name="RECIPE_TAGS[]">
 						<?php foreach ($tags as $tag): ?>
 						<option><?= $tag->getName() ?></option>
@@ -287,7 +306,7 @@ Loc::loadMessages(__FILE__); ?>
 		}
 
 			$('.tag-button').on('click', () => {
-				if ($countTags <= 10)
+				if ($countTags <= 6)
 				{
 					openSelectTagModal();
 				}
@@ -297,5 +316,42 @@ Loc::loadMessages(__FILE__); ?>
 				}
 
 			});
+	</script>
+
+
+	<script>
+		$('.image-delete-button').on('click', function(){
+			if ($countMainImage - 1 > 0)
+			{
+				$('.update-image-delete-' + ($countMainImage - 1)).remove();
+				$countMainImage = $countMainImage - 1;
+			}
+		});
+
+		$('.tag-delete-button').on('click', function(){
+			if ($countTags - 1 > 0)
+			{
+				$('.update-tag-delete-' + ($countTags - 1)).remove();
+				$countTags = $countTags - 1;
+			}
+		});
+
+		$('.ingredient-delete-button').on('click', function(){
+			if ($countTable - 1 > 0)
+			{
+				$('.update-ingredient-delete-' + ($countTable - 1)).remove();
+				$countTable = $countTable - 1;
+			}
+		});
+
+		$('.instruction-delete-button').on('click', function(){
+			if ($countInstruction - 1 > 0)
+			{
+				$('.update-instruction-delete-' + ($countInstruction - 1)).remove();
+				$countInstruction = $countInstruction - 1;
+			}
+		});
+
+
 	</script>
 </div>
