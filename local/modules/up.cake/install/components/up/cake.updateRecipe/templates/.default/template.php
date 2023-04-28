@@ -46,9 +46,9 @@ Loc::loadMessages(__FILE__); ?>
 			endforeach; ?>
 		</div>
 
-		<div class="field is-flex add-form-recipe-tag-block">
-		<a class="image-button button">добавить изображение</a>
-			<a class="image-delete-button button">Удалить изображение</a>
+		<div class="field is-flex add-form-recipe-image-buttons">
+		<a class="image-button button is-primary is-light">добавить изображение</a>
+			<a class="image-delete-button button is-danger is-light">Удалить изображение</a>
 		</div>
 
 		<hr>
@@ -113,8 +113,8 @@ Loc::loadMessages(__FILE__); ?>
 
 			</div>
 				<div class="field">
-					<a class="tag-button button">добавить тег</a>
-					<a class="tag-delete-button button">Удалить тег</a>
+					<a class="tag-button button is-primary is-light">добавить тег</a>
+					<a class="tag-delete-button button is-danger is-light">Удалить тег</a>
 				</div>
 
 
@@ -161,8 +161,8 @@ Loc::loadMessages(__FILE__); ?>
 
 
 				<div class="field">
-				<a class="table-button button">Добавить ингредиент</a>
-				<a class="ingredient-delete-button button">Удалить ингредиент</a>
+				<a class="table-button button is-primary is-light">Добавить ингредиент</a>
+				<a class="ingredient-delete-button button is-danger is-light">Удалить ингредиент</a>
 				</div>
 				<hr>
 				<label class="label create-page-label-tag">Шаги:</label>
@@ -192,8 +192,8 @@ Loc::loadMessages(__FILE__); ?>
 				</div>
 
 				<div class="field">
-					<a class="instruction-button button">Добавить шаг</a>
-					<a class="instruction-delete-button button">Удалить шаг</a>
+					<a class="instruction-button button is-primary is-light">Добавить шаг</a>
+					<a class="instruction-delete-button button is-danger is-light">Удалить шаг</a>
 				</div>
 
 

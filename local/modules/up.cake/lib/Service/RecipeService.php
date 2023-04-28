@@ -83,7 +83,7 @@ class RecipeService
 		$result = $recipe->save();
 		$recipeId = $result->getId();
 
-		for ($i = 1, $iMax = count($newRecipe['RECIPE_IMAGES_MAIN']['error']); $i <= $iMax; $i++)
+		for ($i = 0, $iMax = count($newRecipe['RECIPE_IMAGES_MAIN']['error']); $i < $iMax; $i++)
 		{
 			if ($newRecipe['RECIPE_IMAGES_MAIN']['error'][$i] === 0)
 			{
@@ -92,7 +92,7 @@ class RecipeService
 				$imageId = \CFile::SaveFile($arFile, "tmp/main-images");
 
 				$imageQuery = \UP\Cake\Model\RecipeImageTable::createObject();
-				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(1)->setNumber($i)->save();
+				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(1)->setNumber($i+1)->save();
 			}
 		}
 
@@ -109,7 +109,7 @@ class RecipeService
 		}
 
 
-		for ($i = 1, $iMax = count($newRecipe['RECIPE_INGREDIENT']['NAME']); $i <= $iMax; $i++)
+		for ($i = 0, $iMax = count($newRecipe['RECIPE_INGREDIENT']['NAME']); $i < $iMax; $i++)
 		{
 			$recipeIngredient = \UP\Cake\Model\RecipeIngredientTable::createObject();
 			$IngredientQuery = \UP\Cake\Model\IngredientTable::query()->setSelect(['ID'])
@@ -137,11 +137,11 @@ class RecipeService
 				$imageId = \CFile::SaveFile($arFile, "tmp/instruction-images");
 
 				$imageQuery = \UP\Cake\Model\RecipeImageTable::createObject();
-				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setNumber($iStep)->save();
+				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(0)->setNumber($iStep+1)->save();
 
 			}
 
-			$instructionQuery->setDescription($instruction)->setStep($iStep)->setRecipeId($recipeId)->save();
+			$instructionQuery->setDescription($instruction)->setStep($iStep+1)->setRecipeId($recipeId)->save();
 		}
 	}
 
