@@ -16,7 +16,7 @@ if (!$USER->IsAuthorized())
 	LocalRedirect("/");
 }
 
-$APPLICATION->IncludeComponent("bitrix:main.profile","", [
+$APPLICATION->IncludeComponent("bitrix:main.profile","flat", [
 	"USER_PROPERTY_NAME" => "",
 	"SET_TITLE" => "Y",
 	"AJAX_MODE" => "N",
