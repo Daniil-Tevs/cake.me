@@ -9,13 +9,17 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 ?>
 
 <div class="bx-auth-profile">
+	<?php if (!empty($arResult["strProfileError"])): ?>
+	<div class="notification is-danger is-light auth-success-message">
+		<p><?= $arResult["strProfileError"] ?></p>
+	</div>
+	<? endif; ?>
 
-<?php ShowError($arResult["strProfileError"]);?>
-<?php if ($arResult['DATA_SAVED'] === 'Y') ?>
+<?php if ($arResult['DATA_SAVED'] === 'Y'): ?>
 	<div class="notification is-primary is-light auth-success-message">
 		<p><?= GetMessage('PROFILE_DATA_SAVED') ?></p>
 	</div>
-
+<?php endif; ?>
 	<div id="bx_profile_error" style="display:none"><?ShowError("error")?></div>
 
 	<div id="bx_profile_resend"></div>
