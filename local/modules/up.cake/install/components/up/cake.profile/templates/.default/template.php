@@ -24,11 +24,17 @@ Loc::loadMessages(__FILE__);
 <div class="container mt-6">
 	<div class="columns profile">
 		<div class="column profile-img is-two-fifths">
-			<div class="card-image">
-				<figure class="image is-4by3">
-					<img src="<?=$user['PERSONAL_PHOTO']?>" alt="Placeholder image">
+				<figure class="image card-image is-1by1">
+					<?php if ($arResult['DEFAULT_IMAGE'] === true): ?>
+					<?php if ($user['PERSONAL_GENDER']==='M'): ?>
+					<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+					<?php else: ?>
+					<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+					<?php endif; ?>
+					<?php endif; ?>
+					<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 1000, 1000, "border=0", "", true); ?>
+
 				</figure>
-			</div>
 		</div>
 		<div class="column">
 			<div class="card-content">
