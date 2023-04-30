@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS up_cake_recipe_tag;
+DROP TABLE IF EXISTS up_cake_category;
 DROP TABLE IF EXISTS up_cake_recipe_ingredient;
 DROP TABLE IF EXISTS up_cake_recipe_image;
 DROP TABLE IF EXISTS up_cake_recipe_comment;
