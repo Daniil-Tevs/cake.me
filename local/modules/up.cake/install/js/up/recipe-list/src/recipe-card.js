@@ -4,6 +4,7 @@ export class RecipeCard{
 	cardNode;
 	constructor(recipeData,image,type)
 	{
+		this.recipeId = Number(recipeData.ID);
 		if(type === 'profile')
 		{
 			this.cardNode = this.profileCard(recipeData,image);
@@ -59,7 +60,7 @@ export class RecipeCard{
 						<footer class="card-footer">
 							<div class="card-footer-item">Likes: ${recipeData.REACTION}</div> 	
 							<a href="/recipe/edit/${recipeData.ID}/" class="card-footer-item button profile-button-edit">Edit</a>
-    						<button class="card-footer-item button profile-button-delete">Delete</button>
+    						<button class="card-footer-item button profile-button-delete" value="${recipeData.ID}" onclick=" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);">Delete</button>
 						</footer>
 					</div>
 				</div>`;

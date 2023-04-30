@@ -60,6 +60,11 @@ class RecipeService
 		return $recipes->setOffset($offset)->setLimit($limit)->fetchAll();
 	}
 
+	public static function deleteById(int $id): bool
+	{
+		return (RecipeTable::delete($id))->isSuccess();
+	}
+
 	public static function getRecipeByUserId(int $id,int $offset = 0, int $limit = 0)
 	{
 		return \UP\Cake\Model\RecipeTable::query()->setSelect(
