@@ -142,6 +142,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 			<?php
 			$instructionCount++;
 		endforeach; ?>
+		<hr>
 	</div>
 </div>
 
