@@ -86,27 +86,6 @@ $APPLICATION->ShowPanel(); ?>
 
 				</div>
 			</div>
-			<script>
-				document.categoryActive = false;
-				async function displayCategory()
-				{
-
-					if(!document.categoryActive)
-					{
-						document.getElementById('category').classList.add('is-active');
-						document.categoryActive = true;
-					}
-					else{
-						document.getElementById('category').classList.remove('is-active');
-						document.categoryActive = false;
-					}
-				}
-
-				function addFilter()
-				{
-					console.log(1);
-				}
-			</script>
 			<!-- logo-profile !-->
 			<div class="dropdown is-hoverable is-right profile-icon">
 				<div class="dropdown-trigger">
