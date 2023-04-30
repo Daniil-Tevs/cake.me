@@ -63,7 +63,6 @@ export class RecipeList
 
 	loadList(step = 1)
 	{
-		console.log(this.filters['tags']);
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:cake.recipe.getList',{
 					data: {
@@ -145,6 +144,26 @@ export class RecipeList
 		this.END_PAGE = false;
 		this.recipeList = [];
 		this.reload(1)
+	}
+
+	deleteRecipe(id)
+	{
+		id = Number(id);
+		if (!Type.isInteger(id))
+		{
+			throw new Error('RecipeCard: id should be int');
+		}
+		BX.ajax.runAction('up:cake.recipe.deleteRecipe',{
+				data: {
+					id: id,
+					userId: this.userId,
+				}
+			})
+			.then((response) => {
+				this.END_PAGE = false;
+				this.recipeList = [];
+				this.reload(1)
+			})
 	}
 
 	setName(name)

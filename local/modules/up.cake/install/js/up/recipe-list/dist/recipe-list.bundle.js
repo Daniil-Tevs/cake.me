@@ -7,6 +7,7 @@ this.BX.Up = this.BX.Up || {};
 	var RecipeCard = /*#__PURE__*/function () {
 	  function RecipeCard(recipeData, image, type) {
 	    babelHelpers.classCallCheck(this, RecipeCard);
+	    this.recipeId = Number(recipeData.ID);
 	    if (type === 'profile') {
 	      this.cardNode = this.profileCard(recipeData, image);
 	    } else {
@@ -16,13 +17,13 @@ this.BX.Up = this.BX.Up || {};
 	  babelHelpers.createClass(RecipeCard, [{
 	    key: "simpleCard",
 	    value: function simpleCard(recipeData, image) {
-	      return main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "' alt=\"Placeholder image\">\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "...</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD54 ", " min</div>\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD25 ", " calories</div>\n\t\t\t\t\t\t\t<div class=\"card-footer-item \"><a href=\"/users/<?=htmlspecialcharsbx($recipe->getUser()->getID())?>\">\uD83D\uDC68\u200D\uD83C\uDF73", "</a></div>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : "", recipeData.ID, recipeData.NAME, recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION), recipeData.TIME, recipeData.CALORIES, recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME);
+	      return main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "' alt=\"Placeholder image\">\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "...</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD54 ", " min</div>\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD25 ", " calories</div>\n\t\t\t\t\t\t\t<div class=\"card-footer-item \"><a href=\"/users/", "/>\">\uD83D\uDC68\u200D\uD83C\uDF73", "</a></div>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : "", recipeData.ID, recipeData.NAME, recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION), recipeData.TIME, recipeData.CALORIES, recipeData.UP_CAKE_MODEL_RECIPE_USER_ID, recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME);
 	    }
 	  }, {
 	    key: "profileCard",
 	    value: function profileCard(recipeData, image) {
 	      console.log(recipeData);
-	      return main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "' alt=\"Placeholder image\">\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "...</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">Likes: ", "</div> \t\n\t\t\t\t\t\t\t<a href=\"/recipe/edit/", "/\" class=\"card-footer-item button profile-button-edit\">Edit</a>\n    \t\t\t\t\t\t<button class=\"card-footer-item button profile-button-delete\">Delete</button>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : "", recipeData.ID, recipeData.NAME, recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION), recipeData.REACTION, recipeData.ID);
+	      return main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "' alt=\"Placeholder image\">\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "...</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">Likes: ", "</div> \t\n\t\t\t\t\t\t\t<a href=\"/recipe/edit/", "/\" class=\"card-footer-item button profile-button-edit\">Edit</a>\n    \t\t\t\t\t\t<button class=\"card-footer-item button profile-button-delete\" value=\"", "\" onclick=\" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);\">Delete</button>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : "", recipeData.ID, recipeData.NAME, recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION), recipeData.REACTION, recipeData.ID, recipeData.ID);
 	    }
 	  }]);
 	  return RecipeCard;
@@ -81,7 +82,6 @@ this.BX.Up = this.BX.Up || {};
 	    value: function loadList() {
 	      var _this2 = this;
 	      var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-	      console.log(this.filters['tags']);
 	      return new Promise(function (resolve, reject) {
 	        var _this2$userId, _this2$title;
 	        BX.ajax.runAction('up:cake.recipe.getList', {
@@ -154,6 +154,25 @@ this.BX.Up = this.BX.Up || {};
 	      this.END_PAGE = false;
 	      this.recipeList = [];
 	      this.reload(1);
+	    }
+	  }, {
+	    key: "deleteRecipe",
+	    value: function deleteRecipe(id) {
+	      var _this4 = this;
+	      id = Number(id);
+	      if (!main_core.Type.isInteger(id)) {
+	        throw new Error('RecipeCard: id should be int');
+	      }
+	      BX.ajax.runAction('up:cake.recipe.deleteRecipe', {
+	        data: {
+	          id: id,
+	          userId: this.userId
+	        }
+	      }).then(function (response) {
+	        _this4.END_PAGE = false;
+	        _this4.recipeList = [];
+	        _this4.reload(1);
+	      });
 	    }
 	  }, {
 	    key: "setName",

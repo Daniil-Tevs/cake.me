@@ -4,6 +4,7 @@ namespace UP\Cake\Controller;
 
 use Up\Cake\Service\ImageService;
 use Up\Cake\Service\RecipeService;
+use Up\Cake\Service\UserService;
 
 class Recipe extends \Bitrix\Main\Engine\Controller
 {
@@ -43,6 +44,14 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 			'recipeList' => $recipeList,
 			'imageList' => $imageList,
 		];
+	}
+
+	public function deleteRecipeAction(int $id,int $userId):void
+	{
+		if($userId === UserService::checkUserId($id))
+		{
+			RecipeService::deleteById($id);
+		}
 	}
 
 	protected function getDefaultPreFilters()

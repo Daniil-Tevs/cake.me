@@ -13,6 +13,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 }
 
 Loc::loadMessages(__FILE__);
+CJSCore::Init(array('ajax', 'redirect'));
 [$recipe, $ingredients] = $arResult['RECIPE'];
 $images = $arResult['IMAGES'];
 $mainImages = $arResult['RECIPE_MAIN_IMAGES'];
@@ -48,11 +49,12 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		<div class="swiper">
 			<div class="swiper-wrapper">
 				<?php
-				for ($i = 0,$iMax = count($mainImages); $i < $iMax; $i++): ?>
+				for ($i = 0, $iMax = count($mainImages); $i < $iMax; $i++): ?>
 					<div class="swiper-slide">
 						<?= CFile::ShowImage($mainImages[$i]['IMAGE_ID'], 200, 200, "border=0", "", true); ?>
 					</div>
-				<?php endfor; ?>
+				<?php
+				endfor; ?>
 				<div class="swiper-pagination"></div>
 			</div>
 
@@ -82,10 +84,14 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		</div>
 
 		<footer class="card-footer">
-			<div class="card-footer-item is-size-6">Время приготовления: <?= htmlspecialcharsbx($recipe->getTime()) ?> минут
+			<div class="card-footer-item is-size-6">Время приготовления: <?= htmlspecialcharsbx(
+					$recipe->getTime()
+				) ?> минут
 			</div>
 			<div class="card-footer-item is-size-6">Калории: <?= htmlspecialcharsbx($recipe->getCalories()) ?></div>
-			<div class="card-footer-item is-size-6">Количество порций: <?= htmlspecialcharsbx($recipe->getPortionCount()) ?></div>
+			<div class="card-footer-item is-size-6">Количество порций: <?= htmlspecialcharsbx(
+					$recipe->getPortionCount()
+				) ?></div>
 		</footer>
 		<hr>
 		<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -103,7 +109,9 @@ $isAuthor = $arResult['USER_AUTHOR'];
 				<tr>
 					<th><?= $countIngredient + 1 ?></th>
 					<td><?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?></td>
-					<td><?= htmlspecialcharsbx($ingredient->getCount()) ?> <?= htmlspecialcharsbx($ingredient->getTypeId()) ?></td>
+					<td><?= htmlspecialcharsbx($ingredient->getCount()) ?> <?= htmlspecialcharsbx(
+							$ingredient->getTypeId()
+						) ?></td>
 				</tr>
 				<?php
 				$countIngredient++; endforeach; ?>
@@ -113,25 +121,33 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		<?php
 		$instructionCount = 0;
 		foreach ($recipe->getInstructions() as $instruction): ?>
-		<div class="field is-flex">
-			<div class="detail-instruction-image">
-				<?= CFile::ShowImage($instructionImages[$instructionCount]['IMAGE_ID'], 200, 200, "border=0", "", true); ?>
-			</div>
-			<div class="box is-size-6 detail-instruction-box">
-				<div class="content ml-2">
-					<h2>Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?> </h2>
+			<div class="field is-flex">
+				<div class="detail-instruction-image">
+					<?= CFile::ShowImage(
+						$instructionImages[$instructionCount]['IMAGE_ID'],
+						200,
+						200,
+						"border=0",
+						"",
+						true
+					); ?>
 				</div>
-				<?= htmlspecialcharsbx($instruction->getDescription()) ?>
+				<div class="box is-size-6 detail-instruction-box">
+					<div class="content ml-2">
+						<h2>Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?> </h2>
+					</div>
+					<?= htmlspecialcharsbx($instruction->getDescription()) ?>
+				</div>
 			</div>
-		</div>
-		<?php
+			<?php
 			$instructionCount++;
 		endforeach; ?>
 	</div>
 </div>
 
 </div>
-<script>let swiper = new Swiper('.swiper', {
+<script>
+	let swiper = new Swiper('.swiper', {
 		spaceBetween: 5,
 		loop: true,
 
@@ -147,4 +163,10 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		mousewheel: false,
 		keyboard: true,
 	});
+
+	async function displayCategory()
+	{
+		document.location.href = '/';
+	}
+
 </script>

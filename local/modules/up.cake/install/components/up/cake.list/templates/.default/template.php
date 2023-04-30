@@ -71,7 +71,20 @@ Loc::loadMessages(__FILE__);
 		}
 	}
 
-
 	window.addEventListener('scroll', throttle(checkPosition))
 
+	document.categoryActive = false;
+	async function displayCategory()
+	{
+
+		if(!document.categoryActive)
+		{
+			document.getElementById('category').classList.add('is-active');
+			document.categoryActive = true;
+		}
+		else{
+			document.getElementById('category').classList.remove('is-active');
+			document.categoryActive = false;
+		}
+	}
 </script>
