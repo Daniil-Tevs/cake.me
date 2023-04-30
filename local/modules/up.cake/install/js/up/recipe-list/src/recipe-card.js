@@ -34,7 +34,7 @@ export class RecipeCard{
 						<footer class="card-footer">
 							<div class="card-footer-item">🕔 ${recipeData.TIME} min</div>
 							<div class="card-footer-item">🔥 ${recipeData.CALORIES} calories</div>
-							<div class="card-footer-item "><a href="/users/${recipeData.UP_CAKE_MODEL_RECIPE_USER_ID}/>">👨‍🍳${recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME}</a></div>
+							<div class="card-footer-item "><a href="/users/${recipeData.UP_CAKE_MODEL_RECIPE_USER_ID}/">👨‍🍳${recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME}</a></div>
 						</footer>
 					</div>
 				</div>`;
