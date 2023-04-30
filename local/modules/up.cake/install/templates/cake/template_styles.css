@@ -273,6 +273,10 @@ a.dropdown-item {
 
 /*----------------------------------*/
 
+.card-lists{
+	width: fit-content;
+}
+
 .label-filter{
 	margin-right:11px;
 }

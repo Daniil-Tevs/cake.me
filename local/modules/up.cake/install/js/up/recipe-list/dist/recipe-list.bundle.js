@@ -105,13 +105,13 @@ this.BX.Up = this.BX.Up || {};
 	      var _this3 = this;
 	      this.rootNode.innerHTML = '';
 	      var index = 1;
-	      var recipeContainerNode = main_core.Tag.render(_templateObject$1 || (_templateObject$1 = babelHelpers.taggedTemplateLiteral(["<div class=\"columns\"></div>"])));
+	      var recipeContainerNode = main_core.Tag.render(_templateObject$1 || (_templateObject$1 = babelHelpers.taggedTemplateLiteral(["<div class=\"columns card-lists\"></div>"])));
 	      this.recipeList.forEach(function (recipeData) {
 	        var recipeNode = new RecipeCard(recipeData, _this3.imageList[recipeData.ID], _this3.type).cardNode;
 	        recipeContainerNode.appendChild(recipeNode);
 	        if (index % _this3.COUNT_RECIPE_IN_ROW === 0) {
 	          _this3.rootNode.appendChild(recipeContainerNode);
-	          recipeContainerNode = main_core.Tag.render(_templateObject2$1 || (_templateObject2$1 = babelHelpers.taggedTemplateLiteral(["<div class=\"columns\"></div>"])));
+	          recipeContainerNode = main_core.Tag.render(_templateObject2$1 || (_templateObject2$1 = babelHelpers.taggedTemplateLiteral(["<div class=\"columns card-lists\"></div>"])));
 	        }
 	        index++;
 	      });

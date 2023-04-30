@@ -87,14 +87,14 @@ export class RecipeList
 	{
 		this.rootNode.innerHTML = '';
 		let index = 1;
-		let recipeContainerNode = Tag.render`<div class="columns"></div>`;
+		let recipeContainerNode = Tag.render`<div class="columns card-lists"></div>`;
 		this.recipeList.forEach(recipeData => {
 			const recipeNode = (new RecipeCard(recipeData,this.imageList[recipeData.ID],this.type)).cardNode;
 			recipeContainerNode.appendChild(recipeNode);
 			if (index % this.COUNT_RECIPE_IN_ROW === 0)
 			{
 				this.rootNode.appendChild(recipeContainerNode);
-				recipeContainerNode = Tag.render`<div class="columns"></div>`;
+				recipeContainerNode = Tag.render`<div class="columns card-lists"></div>`;
 			}
 			index++;
 		});
