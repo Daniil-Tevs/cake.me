@@ -2,12 +2,10 @@
 
 namespace Up\Cake\Service;
 
-use Bitrix\Main\DB\MysqlCommonConnection;
-use Bitrix\Main\ORM\Query\Query;
 use CFile;
-use UP\Cake\Model\RecipeImageTable;
 use UP\Cake\Model\RecipeIngredientTable;
 use UP\Cake\Model\RecipeTagTable;
+use UP\Cake\Model\RecipeTable;
 
 class RecipeService
 {
@@ -100,12 +98,12 @@ class RecipeService
 	{
 		$recipe = \UP\Cake\Model\RecipeTable::createObject();
 		$recipe->setName($newRecipe['RECIPE_NAME'])->setDescription($newRecipe['RECIPE_DESC'])
-			->setTime($newRecipe['RECIPE_TIME'])->setCalories(['RECIPE_CALORIES'])
-			->setPortionCount(['RECIPE_PORTION'])->setUserId($newRecipe["RECIPE_USER"]);
+			->setTime($newRecipe['RECIPE_TIME'])->setCalories($newRecipe['RECIPE_CALORIES'])
+			->setPortionCount($newRecipe['RECIPE_PORTION'])->setUserId($newRecipe["RECIPE_USER"]);
 		$result = $recipe->save();
 		$recipeId = $result->getId();
 
-		for ($i = 1, $iMax = count($newRecipe['RECIPE_IMAGES_MAIN']['error']); $i <= $iMax; $i++)
+		for ($i = 0, $iMax = count($newRecipe['RECIPE_IMAGES_MAIN']['error']); $i < $iMax; $i++)
 		{
 			if ($newRecipe['RECIPE_IMAGES_MAIN']['error'][$i] === 0)
 			{
@@ -114,7 +112,7 @@ class RecipeService
 				$imageId = \CFile::SaveFile($arFile, "tmp/main-images");
 
 				$imageQuery = \UP\Cake\Model\RecipeImageTable::createObject();
-				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(1)->setNumber($i)->save();
+				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(1)->setNumber($i+1)->save();
 			}
 		}
 
@@ -131,7 +129,7 @@ class RecipeService
 		}
 
 
-		for ($i = 1, $iMax = count($newRecipe['RECIPE_INGREDIENT']['NAME']); $i <= $iMax; $i++)
+		for ($i = 0, $iMax = count($newRecipe['RECIPE_INGREDIENT']['NAME']); $i < $iMax; $i++)
 		{
 			$recipeIngredient = \UP\Cake\Model\RecipeIngredientTable::createObject();
 			$IngredientQuery = \UP\Cake\Model\IngredientTable::query()->setSelect(['ID'])
@@ -159,12 +157,136 @@ class RecipeService
 				$imageId = \CFile::SaveFile($arFile, "tmp/instruction-images");
 
 				$imageQuery = \UP\Cake\Model\RecipeImageTable::createObject();
-				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(0)->setNumber($iStep)->save();
+				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(0)->setNumber($iStep+1)->save();
 
 			}
 
-			$instructionQuery->setDescription($instruction)->setStep($iStep)->setRecipeId($recipeId)->save();
+			$instructionQuery->setDescription($instruction)->setStep($iStep+1)->setRecipeId($recipeId)->save();
+		}
+	}
+
+	public static function updateRecipe(array $updateRecipe, int $recipeId): void
+	{
+		//Изменение основной информации о рецепте
+		$result = RecipeTable::getById($recipeId)->fetchObject()
+			->setName($updateRecipe['RECIPE_NAME'])->setDescription('')
+			->setDescription($updateRecipe['RECIPE_DESC'])->setTime($updateRecipe['RECIPE_TIME'])
+			->setCalories($updateRecipe['RECIPE_CALORIES'])->setPortionCount($updateRecipe['RECIPE_PORTION'])->save();
+
+
+		//Изменение тегов
+		$tagDelete = RecipeTagTable::query()->setSelect(['*'])->where('RECIPE_ID', $recipeId)->fetchCollection();
+		foreach ($tagDelete as $item)
+		{
+			$item->delete();
 		}
 
+		foreach ($updateRecipe['RECIPE_TAGS'] as $iTag => $tag)
+		{
+
+			$recipeTag = \UP\Cake\Model\RecipeTagTable::createObject();
+			$tagQuery = \UP\Cake\Model\TagTable::query()->setSelect(['ID'])->whereLike('NAME', $tag)
+											   ->fetchObject();
+			if (empty($tagQuery))
+			{
+				//TODO: добавить обработку нулевых значений
+			}
+			$recipeTag->setRecipeId($recipeId)->setTagId($tagQuery->getId())->save();
+		}
+
+		//Изменение ингредиентов
+		$ingredientDelete = RecipeIngredientTable::query()->setSelect(['RECIPE_ID'])
+			->where('RECIPE_ID', $recipeId)->fetchCollection();
+
+		foreach ($ingredientDelete as $item)
+		{
+			$item->delete();
+		}
+
+		for ($i = 0, $iMax = count($updateRecipe['RECIPE_INGREDIENT']['NAME']); $i < $iMax; $i++)
+		{
+			$recipeIngredient = \UP\Cake\Model\RecipeIngredientTable::createObject();
+			$IngredientQuery = \UP\Cake\Model\IngredientTable::query()->setSelect(['ID'])
+				->whereLike('NAME', $updateRecipe['RECIPE_INGREDIENT']['NAME'][$i])->fetchObject();
+
+			if (empty($IngredientQuery))
+			{
+				//TODO: добавить обработку нулевых значений
+			}
+
+			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientQuery->getId())
+				->setCount($updateRecipe['RECIPE_INGREDIENT']['VALUE'][$i])
+				->setTypeId($updateRecipe['RECIPE_INGREDIENT']['TYPE'][$i])->save();
+		}
+
+		//Изменение шагов
+		$imageInstructIds = RecipeImageTable::query()->setSelect(['IMAGE_ID'])->where('RECIPE_ID', $recipeId)
+			->where('IS_MAIN', 0)->fetchAll();
+
+		for ($i = 0, $iMax = count($imageInstructIds); $i < $iMax; $i++)
+		{
+
+			if ($i <= count($updateRecipe['RECIPE_INSTRUCTION_IMAGES']['error']) &&
+				(int)$updateRecipe['RECIPE_INSTRUCTION_IMAGES']['error'][$i] === 100)
+			{
+				continue;
+			}
+
+			CFile::Delete($imageInstructIds[$i]['IMAGE_ID']);
+		}
+
+		$ingredientDelete = InstructionsTable::query()->setSelect(['ID'])
+			->where('RECIPE_ID', $recipeId)->fetchCollection();
+
+		foreach ($ingredientDelete as $item)
+		{
+			$item->delete();
+		}
+
+		foreach ($updateRecipe['RECIPE_INSTRUCTION'] as $iStep => $instruction)
+		{
+			$instructionQuery = \UP\Cake\Model\InstructionsTable::createObject();
+
+			if ($updateRecipe['RECIPE_INSTRUCTION_IMAGES']['error'][$iStep] === 0)
+			{
+				$filePath = $updateRecipe['RECIPE_INSTRUCTION_IMAGES']['tmp_name'][$iStep];
+				$arFile = CFile::MakeFileArray($filePath);
+				$imageId = \CFile::SaveFile($arFile, "tmp/instruction-images");
+
+				$imageQuery = \UP\Cake\Model\RecipeImageTable::createObject();
+				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(0)->setNumber($iStep+1)->save();
+			}
+
+			$instructionQuery->setDescription($instruction)->setStep($iStep+1)->setRecipeId($recipeId)->save();
+		}
+
+		//изменение главных изображений
+		$imageIds = RecipeImageTable::query()->setSelect(['IMAGE_ID'])->where('RECIPE_ID', $recipeId)
+			->where('IS_MAIN', 1)->fetchAll();
+
+		for ($i = 0, $iMax = count($imageIds); $i < $iMax; $i++)
+		{
+			if ($i <= count($updateRecipe['RECIPE_IMAGES_MAIN']['error']) &&
+				(int)$updateRecipe['RECIPE_IMAGES_MAIN']['error'][$i] === 100)
+			{
+				continue;
+			}
+
+			CFile::Delete($imageIds[$i]['IMAGE_ID']);
+		}
+
+		for ($i = 0, $iMax = count($updateRecipe['RECIPE_IMAGES_MAIN']['error']); $i < $iMax; $i++)
+		{
+
+			if ($updateRecipe['RECIPE_IMAGES_MAIN']['error'][$i] === 0)
+			{
+				$filePath = $updateRecipe['RECIPE_IMAGES_MAIN']['tmp_name'][$i];
+				$arFile = CFile::MakeFileArray($filePath);
+				$imageId = \CFile::SaveFile($arFile, "tmp/main-images");
+
+				$imageQuery = \UP\Cake\Model\RecipeImageTable::createObject();
+				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(1)->setNumber($i+1)->save();
+			}
+		}
 	}
 }

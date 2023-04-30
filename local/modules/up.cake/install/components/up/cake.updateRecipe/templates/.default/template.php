@@ -15,26 +15,39 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 $tags = $arResult['TAGS'];
 $types = $arResult['TYPES'];
 
+[$recipe, $ingredients] = $arResult['RECIPE'];
+$mainImages = $arResult['RECIPE_MAIN_IMAGES'];
+$instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
+// echo '<pre>';
+// print_r($mainImages);
+// print_r($instructionImages); die();
+
 Loc::loadMessages(__FILE__); ?>
 
 <div class="content">
-	<form class="box" name="form_add_recipe" method="post" target="_top" action="/recipe/create/" enctype="multipart/form-data">
-		<div class="create-page-main-label">Новый рецепт</div>
+	<form class="box" name="form_add_recipe" method="post" target="_top" action="/recipe/update/<?=$recipe->getId()?>/" enctype="multipart/form-data">
+		<div class="create-page-main-label">Изменить рецепт</div>
 
 		<div class="block is-flex add-form-recipe-name">
-			<input class="input is-large add-form-recipe-name-input" name="RECIPE_NAME" type="text" placeholder="Название рецепта">
+			<input class="input is-large add-form-recipe-name-input" name="RECIPE_NAME" type="text" value="<?= htmlspecialcharsbx($recipe->getName()) ?>" placeholder="Название рецепта">
 		</div>
 		<hr>
 		<div class="create-page-main-label">Главное изображение:</div>
 		<div class="block is-flex add-form-recipe-main-image">
-			<div class="field update-image-delete-1">
-				<label class="label create-page-main-label-image">Изображение 1:</label>
-				<input type="file" name="RECIPE_IMAGES_MAIN[]" />
-			</div>
+
+			<?php $imageCount = 1;
+			foreach ($mainImages as $image): ?>
+				<div class="field update-image-delete-<?= $imageCount ?>">
+			<?= CFile::ShowImage($image['IMAGE_ID'], 100, 50, "border=0", "", true); ?>
+			<label class="label create-page-main-label-image">Изображение <?= $imageCount ?>:</label>
+			<input type="file" name="RECIPE_IMAGES_MAIN[]" />
+				</div>
+			<?php $imageCount++;
+			endforeach; ?>
 		</div>
 
 		<div class="field is-flex add-form-recipe-image-buttons">
-			<a class="image-button button is-primary is-light">добавить изображение</a>
+		<a class="image-button button is-primary is-light">добавить изображение</a>
 			<a class="image-delete-button button is-danger is-light">Удалить изображение</a>
 		</div>
 
@@ -45,7 +58,7 @@ Loc::loadMessages(__FILE__); ?>
 			<div class="field add-recipe-desc">
 				<div class="field">
 					<div class="control">
-						<textarea class="textarea" maxlength="2000" name="RECIPE_DESC" placeholder="Описание"></textarea>
+						<textarea class="textarea" maxlength="2000" name="RECIPE_DESC" placeholder="Описание"><?= htmlspecialcharsbx($recipe->getDescription()) ?></textarea>
 					</div>
 				</div>
 			</div>
@@ -55,21 +68,24 @@ Loc::loadMessages(__FILE__); ?>
 			<div class="field">
 				<label class="label">Количество порций:</label>
 				<div class="control">
-					<input class="input add-recipe-info-block-input" name="RECIPE_PORTION" type="number" value="1" min="1" max="100" placeholder="">
+					<input class="input add-recipe-info-block-input" name="RECIPE_PORTION" type="number"
+						   value="<?= htmlspecialcharsbx($recipe->getPortionCount()) ?>" min="1" max="100" placeholder="">
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">Время приготовления (мин):</label>
 				<div class="control">
-					<input class="input add-recipe-info-block-time" name="RECIPE_TIME" type="number" placeholder="">
+					<input class="input add-recipe-info-block-time" name="RECIPE_TIME"
+						   value="<?= htmlspecialcharsbx($recipe->getTime()) ?>" type="number" placeholder="">
 				</div>
 			</div>
 
 			<div class="field">
 				<label class="label">Калории:</label>
 				<div class="control">
-					<input class="input add-recipe-info-block-input" name="RECIPE_CALORIES" type="number" value="1" min="1" max="10000" placeholder="">
+					<input class="input add-recipe-info-block-input" name="RECIPE_CALORIES" type="number"
+						   value="<?= htmlspecialcharsbx($recipe->getCalories()) ?>" min="0" max="10000" placeholder="">
 				</div>
 			</div>
 		</div>
@@ -78,20 +94,28 @@ Loc::loadMessages(__FILE__); ?>
 			<div class="field is-flex add-form-recipe-tag-block">
 			<label class="label create-page-label-tag">Категории блюда:</label>
 			<div class="control add-recipe-control-tags is-flex">
-				<div class="select add-recipe-tags-select update-tag-delete-1">
+				<?php $tagCount = 1;
+				foreach ($recipe->getTags() as $item): ?>
+				<div class="select add-recipe-tags-select update-tag-delete-<?= $tagCount ?>">
 					<select name="RECIPE_TAGS[]">
 						<?php foreach ($tags as $tag): ?>
-						<option ><?= $tag->getName() ?></option>
+
+						<?php if (htmlspecialcharsbx($item->getName()) === htmlspecialcharsbx($tag->getName())): ?>
+						<option selected="selected"><?= htmlspecialcharsbx($tag->getName()) ?></option>
+						<?php else: ?>
+						<option><?= htmlspecialcharsbx($tag->getName()) ?></option>
+						<?php endif; ?>
+
 						<?php endforeach; ?>
 					</select>
 				</div>
-			</div>
+				<?php $tagCount++; endforeach; ?>
 
+			</div>
 				<div class="field">
 					<a class="tag-button button is-primary is-light">добавить тег</a>
 					<a class="tag-delete-button button is-danger is-light">Удалить тег</a>
 				</div>
-
 
 
 				<hr>
@@ -106,30 +130,40 @@ Loc::loadMessages(__FILE__); ?>
 					</tr>
 					</thead>
 					<tbody class="table-add-recipe-ingredient">
-						<tr class="update-ingredient-delete-1">
-							<th>1</th>
-							<td><input class="input" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
-							<td><input class="input" name="RECIPE_INGREDIENT[VALUE][]" type="number"></td>
+					<?php $countIngredient = 1;
+					foreach ($ingredients as $ingredient): ?>
+						<tr class="update-ingredient-delete-<?= $countIngredient ?>">
+							<th><?= $countIngredient ?></th>
+							<td><input class="input" name="RECIPE_INGREDIENT[NAME][]"
+									   value="<?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?>" type="text"></td>
+							<td><input class="input" name="RECIPE_INGREDIENT[VALUE][]"
+									   value="<?= htmlspecialcharsbx($ingredient->getCount()) ?>" type="number"></td>
 							<td>
 								<div class="select add-recipe-tags-select">
 									<select name="RECIPE_INGREDIENT[TYPE][]">
 										<?php foreach ($types as $type): ?>
-											<option ><?= $type->getId() ?></option>
+
+										<?php if ( htmlspecialcharsbx($ingredient->getTypeId()) === htmlspecialcharsbx($type->getId())): ?>
+											<option selected="selected"><?= $type->getId() ?></option>
+										<?php else: ?>
+										<option><?= $type->getId() ?></option>
+										<?php endif; ?>
+
 										<?php endforeach; ?>
 									</select>
 								</div>
 							</td>
 						</tr>
+					<?php $countIngredient++;
+					endforeach; ?>
 					</tbody>
 				</table>
 
 
-
 				<div class="field">
-					<a class="table-button button is-primary is-light">Добавить ингредиент</a>
-					<a class="ingredient-delete-button button is-danger is-light">Удалить ингредиент</a>
+				<a class="table-button button is-primary is-light">Добавить ингредиент</a>
+				<a class="ingredient-delete-button button is-danger is-light">Удалить ингредиент</a>
 				</div>
-
 				<hr>
 				<label class="label create-page-label-tag">Шаги:</label>
 				<hr>
@@ -137,26 +171,31 @@ Loc::loadMessages(__FILE__); ?>
 
 
 				<div class="field add-recipe-instruction">
-
-					<div class="field update-instruction-delete-1">
-					<label class="label">Шаг 1:</label>
+					<?php
+					$instructionCount = 1;
+					foreach ($recipe->getInstructions() as $instruction): ?>
+					<div class="field update-instruction-delete-<?= $instructionCount ?>">
+					<label class="label">Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?>:</label>
+						<?= CFile::ShowImage($instructionImages[$instructionCount - 1]['IMAGE_ID'], 100, 100, "border=0", "", true); ?>
 
 					<div class="field is-flex  add-recipe-instruction-textarea">
 						<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]" />
 						<div class="field">
 							<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
+								<textarea class="textarea add-recipe-textarea-input" maxlength="1000" name="RECIPE_INSTRUCTION[]"><?= htmlspecialcharsbx($instruction->getDescription()) ?></textarea>
 							</div>
 						</div>
 					</div>
 					</div>
-
+					<?php $instructionCount++;
+					endforeach; ?>
 				</div>
 
 				<div class="field">
 					<a class="instruction-button button is-primary is-light">Добавить шаг</a>
 					<a class="instruction-delete-button button is-danger is-light">Удалить шаг</a>
 				</div>
+
 
 
 				<div class="field is-grouped is-grouped-centered is-add-form-buttons">
@@ -174,14 +213,14 @@ Loc::loadMessages(__FILE__); ?>
 	</form>
 
 	<script>
-		let $countMainImage = 2;
+		let $countMainImage = <?= $imageCount ?>;
 		function openSelectMainImageModal()
 		{
 
 			const modalImage = $(`
 			<div class="field update-image-delete-${$countMainImage}">
-				<label class="label create-page-main-label-image">Изображение ${$countMainImage}:</label>
-				<input type="file" name="RECIPE_IMAGES_MAIN[]" />
+			<label class="label create-page-main-label-image">Изображение ${$countMainImage}:</label>
+			<input type="file" name="RECIPE_IMAGES_MAIN[]" />
 			</div>
 	`);
 			$countMainImage++;
@@ -205,7 +244,7 @@ Loc::loadMessages(__FILE__); ?>
 
 
 	<script>
-		let $countInstruction = 2;
+		let $countInstruction = <?= $instructionCount ?>;
 		function openSelectInstructionModal()
 		{
 
@@ -222,7 +261,7 @@ Loc::loadMessages(__FILE__); ?>
 							</div>
 						</div>
 					</div>
-				</div>
+			</div>
 	`);
 			$countInstruction++;
 			$('.add-recipe-instruction').append(modalInstruction);
@@ -246,7 +285,7 @@ Loc::loadMessages(__FILE__); ?>
 
 
 	<script>
-		let $countTable = 2;
+		let $countTable = <?= $countIngredient ?>;
 		function openSelectIngredientModal()
 		{
 
@@ -287,7 +326,7 @@ Loc::loadMessages(__FILE__); ?>
 
 
 	<script>
-		let $countTags = 2;
+		let $countTags = <?= $tagCount ?>;
 		function openSelectTagModal()
 		{
 
@@ -306,7 +345,7 @@ Loc::loadMessages(__FILE__); ?>
 		}
 
 			$('.tag-button').on('click', () => {
-				if ($countTags <= 6)
+				if ($countTags <= 7)
 				{
 					openSelectTagModal();
 				}
@@ -317,7 +356,6 @@ Loc::loadMessages(__FILE__); ?>
 
 			});
 	</script>
-
 
 	<script>
 		$('.image-delete-button').on('click', function(){

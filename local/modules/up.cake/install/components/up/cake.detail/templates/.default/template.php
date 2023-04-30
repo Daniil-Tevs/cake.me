@@ -41,8 +41,6 @@ $instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
 				<?php
 				for ($i = 0,$iMax = count($mainImages); $i < $iMax; $i++): ?>
 					<div class="swiper-slide">
-<!--						<img src="--><?//= $image ?><!--" alt="">-->
-
 						<?= CFile::ShowImage($mainImages[$i]['IMAGE_ID'], 200, 200, "border=0", "", true); ?>
 					</div>
 				<?php endfor; ?>
@@ -69,14 +67,10 @@ $instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
 		</div>
 
 		<footer class="card-footer">
-			<div class="card-footer-item is-size-6">Время приготовления: <?= htmlspecialcharsbx(
-					$recipe->getTime()
-				) ?> минут
+			<div class="card-footer-item is-size-6">Время приготовления: <?= htmlspecialcharsbx($recipe->getTime()) ?> минут
 			</div>
 			<div class="card-footer-item is-size-6">Калории: <?= htmlspecialcharsbx($recipe->getCalories()) ?></div>
-			<div class="card-footer-item is-size-6">Количество порций: <?= htmlspecialcharsbx(
-					$recipe->getPortionCount()
-				) ?></div>
+			<div class="card-footer-item is-size-6">Количество порций: <?= htmlspecialcharsbx($recipe->getPortionCount()) ?></div>
 		</footer>
 		<hr>
 		<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -94,9 +88,7 @@ $instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
 				<tr>
 					<th><?= $countIngredient + 1 ?></th>
 					<td><?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?></td>
-					<td><?= htmlspecialcharsbx($ingredient->getCount()) ?> <?= htmlspecialcharsbx(
-							$ingredient->getTypeId()
-						) ?></td>
+					<td><?= htmlspecialcharsbx($ingredient->getCount()) ?> <?= htmlspecialcharsbx($ingredient->getTypeId()) ?></td>
 				</tr>
 				<?php
 				$countIngredient++; endforeach; ?>

@@ -407,6 +407,15 @@ input[type=number]::-webkit-outer-spin-button {
 	width: 150px;
 }
 
+.add-form-recipe-image-buttons {
+	justify-content: center;
+	align-items: center;
+}
+
+.image-button {
+	margin-right: 5px;
+}
+
 .add-recipe-info-block-time {
 	width: 52%;
 	margin-left: 40px;
