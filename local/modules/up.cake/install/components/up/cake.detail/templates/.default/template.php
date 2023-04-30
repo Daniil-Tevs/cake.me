@@ -18,6 +18,9 @@ CJSCore::Init(array('ajax', 'redirect'));
 $images = $arResult['IMAGES'];
 $mainImages = $arResult['RECIPE_MAIN_IMAGES'];
 $instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
+
+$UserImage = $arResult['PERSONAL_PHOTO'];
+$UserGender = $arResult['GENDER'];
 ?>
 
 <div class="column">
@@ -57,12 +60,18 @@ $instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
 			<div class="media">
 				<div class="media-left">
 					<figure class="image is-48x48">
-						<img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+						<?php if ($UserGender === 'M'): ?>
+						<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						<?php elseif ($UserGender === 'F'): ?>
+						<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						<?php else: ?>
+						<?= CFile::ShowImage($UserImage, 100, 100, "border=0", "", true); ?>
+					<?php endif; ?>
 					</figure>
 				</div>
 				<div class="media-content">
 					<p class="title is-4"><a href="#"> <?= htmlspecialcharsbx(
-								$recipe->getUser()->getName() . $recipe->getUser()->getLastName()
+								$recipe->getUser()->getName() . ' ' . $recipe->getUser()->getLastName()
 							) ?> </a></p>
 				</div>
 			</div>

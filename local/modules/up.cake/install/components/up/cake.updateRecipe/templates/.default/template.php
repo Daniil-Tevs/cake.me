@@ -25,7 +25,7 @@ $instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
 Loc::loadMessages(__FILE__); ?>
 
 <div class="content">
-	<form class="box" name="form_add_recipe" method="post" target="_top" action="/recipe/update/<?=$recipe->getId()?>/" enctype="multipart/form-data">
+	<form class="box" name="form_add_recipe" method="post" target="_top" action="/recipe/edit/<?=$recipe->getId()?>/" enctype="multipart/form-data">
 		<div class="create-page-main-label">Изменить рецепт</div>
 
 		<div class="block is-flex add-form-recipe-name">
