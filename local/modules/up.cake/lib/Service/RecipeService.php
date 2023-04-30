@@ -3,6 +3,8 @@
 namespace Up\Cake\Service;
 
 use CFile;
+use Up\Cake\Model\InstructionsTable;
+use UP\Cake\Model\RecipeImageTable;
 use UP\Cake\Model\RecipeIngredientTable;
 use UP\Cake\Model\RecipeTagTable;
 use UP\Cake\Model\RecipeTable;
