@@ -22,6 +22,40 @@ body {
 	align-items: center;
 }
 
+.logo-add{
+	margin-right: 19px;
+	margin-top: 1px;
+}
+
+.filters{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width:fit-content;
+	height: fit-content;
+	background: #f8e6ff;
+	border-top: 1px solid grey;
+}
+
+.header-category{
+	margin-top: 8px;
+	height: max-content;
+}
+
+.tag{
+	margin-right:10px;
+}
+
+.category-title{
+	display:flex;
+	align-items:center;
+	justify-content: center;
+}
+
+.category-check{
+	display:none;
+}
+
 .logo-name {
 	color: rgb(70, 70, 70);
 	margin-left: 5px;
@@ -239,6 +273,14 @@ a.dropdown-item {
 
 /*----------------------------------*/
 
+.label-filter{
+	margin-right:11px;
+}
+
+.search-container{
+	margin-left: 112px;
+}
+
 .header-filter {
 	height: 70px;
 	background: #f8e6ff;
@@ -273,7 +315,9 @@ a.dropdown-item {
 
 .tags {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: flex-start;
+	flex-direction: column;
+	align-items: flex-start;
 }
 
 .detail-instruction-image {
