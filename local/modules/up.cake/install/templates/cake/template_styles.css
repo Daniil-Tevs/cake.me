@@ -156,6 +156,7 @@ a.dropdown-item {
 
 .profile-icon{
 	margin-right:20px;
+	cursor: pointer;
 }
 
 .profile {
