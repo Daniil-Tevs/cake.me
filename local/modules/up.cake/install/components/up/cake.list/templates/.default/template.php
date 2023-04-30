@@ -32,7 +32,7 @@ Loc::loadMessages(__FILE__);
 <div id="recipe-list"></div>
 
 <script>
-	let step = 1
+	window.step = 1
 
 	BX.ready(function() {
 		window.CakeRecipeList = new BX.Up.Cake.RecipeList({
@@ -64,12 +64,13 @@ Loc::loadMessages(__FILE__);
 		const position = scrolled + screenHeight
 
 		if (position >= threshold && !window.CakeRecipeList.END_PAGE) {
-			console.log(step);
-			step++;
+			console.log(window.step);
+			window.step++;
 			window.scrollBy(0,-100);
-			await window.CakeRecipeList.reload(step);
+			await window.CakeRecipeList.reload(window.step);
 		}
 	}
+
 
 	window.addEventListener('scroll', throttle(checkPosition))
 
