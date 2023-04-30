@@ -25,13 +25,17 @@ Loc::loadMessages(__FILE__); ?>
 
 <?php if (!empty($errors)): ?>
 	<div class="notification is-danger is-light error-edit-recipe">
-	<?php if ($errors[0] === true) ?>
+	<?php if ($errors[0] === true): ?>
 		<p>Теги или ингредиенты не должны повторяться!</p>
-	<?php if ($errors[1] === true) ?>
+	<?php endif; ?>
+	<?php if ($errors[1] === true): ?>
 		<p>Текстовые поля шагов не должны быть пустыми!</p>
-	<?php if ($errors[2] === true) ?>
+	<?php endif; ?>
+	<?php if ($errors[2] === true): ?>
 		<p>Должен быть хотя бы один шаг или ингредиент!</p>
-		</div>
+
+	<?php endif; ?>
+	</div>
 	<?php endif; ?>
 
 <div class="content">

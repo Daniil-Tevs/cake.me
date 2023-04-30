@@ -31,19 +31,19 @@ class CakeDetailComponent extends CBitrixComponent
 		if ($request->get("duplicate") === "Y")
 		{
 			$errorDuplicate = true;
-			$this->arResult['ERROR_MESSAGE'][] = $errorDuplicate;
+			$this->arResult['ERROR_MESSAGE'][0] = $errorDuplicate;
 		}
 
 		if ($request->get("emptyInstruction") === "Y")
 		{
 			$errorEmptyInstruction = true;
-			$this->arResult['ERROR_MESSAGE'][] = $errorEmptyInstruction;
+			$this->arResult['ERROR_MESSAGE'][1] = $errorEmptyInstruction;
 		}
 
 		if ($request->get("emptyBlocks") === "Y")
 		{
 			$errorEmptyBlocks = true;
-			$this->arResult['ERROR_MESSAGE'][] = $errorEmptyBlocks;
+			$this->arResult['ERROR_MESSAGE'][2] = $errorEmptyBlocks;
 		}
 
 
