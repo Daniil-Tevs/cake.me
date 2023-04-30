@@ -7,6 +7,9 @@ use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Fields\StringField,
 	Bitrix\Main\ORM\Fields\Validators\LengthValidator;
 use Bitrix\Main\ORM\Fields\Relations\ManyToMany;
+use Bitrix\Main\ORM\Fields\Relations\OneToMany;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Query\Join;
 
 Loc::loadMessages(__FILE__);
 
@@ -36,11 +39,24 @@ class TagTable extends DataManager
 					'title' => Loc::getMessage('TAG_ENTITY_NAME_FIELD')
 				]
 			),
+			new IntegerField(
+				'CATEGORY_ID',
+				[
+					'required' => true,
+				]
+			),
 
 			(new ManyToMany(
 				'RECIPES',
 				RecipeTable::class)
 			)->configureTableName('up_cake_recipe_tag'),
+
+
+			'CATEGORY' => (new Reference(
+				'CATEGORY',
+				CategoryTable::class,
+				Join::on('this.CATEGORY_ID','ref.ID')
+			)),
 		];
 	}
 
