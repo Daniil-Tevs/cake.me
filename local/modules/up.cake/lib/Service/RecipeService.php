@@ -2,13 +2,16 @@
 
 namespace Up\Cake\Service;
 
+use Bitrix\Main\DB\MysqlCommonConnection;
+use Bitrix\Main\ORM\Query\Query;
 use CFile;
 use UP\Cake\Model\RecipeImageTable;
 use UP\Cake\Model\RecipeIngredientTable;
+use UP\Cake\Model\RecipeTagTable;
 
 class RecipeService
 {
-	public static function get(int $offset = 0, int $limit = 0, string $title = null, $filter = null)
+	public static function get(int $offset = 0, int $limit = 0, string $title = null, array $filter = null)
 	{
 		$recipes = \UP\Cake\Model\RecipeTable::query()->setSelect(
 			[
@@ -21,16 +24,41 @@ class RecipeService
 				'USER',
 			]
 		);
+
 		if ($title)
 		{
 			$title = mySqlHelper()->forSql('%' . $title . '%');
 			$recipes->whereLike('NAME', $title);
 		}
-		if ($filter)
+
+		if (!empty($filter))
 		{
-			$filter = mySqlHelper()->convertToDbInteger($filter);
-			$recipes->whereIn('TAGS.ID', $filter);
+			$filter = array_map(fn($tag) => (int)mySqlHelper()->forSql($tag),$filter);
+			$query = 'SELECT t1.RECIPE_ID FROM up_cake_recipe_tag t1 ';
+			$conditional = ' WHERE ';
+			$i=1;
+			foreach ($filter as $tag)
+			{
+				if($i>1)
+				{
+					$query .= " INNER JOIN up_cake_recipe_tag t{$i} ";
+					$conditional .= sprintf(' t%d.RECIPE_ID = t%d.RECIPE_ID AND ',$i-1,$i);
+				}
+
+				$conditional .= "t{$i}.TAG_ID = $tag";
+				$conditional .= ($tag !== $filter[count($filter)-1])?" AND ":'';
+				$i++;
+			}
+			$recipeIds = db() -> query($query . $conditional);
+
+			$recipeIds = array_map(fn($tag)=>(int)$tag['RECIPE_ID'],$recipeIds->fetchAll());
+			if(empty($recipeIds))
+			{
+				return [];
+			}
+			$recipes->whereIn('ID', $recipeIds);
 		}
+
 		return $recipes->setOffset($offset)->setLimit($limit)->fetchAll();
 	}
 
