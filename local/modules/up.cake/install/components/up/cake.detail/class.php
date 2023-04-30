@@ -34,15 +34,16 @@ class CakeDetailComponent extends CBitrixComponent
 	{
 		global $USER;
 
-		$userId = $this->arResult['RECIPE'][0]->getUserId();
+		$userId = (int)$this->arResult['RECIPE'][0]->getUserId();
 
-		if ((int)$USER->GetID() === (int)$userId)
+		if ((int)$USER->GetID() === $userId)
 		{
 			$this->arResult['USER_AUTHOR'] = true;
 		}
 
 		$this->arResult['GENDER'] = '';
-		$user = CUser::GetByID($USER->GetID())->Fetch();
+
+		$user = CUser::GetByID($userId)->Fetch();
 
 		if ($user['PERSONAL_PHOTO'] === null)
 		{
