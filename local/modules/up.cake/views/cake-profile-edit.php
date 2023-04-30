@@ -21,8 +21,8 @@ $APPLICATION->IncludeComponent("bitrix:main.profile","flat", [
 	"SET_TITLE" => "Y",
 	"AJAX_MODE" => "N",
 	"USER_PROPERTY" => Array(),
-	"SEND_INFO" => "Y",
-	"CHECK_RIGHTS" => "Y",
+	"SEND_INFO" => "N",
+	"CHECK_RIGHTS" => "N",
 	"AJAX_OPTION_JUMP" => "N",
 	"AJAX_OPTION_STYLE" => "Y",
 	"AJAX_OPTION_HISTORY" => "N"
