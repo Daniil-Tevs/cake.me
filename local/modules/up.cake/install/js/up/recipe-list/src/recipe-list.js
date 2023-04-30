@@ -6,6 +6,8 @@ export class RecipeList
 	COUNT_RECIPE_IN_ROW = 3;
 	LENGTH_DESCRIPTION = 200;
 	END_PAGE = false
+	title = '';
+	filters = [];
 
 	constructor(options = {})
 	{
@@ -24,6 +26,12 @@ export class RecipeList
 		}
 
 		this.type = options.type;
+		this.filters['tags'] = [];
+		this.title = window.location.search.replace('?','').split('&').reduce(function(p,e){
+					var a = e.split('=');
+					p[ decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+					return p;
+				}, {})['search-string'];
 
 		this.rootNode = document.getElementById(this.rootNodeId);
 
@@ -40,7 +48,7 @@ export class RecipeList
 	{
 		this.loadList(step)
 			.then((data) => {
-				if(data[0].length !== this.recipeList.length)
+				if(data[0].length !== this.recipeList.length || data[0].length === 0)
 				{
 					this.recipeList = data[0];
 					this.imageList = data[1];
@@ -55,11 +63,14 @@ export class RecipeList
 
 	loadList(step = 1)
 	{
+		console.log(this.filters['tags']);
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:cake.recipe.getList',{
 					data: {
 						step: step,
 						userId: this.userId ?? null,
+						title: this.title ?? null,
+						filters: this.filters['tags'],
 					}
 				})
 				.then((response) => {
@@ -75,7 +86,6 @@ export class RecipeList
 	render()
 	{
 		this.rootNode.innerHTML = '';
-		console.log(this.imageList)
 		let index = 1;
 		let recipeContainerNode = Tag.render`<div class="columns"></div>`;
 		this.recipeList.forEach(recipeData => {
@@ -89,6 +99,52 @@ export class RecipeList
 			index++;
 		});
 		this.rootNode.appendChild(recipeContainerNode);
+	}
+
+	changeFilters(type,id = 0)
+	{
+		id = Number(id);
+		if(!Type.isInteger(id))
+		{
+			throw new Error('RecipeList: id checkbox should be integer');
+		}
+		if(!Type.isStringFilled(type))
+		{
+			throw new Error('RecipeList: type should be string');
+		}
+
+		if(id !== 0)
+		{
+			console.log(id,type,this.filters[type]);
+
+			if(this.filters['tags'].indexOf(this.filters[type]) >= 0)
+			{
+				this.filters['tags'].splice(this.filters['tags'].indexOf(this.filters[type]),1);
+			}
+			this.filters['tags'].push(id);
+			this.filters[type] = id;
+		}
+		else
+		{
+			this.filters['tags'].splice(this.filters['tags'].indexOf(this.filters[type]),1);
+			delete this.filters[type];
+		}
+		this.END_PAGE = false;
+		this.recipeList = [];
+		this.reload(1)
+	};
+
+	changeTitle(title)
+	{
+		console.log(title);
+		if(!Type.isStringFilled(title) && title.trim() !== '')
+		{
+			throw new Error('RecipeList: title should be string');
+		}
+		this.title = title.trim();
+		this.END_PAGE = false;
+		this.recipeList = [];
+		this.reload(1)
 	}
 
 	setName(name)

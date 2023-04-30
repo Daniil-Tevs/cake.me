@@ -9,7 +9,7 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 {
 	protected const COUNT_RECIPE_ON_PAGE = 4;
 
-	public function getListAction(int $step = 1, int $userId = null): array
+	public function getListAction(int $step = 1, int $userId = null,string $title = '', array $filters = []): array
 	{
 		if($userId !== null)
 		{
@@ -21,11 +21,13 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 		}
 		else
 		{
+			$recipes = RecipeService::get(0,$step * self::COUNT_RECIPE_ON_PAGE,$title,$filters);
+
 			$recipeList = array_map(function($recipe) {
 				return array_map(function($data) {
 					return \CUtil::JSEscape($data);
 				}, $recipe);
-			},RecipeService::get(0,$step * self::COUNT_RECIPE_ON_PAGE));
+			},$recipes);
 		}
 
 		$imageList = [];

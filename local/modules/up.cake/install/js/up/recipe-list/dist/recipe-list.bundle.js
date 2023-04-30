@@ -36,6 +36,8 @@ this.BX.Up = this.BX.Up || {};
 	    babelHelpers.defineProperty(this, "COUNT_RECIPE_IN_ROW", 3);
 	    babelHelpers.defineProperty(this, "LENGTH_DESCRIPTION", 200);
 	    babelHelpers.defineProperty(this, "END_PAGE", false);
+	    babelHelpers.defineProperty(this, "title", '');
+	    babelHelpers.defineProperty(this, "filters", []);
 	    if (main_core.Type.isStringFilled(options.rootNodeId)) {
 	      this.rootNodeId = options.rootNodeId;
 	    } else {
@@ -45,6 +47,12 @@ this.BX.Up = this.BX.Up || {};
 	      this.userId = options.userId;
 	    }
 	    this.type = options.type;
+	    this.filters['tags'] = [];
+	    this.title = window.location.search.replace('?', '').split('&').reduce(function (p, e) {
+	      var a = e.split('=');
+	      p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+	      return p;
+	    }, {})['search-string'];
 	    this.rootNode = document.getElementById(this.rootNodeId);
 	    if (!this.rootNode) {
 	      throw new Error("RecipeList: element with id\"".concat(this.rootNodeId, "\" not found"));
@@ -59,7 +67,7 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 	      this.loadList(step).then(function (data) {
-	        if (data[0].length !== _this.recipeList.length) {
+	        if (data[0].length !== _this.recipeList.length || data[0].length === 0) {
 	          _this.recipeList = data[0];
 	          _this.imageList = data[1];
 	          _this.render();
@@ -73,12 +81,15 @@ this.BX.Up = this.BX.Up || {};
 	    value: function loadList() {
 	      var _this2 = this;
 	      var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+	      console.log(this.filters['tags']);
 	      return new Promise(function (resolve, reject) {
-	        var _this2$userId;
+	        var _this2$userId, _this2$title;
 	        BX.ajax.runAction('up:cake.recipe.getList', {
 	          data: {
 	            step: step,
-	            userId: (_this2$userId = _this2.userId) !== null && _this2$userId !== void 0 ? _this2$userId : null
+	            userId: (_this2$userId = _this2.userId) !== null && _this2$userId !== void 0 ? _this2$userId : null,
+	            title: (_this2$title = _this2.title) !== null && _this2$title !== void 0 ? _this2$title : null,
+	            filters: _this2.filters['tags']
 	          }
 	        }).then(function (response) {
 	          var request = [response.data.recipeList, response.data.imageList];
@@ -93,7 +104,6 @@ this.BX.Up = this.BX.Up || {};
 	    value: function render() {
 	      var _this3 = this;
 	      this.rootNode.innerHTML = '';
-	      console.log(this.imageList);
 	      var index = 1;
 	      var recipeContainerNode = main_core.Tag.render(_templateObject$1 || (_templateObject$1 = babelHelpers.taggedTemplateLiteral(["<div class=\"columns\"></div>"])));
 	      this.recipeList.forEach(function (recipeData) {
@@ -106,6 +116,44 @@ this.BX.Up = this.BX.Up || {};
 	        index++;
 	      });
 	      this.rootNode.appendChild(recipeContainerNode);
+	    }
+	  }, {
+	    key: "changeFilters",
+	    value: function changeFilters(type) {
+	      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+	      id = Number(id);
+	      if (!main_core.Type.isInteger(id)) {
+	        throw new Error('RecipeList: id checkbox should be integer');
+	      }
+	      if (!main_core.Type.isStringFilled(type)) {
+	        throw new Error('RecipeList: type should be string');
+	      }
+	      if (id !== 0) {
+	        console.log(id, type, this.filters[type]);
+	        if (this.filters['tags'].indexOf(this.filters[type]) >= 0) {
+	          this.filters['tags'].splice(this.filters['tags'].indexOf(this.filters[type]), 1);
+	        }
+	        this.filters['tags'].push(id);
+	        this.filters[type] = id;
+	      } else {
+	        this.filters['tags'].splice(this.filters['tags'].indexOf(this.filters[type]), 1);
+	        delete this.filters[type];
+	      }
+	      this.END_PAGE = false;
+	      this.recipeList = [];
+	      this.reload(1);
+	    }
+	  }, {
+	    key: "changeTitle",
+	    value: function changeTitle(title) {
+	      console.log(title);
+	      if (!main_core.Type.isStringFilled(title) && title.trim() !== '') {
+	        throw new Error('RecipeList: title should be string');
+	      }
+	      this.title = title.trim();
+	      this.END_PAGE = false;
+	      this.recipeList = [];
+	      this.reload(1);
 	    }
 	  }, {
 	    key: "setName",
