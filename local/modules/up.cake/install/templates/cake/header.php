@@ -127,11 +127,11 @@ $APPLICATION->ShowPanel(); ?>
 							</a>
 						<?php else: ?>
 						<a href="/auth/" class="dropdown-item">
-							Log in
+							войти
 						</a>
 						<hr class="dropdown-divider">
 						<a href="/register/" class="dropdown-item">
-							Sign up
+							регистрация
 						</a>
 						<?php endif; ?>
 					</div>

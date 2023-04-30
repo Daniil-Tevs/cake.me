@@ -125,7 +125,7 @@ class RecipeService
 				->fetchObject();
 			if (empty($tagQuery))
 			{
-				//TODO: добавить обработку нулевых значений
+				continue;
 			}
 			$recipeTag->setRecipeId($recipeId)->setTagId($tagQuery->getId())->save();
 		}
@@ -138,9 +138,9 @@ class RecipeService
 				->whereLike('NAME', $newRecipe['RECIPE_INGREDIENT']['NAME'][$i])
 				->fetchObject();
 
-			if (empty($tagQuery))
+			if (empty($IngredientQuery))
 			{
-				//TODO: добавить обработку нулевых значений
+				continue;
 			}
 			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientQuery->getId())
 				->setCount($newRecipe['RECIPE_INGREDIENT']['VALUE'][$i])->setTypeId($newRecipe['RECIPE_INGREDIENT']['TYPE'][$i])->save();
@@ -150,7 +150,6 @@ class RecipeService
 		{
 			$instructionQuery = \UP\Cake\Model\InstructionsTable::createObject();
 
-			//TODO: добавить добавление изображений
 
 			if ($newRecipe['RECIPE_INSTRUCTION_IMAGES']['error'][$iStep] === 0)
 			{
@@ -191,7 +190,7 @@ class RecipeService
 											   ->fetchObject();
 			if (empty($tagQuery))
 			{
-				//TODO: добавить обработку нулевых значений
+				continue;
 			}
 			$recipeTag->setRecipeId($recipeId)->setTagId($tagQuery->getId())->save();
 		}
@@ -213,7 +212,7 @@ class RecipeService
 
 			if (empty($IngredientQuery))
 			{
-				//TODO: добавить обработку нулевых значений
+				continue;
 			}
 
 			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientQuery->getId())
