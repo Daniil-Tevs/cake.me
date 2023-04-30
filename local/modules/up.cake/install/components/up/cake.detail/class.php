@@ -30,13 +30,20 @@ class CakeDetailComponent extends CBitrixComponent
 		// $this->arResult['IMAGES'] = \Up\Cake\Service\ImageService::getById($this->arParams['ID']);
 	}
 
-	public function fetchUser(): void
+	protected function fetchUser(): void
 	{
 		global $USER;
 
-		$this->arResult['GENDER'] = '';
+		$userId = $this->arResult['RECIPE'][0]->getUserId();
 
+		if ((int)$USER->GetID() === (int)$userId)
+		{
+			$this->arResult['USER_AUTHOR'] = true;
+		}
+
+		$this->arResult['GENDER'] = '';
 		$user = CUser::GetByID($USER->GetID())->Fetch();
+
 		if ($user['PERSONAL_PHOTO'] === null)
 		{
 			if ($user['PERSONAL_GENDER'] === 'M')
