@@ -46,4 +46,29 @@ class UserService
 
 		return $result->isSuccess();
 	}
+
+	public static function getUserList(string $searchName, string $searchLastName): array
+	{
+		$userList = UserTable::query()
+			->setSelect(['ID', 'LOGIN', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHOTO', 'PERSONAL_NOTES']);
+		if ($searchName === '')
+		{
+			$userList = $userList->whereLike('LAST_NAME', "%{$searchLastName}%");
+		}
+
+		elseif ($searchLastName === '')
+		{
+			$userList = $userList->whereLike('NAME', "%{$searchName}%");
+		}
+
+		else
+		{
+			$userList = $userList->whereLike('NAME', "%{$searchName}%")
+				->whereLike('LAST_NAME', "%{$searchLastName}%");
+		}
+
+		$userList = $userList->setLimit(20)->fetchAll();
+
+		return $userList;
+	}
 }
