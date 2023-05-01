@@ -101,6 +101,10 @@ $APPLICATION->ShowPanel(); ?>
 								профиль
 							</a>
 							<hr class="dropdown-divider">
+							<a href="/search/users/" class="dropdown-item">
+								найти пользователя
+							</a>
+							<hr class="dropdown-divider">
 							<a href="/logout/" class="dropdown-item">
 								выйти
 							</a>
