@@ -15,8 +15,8 @@ class CakeDetailComponent extends CBitrixComponent
 		if ($request->isPost())
 		{
 			$this->updateRecipe($request);
-
 		}
+
 		$this->getMessage($request);
 
 		$this->includeComponentTemplate();

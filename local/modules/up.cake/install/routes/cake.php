@@ -30,4 +30,7 @@ return function (RoutingConfigurator $routes) {
 	$routes->get('/recipe/edit/{id}/', new PublicPageController('/local/modules/up.cake/views/cake-recipe-update.php'));
 	$routes->post('/recipe/edit/{id}/', new PublicPageController('/local/modules/up.cake/views/cake-recipe-update.php'));
 
+	//Страница пользователя
+	$routes->get('/users/{id}/', new PublicPageController('/local/modules/up.cake/views/cake-users.php'));
+	$routes->get('/search/users/', new PublicPageController('/local/modules/up.cake/views/cake-search-users.php'));
 };
