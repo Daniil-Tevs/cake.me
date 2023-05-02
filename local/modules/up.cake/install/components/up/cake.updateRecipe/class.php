@@ -15,20 +15,40 @@ class CakeDetailComponent extends CBitrixComponent
 		if ($request->isPost())
 		{
 			$this->updateRecipe($request);
-
 		}
+
+		$this->getMessage($request);
 
 		$this->includeComponentTemplate();
 	}
 
-	public function onPrepareComponentParams($arParams)
+	protected function getMessage($request)
 	{
-		$arParams['ID'] = (int)$arParams['ID'];
-		if ($arParams['ID'] <= 0)
+		$errorDuplicate = false;
+		$errorEmptyInstruction = false;
+		$errorEmptyBlocks = false;
+
+		if ($request->get("duplicate") === "Y")
 		{
-			throw new Exception('Invalid recipe ID');
+			$errorDuplicate = true;
+			$this->arResult['ERROR_MESSAGE'][0] = $errorDuplicate;
 		}
-		return $arParams;
+
+		if ($request->get("emptyInstruction") === "Y")
+		{
+			$errorEmptyInstruction = true;
+			$this->arResult['ERROR_MESSAGE'][1] = $errorEmptyInstruction;
+		}
+
+		if ($request->get("emptyBlocks") === "Y")
+		{
+			$errorEmptyBlocks = true;
+			$this->arResult['ERROR_MESSAGE'][2] = $errorEmptyBlocks;
+		}
+
+
+
+
 	}
 
 	protected function getTags(): void
@@ -82,8 +102,7 @@ class CakeDetailComponent extends CBitrixComponent
 				$_FILES['RECIPE_INSTRUCTION_IMAGES']['error'][$i] = 100;
 			}
 		}
-		// echo '<pre>';
-		// print_r($_FILES['RECIPE_IMAGES_MAIN']); die();
+
 		$updateRecipe = [
 			"RECIPE_NAME" => $request['RECIPE_NAME'],
 			"RECIPE_IMAGES_MAIN" => $_FILES['RECIPE_IMAGES_MAIN'],
@@ -98,20 +117,33 @@ class CakeDetailComponent extends CBitrixComponent
 			"RECIPE_USER" => $USER->GetID(),
 		];
 
-		if (count($updateRecipe['RECIPE_TAGS']) !== count(array_unique($updateRecipe['RECIPE_TAGS'])))
+		$errorParams = '?';
+
+		if (empty($updateRecipe['RECIPE_INGREDIENT']) || empty($updateRecipe['RECIPE_INSTRUCTION']))
 		{
-			LocalRedirect("/recipe/update/{$this->arParams['ID']}/?duplicate=Y");
+			$errorParams .= 'emptyBlocks=Y';
 		}
-		if (count($updateRecipe['RECIPE_INGREDIENT']['NAME']) !== count(array_unique($updateRecipe['RECIPE_INGREDIENT']['NAME'])))
+
+		if (count($updateRecipe['RECIPE_TAGS']) !== count(array_unique($updateRecipe['RECIPE_TAGS'])) ||
+			count($updateRecipe['RECIPE_INGREDIENT']['NAME']) !== count(array_unique($updateRecipe['RECIPE_INGREDIENT']['NAME'])))
 		{
-			LocalRedirect("/recipe/update/{$this->arParams['ID']}/?duplicate=Y");
+			$errorParams .= "&duplicate=Y";
 		}
+
+		if (!empty($updateRecipe["RECIPE_INSTRUCTION"]))
+		{
 		foreach ($updateRecipe["RECIPE_INSTRUCTION"] as $item)
-		{
-			if (trim($item) === '')
 			{
-				LocalRedirect("/recipe/update/{$this->arParams['ID']}/?errInstruction=Y");
+				if (trim($item) === '')
+				{
+					$errorParams .= '&emptyInstruction=Y';
+				}
 			}
+		}
+
+		if ($errorParams !== '?')
+		{
+			LocalRedirect("/recipe/edit/{$this->arParams['ID']}/" . $errorParams);
 		}
 
 		\Up\Cake\Service\RecipeService::updateRecipe($updateRecipe, $this->arParams['ID']);

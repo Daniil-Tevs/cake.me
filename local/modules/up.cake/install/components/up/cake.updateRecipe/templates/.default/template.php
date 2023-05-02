@@ -18,11 +18,25 @@ $types = $arResult['TYPES'];
 [$recipe, $ingredients] = $arResult['RECIPE'];
 $mainImages = $arResult['RECIPE_MAIN_IMAGES'];
 $instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
-// echo '<pre>';
-// print_r($mainImages);
-// print_r($instructionImages); die();
+
+$errors = $arResult['ERROR_MESSAGE'];
 
 Loc::loadMessages(__FILE__); ?>
+
+<?php if (!empty($errors)): ?>
+	<div class="notification is-danger is-light error-edit-recipe">
+	<?php if ($errors[0] === true): ?>
+		<p>Теги или ингредиенты не должны повторяться!</p>
+	<?php endif; ?>
+	<?php if ($errors[1] === true): ?>
+		<p>Текстовые поля шагов не должны быть пустыми!</p>
+	<?php endif; ?>
+	<?php if ($errors[2] === true): ?>
+		<p>Должен быть хотя бы один шаг или ингредиент!</p>
+
+	<?php endif; ?>
+	</div>
+	<?php endif; ?>
 
 <div class="content">
 	<form class="box" name="form_add_recipe" method="post" target="_top" action="/recipe/edit/<?=$recipe->getId()?>/" enctype="multipart/form-data">

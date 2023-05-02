@@ -101,16 +101,20 @@ $APPLICATION->ShowPanel(); ?>
 								профиль
 							</a>
 							<hr class="dropdown-divider">
+							<a href="/search/users/" class="dropdown-item">
+								найти пользователя
+							</a>
+							<hr class="dropdown-divider">
 							<a href="/logout/" class="dropdown-item">
 								выйти
 							</a>
 						<?php else: ?>
 						<a href="/auth/" class="dropdown-item">
-							Log in
+							войти
 						</a>
 						<hr class="dropdown-divider">
 						<a href="/register/" class="dropdown-item">
-							Sign up
+							регистрация
 						</a>
 						<?php endif; ?>
 					</div>

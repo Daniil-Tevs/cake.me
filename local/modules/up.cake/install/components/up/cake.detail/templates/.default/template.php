@@ -23,13 +23,19 @@ $instructionImages = $arResult['RECIPE_INSTRUCTIONS_IMAGES'];
 
 $UserImage = $arResult['PERSONAL_PHOTO'];
 $UserGender = $arResult['GENDER'];
+$isAuthor = $arResult['USER_AUTHOR'];
 ?>
 
 <div class="column">
 	<div class="card detail-card">
 		<div class="card-content">
 			<div class="content is-size-6">
-				<div class="title mb-2"><?= htmlspecialcharsbx($recipe->getName()) ?> </div>
+				<div class="field is-flex detail-main-name-block">
+					<div class="title mb-2"><?= htmlspecialcharsbx($recipe->getName()) ?> </div>
+					<?php if ($isAuthor): ?>
+					<a href="/recipe/edit/<?= $recipe->getId() ?>/" class="button is-info detail-edit-href">Редактировать</a>
+					<?php endif; ?>
+				</div>
 				<hr>
 				<div class="tags are-large">
 					<?php
@@ -138,6 +144,7 @@ $UserGender = $arResult['GENDER'];
 			<?php
 			$instructionCount++;
 		endforeach; ?>
+		<hr>
 	</div>
 
 	<div class="container comment-section">

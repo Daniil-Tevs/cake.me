@@ -9,6 +9,7 @@ use Bitrix\Main\Context;
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Авторизация");
 
+global $USER;
 $AuthResult = $APPLICATION->arAuthResult;
 
 if (!$USER->IsAuthorized())
@@ -16,16 +17,13 @@ if (!$USER->IsAuthorized())
 	LocalRedirect("/");
 }
 
-$APPLICATION->IncludeComponent("bitrix:main.profile","flat", [
-	"USER_PROPERTY_NAME" => "",
-	"SET_TITLE" => "Y",
-	"AJAX_MODE" => "N",
-	"USER_PROPERTY" => Array(),
-	"SEND_INFO" => "N",
-	"CHECK_RIGHTS" => "N",
-	"AJAX_OPTION_JUMP" => "N",
-	"AJAX_OPTION_STYLE" => "Y",
-	"AJAX_OPTION_HISTORY" => "N"
+if ((int)$USER->GetID() === (int)$_REQUEST['id'])
+{
+	LocalRedirect("/profile/");
+}
+
+$APPLICATION->IncludeComponent("up:cake.users","", [
+	'ID' => (int)$_REQUEST['id'],
 ]);
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");
