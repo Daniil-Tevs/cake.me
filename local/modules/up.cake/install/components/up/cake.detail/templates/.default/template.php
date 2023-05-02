@@ -13,7 +13,9 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 }
 
 Loc::loadMessages(__FILE__);
-CJSCore::Init(array('ajax', 'redirect'));
+
+\Bitrix\Main\UI\Extension::load('up.recipe-comments');
+
 [$recipe, $ingredients] = $arResult['RECIPE'];
 $images = $arResult['IMAGES'];
 $mainImages = $arResult['RECIPE_MAIN_IMAGES'];
@@ -137,9 +139,22 @@ $UserGender = $arResult['GENDER'];
 			$instructionCount++;
 		endforeach; ?>
 	</div>
+
+	<div class="container comment-section">
+		<h2>Комментарии:</h2>
+		<hr>
+		<div id="comment-list" class="comments">Будьте первым!</div>
+		<div class="add-comment">
+			<form id = "comment-form" action="" class="comment-form">
+				<textarea id = "comment-textarea" class="textarea" placeholder="Добавить комментарий"></textarea>
+				<input type="image" class="comment-form-image"  src="/local/modules/up.cake/install/templates/cake/images/comment.png" alt="Submit Form" />
+			</form>
+		</div>
+	</div>
 </div>
 
 </div>
+
 <script>
 	let swiper = new Swiper('.swiper', {
 		spaceBetween: 5,
@@ -161,6 +176,62 @@ $UserGender = $arResult['GENDER'];
 	async function displayCategory()
 	{
 		document.location.href = '/';
+	}
+
+
+	window.stepComment = 1
+
+	BX.ready(function() {
+		window.CakeCommentList = new BX.Up.Cake.RecipeComments({
+			rootNodeId: 'comment-list',
+			recipeId: <?= htmlspecialcharsbx($recipe->getId()) ?>,
+		})
+	})
+
+
+	function throttle(callee, timeout) {
+		let timer = null
+
+		return function perform(...args) {
+			if (timer) return
+
+			timer = setTimeout(() => {
+				callee(...args)
+
+				clearTimeout(timer)
+				timer = null
+			}, timeout)
+		}
+	}
+
+	const comments = document.getElementById('comment-list');
+	async  function checkPosition() {
+		const height = comments.offsetHeight;
+		const screenHeight = comments.scrollHeight;
+		const scrolled = comments.scrollTop;
+
+		const threshold = screenHeight *0.9;
+		const position = scrolled + height
+
+		if (position >= threshold && !window.CakeCommentList.END_PAGE) {
+			window.stepComment++;
+			await window.CakeCommentList.reload(window.stepComment);
+			setTimeout(checkPosition,2000);
+		}
+	}
+
+	comments.addEventListener('scroll', throttle(checkPosition))
+
+	let form = document.getElementById('comment-form');
+	form.addEventListener('submit', addComment);
+
+	function addComment(event)
+	{
+		event.preventDefault();
+		let title = document.getElementById('comment-textarea').value;
+		document.getElementById('comment-textarea').value = '';
+		window.CakeCommentList.addComment(title);
+		comments.scrollTop = 0;
 	}
 
 </script>
