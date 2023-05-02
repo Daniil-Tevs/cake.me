@@ -25,10 +25,15 @@ class RecipeService
 			]
 		);
 
-		if ($title)
+		if ($title && strlen($title) > 3)
 		{
-			$title = mySqlHelper()->forSql('%' . $title . '%');
-			$recipes->whereLike('NAME', $title);
+			$searchTitle = '';
+			foreach (explode(' ',$title) as $word)
+			{
+				if($word === '') continue;
+				$searchTitle .= mySqlHelper()->forSql($word) . '%';
+			}
+			$recipes->whereLike('NAME', '%'.$searchTitle.'%');
 		}
 
 		if (!empty($filter))
