@@ -11,6 +11,8 @@ class CakeDetailComponent extends CBitrixComponent
 		$this->getTags();
 		$this->getTypes();
 
+		$this->getMessages($request);
+
 		if ($request->isPost())
 		{
 			$this->createRecipe($request);
@@ -18,6 +20,13 @@ class CakeDetailComponent extends CBitrixComponent
 		}
 
 		$this->includeComponentTemplate();
+	}
+	protected function getMessages($request): void
+	{
+		if ($request->get("error_create") === "Y")
+		{
+			$this->arResult['ERROR_CREATE'] = true;
+		}
 	}
 
 	protected function getTags(): void
@@ -47,6 +56,15 @@ class CakeDetailComponent extends CBitrixComponent
 			"RECIPE_USER" => $USER->GetID(),
 		];
 
+		if ($newRecipe["RECIPE_NAME"] === '' || $newRecipe["RECIPE_PORTION"] <= 0 || $newRecipe["RECIPE_TIME"] <= 0 ||
+			$newRecipe["RECIPE_CALORIES"] < 0 || empty($newRecipe["RECIPE_TAGS"]) || empty($newRecipe["RECIPE_INGREDIENT"]) ||
+			empty($newRecipe["RECIPE_INSTRUCTION"]) || empty($newRecipe["RECIPE_IMAGES_MAIN"]))
+		{
+			LocalRedirect('/recipe/create/?error_create=Y');
+		}
+
 		\Up\Cake\Service\RecipeService::addRecipe($newRecipe);
+
+		LocalRedirect('/?create_success=Y');
 	}
 }
