@@ -67,6 +67,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		<div class="card-content">
 			<div class="media">
 				<div class="media-left">
+					<a href="/users/<?= $recipe->getUser()->getId() ?>/">
 					<figure class="image is-48x48">
 						<?php if ($UserGender === 'M'): ?>
 						<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
@@ -77,8 +78,9 @@ $isAuthor = $arResult['USER_AUTHOR'];
 					<?php endif; ?>
 					</figure>
 				</div>
+				</a>
 				<div class="media-content">
-					<p class="title is-4"><a href="#"> <?= htmlspecialcharsbx(
+					<p class="title is-4"><a href="/users/<?= $recipe->getUser()->getId() ?>/"> <?= htmlspecialcharsbx(
 								$recipe->getUser()->getName() . ' ' . $recipe->getUser()->getLastName()
 							) ?> </a></p>
 				</div>
