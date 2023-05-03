@@ -488,6 +488,73 @@ input[type=number]::-webkit-outer-spin-button {
 	margin-right: 10px;
 }
 
+.comment-section{
+	margin-top: 29px;
+	background: #fff9ee;
+	border-radius: 5px;
+	box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+	color: #4a4a4a;
+	padding-bottom: 10px;
+}
+
+.comment-section h2{
+	font-size: 24px;
+	background: #c6ccffe3;
+	padding-top: 5px;
+	padding-left: 10px;
+	border-radius: 4px;
+}
+
+.comments{
+	padding-top: 10px;
+	padding-left: 10px;
+	margin-bottom: 16px;
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.comment-section hr{
+	padding-left: 10px;
+	margin: 0px;
+	background: #6f00ffa8;
+}
+
+.add-comment{
+	padding-left: 10px;
+}
+
+.comment-form{
+	width:70%;
+	display: flex;
+	flex-direction: row;
+}
+
+.comment-form .textarea{
+	min-height: 83px;
+	font-size: 15px;
+}
+
+.comment-form-image{
+	width: 38px;
+	height: 38px;
+	margin-left: 8px;
+	margin-top: 53px;
+}
+
+.comment-card{
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	margin-bottom: 15px;
+}
+
+.comment-title{
+	flex:1;
+}
+
+.comments .media {
+	width: 145px;
+}
 .error-edit-recipe {
 	margin-top: 10px;
 	text-align: center;
