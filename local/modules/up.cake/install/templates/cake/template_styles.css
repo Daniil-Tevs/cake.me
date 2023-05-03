@@ -585,7 +585,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .input-search-user {
-	width: 300px;
+	width: 450px;
 	margin-right: 10px;
 }
 
@@ -595,7 +595,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .button-user-search {
-	width: 100px;
+	width: 120px;
 }
 
 .box-user-search {

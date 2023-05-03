@@ -116,6 +116,15 @@ Loc::loadMessages(__FILE__);
 				return false;
 		}
 
+		if (searchInput.length  > 50)
+		{
+			let searchInputClass = document.querySelector('#search-input');
+			searchInputClass.classList.add('is-danger', 'is-focused');
+			error = true;
+			alert('Слишком много символов в поиске!')
+			return false;
+		}
+
 		return true;
 	};
 </script>
