@@ -82,7 +82,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 				<div class="media-content">
 					<p class="title is-4"><a href="/users/<?= $recipe->getUser()->getId() ?>/"> <?= htmlspecialcharsbx(
 								$recipe->getUser()->getName() . ' ' . $recipe->getUser()->getLastName()
-							) ?> </a></p>
+							) ?> (<?= htmlspecialcharsbx($recipe->getUser()->getLogin()) ?>)</a></p>
 				</div>
 			</div>
 		</div>
