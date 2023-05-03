@@ -394,6 +394,10 @@ a.dropdown-item {
 	margin-bottom: 20px;
 }
 
+.is-danger-image-recipe-form {
+	color: red;
+}
+
 .add-form-recipe-name {
 	margin-top: 20px;
 	justify-content: center;

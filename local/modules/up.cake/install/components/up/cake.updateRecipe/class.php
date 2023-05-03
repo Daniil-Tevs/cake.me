@@ -46,9 +46,10 @@ class CakeDetailComponent extends CBitrixComponent
 			$this->arResult['ERROR_MESSAGE'][2] = $errorEmptyBlocks;
 		}
 
-
-
-
+	if ($request->get("error_create") === "Y")
+	{
+		$this->arResult['ERROR_MESSAGE'][3] = true;
+	}
 	}
 
 	protected function getTags(): void
@@ -146,8 +147,15 @@ class CakeDetailComponent extends CBitrixComponent
 			LocalRedirect("/recipe/edit/{$this->arParams['ID']}/" . $errorParams);
 		}
 
+		if ($updateRecipe["RECIPE_NAME"] === '' || $updateRecipe["RECIPE_PORTION"] <= 0 || $updateRecipe["RECIPE_TIME"] <= 0 ||
+			$updateRecipe["RECIPE_CALORIES"] < 0 || empty($updateRecipe["RECIPE_TAGS"]) || empty($updateRecipe["RECIPE_INGREDIENT"]) ||
+			empty($updateRecipe["RECIPE_INSTRUCTION"]) || empty($updateRecipe["RECIPE_IMAGES_MAIN"]))
+		{
+			LocalRedirect('/recipe/create/?error_create=Y');
+		}
+
 		\Up\Cake\Service\RecipeService::updateRecipe($updateRecipe, $this->arParams['ID']);
-		LocalRedirect('/?updateSuccess=Y');
+		LocalRedirect('/?update_success=Y');
 	}
 
 	protected function fetchRecipeDetail(): void
