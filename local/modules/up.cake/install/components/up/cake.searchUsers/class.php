@@ -13,29 +13,34 @@ class CakeProfile extends CBitrixComponent
 		$request = Context::getCurrent()->getRequest();
 		$this->arResult['USER_REQUEST'] = false;
 
-		if (trim($request->get("search_name")) !== '' || trim($request->get("search_last")) !== '')
+		if (trim($request->get("search")) !== '')
 		{
-			$searchName = trim($request->get("search_name"));
-			$searchLastName = trim($request->get("search_last"));
+			$search = trim($request->get("search"));
 
-			$this->getUserList($searchName, $searchLastName);
+			$this->getUserList($search);
 		}
 
 		$this->includeComponentTemplate();
 	}
 
-	protected function getUserList(string $searchName, string $searchLastName): void
+	protected function getUserList(string $search): void
 	{
 		global $USER;
-		$userList = \Up\Cake\Service\UserService::getUserList($searchName, $searchLastName);
+
+		// $search = str_replace(' ', '', $search);
+
+		$userList = \Up\Cake\Service\UserService::getUserList($search);
 
 		// убираем из выборки текущего авторизованного пользователя
-		foreach ($userList as $i => $user)
+		if (!empty($userList))
 		{
-			if ((int)$user['ID'] === (int)$USER->GetID())
+			foreach ($userList as $i => $user)
 			{
-				unset($userList[$i]);
-				break;
+				if ((int)$user['ID'] === (int)$USER->GetID())
+				{
+					unset($userList[$i]);
+					break;
+				}
 			}
 		}
 

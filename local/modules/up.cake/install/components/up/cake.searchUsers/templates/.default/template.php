@@ -41,17 +41,14 @@ Loc::loadMessages(__FILE__);
 
 	<div class="box box-search-user">
 		<h1>Поиск пользователей</h1>
-		<p>(Введите имя и фамилию пользователя)</p>
+		<p>(Введите имя, фамилию или логин пользователя)</p>
 		<hr>
 		<div class="field">
-			<form action="/search/users/" method="get">
+			<form name="form_user_search" action="/search/users/" method="get">
 			<div class="field has-addons">
 
 				<div class="control">
-					<input class="input input-search-user" type="text" name="search_name" placeholder="поиск по имени">
-				</div>
-				<div class="control">
-					<input class="input input-search-user" type="text" name="search_last" placeholder="поиск по фамилии">
+					<input class="input input-search-user" type="text" id="search-input" name="search" placeholder="поиск по имени">
 				</div>
 				<button type="submit" class="button button-user-search is-link">найти</button>
 			</div>
@@ -89,7 +86,7 @@ Loc::loadMessages(__FILE__);
 				<div class="content">
 					<p>
 						<a href="/users/<?= (int)$user['ID'] ?>/">
-						<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?></strong>
+						<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?> (<?= htmlspecialcharsbx($user['LOGIN']) ?>)</strong>
 						</a>
 						<br>
 						<?= htmlspecialcharsbx($user['PERSONAL_NOTES']) ?>
@@ -103,3 +100,22 @@ Loc::loadMessages(__FILE__);
 
 	</div>
 </div>
+
+<script>
+	document.forms.form_user_search.onsubmit = function() {
+		let searchInput = this.search.value.trim();
+		let error = false;
+		searchInput = searchInput.replaceAll(' ', '');
+
+		if (searchInput.length  < 3)
+		{
+			let searchInputClass = document.querySelector('#search-input');
+			searchInputClass.classList.add('is-danger', 'is-focused');
+			error = true;
+				alert('Укажите более точную информацию о пользователе!')
+				return false;
+		}
+
+		return true;
+	};
+</script>
