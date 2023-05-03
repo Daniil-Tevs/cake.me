@@ -63,6 +63,11 @@ class CakeDetailComponent extends CBitrixComponent
 			LocalRedirect('/recipe/create/?error_create=Y');
 		}
 
+		foreach ($newRecipe['RECIPE_INGREDIENT']['NAME'] as $i => $name)
+		{
+			$newRecipe['RECIPE_INGREDIENT']['NAME'][$i] = mb_strtolower(trim($name));
+		}
+
 		\Up\Cake\Service\RecipeService::addRecipe($newRecipe);
 
 		LocalRedirect('/?create_success=Y');

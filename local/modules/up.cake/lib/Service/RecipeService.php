@@ -143,6 +143,7 @@ class RecipeService
 
 		for ($i = 0, $iMax = count($newRecipe['RECIPE_INGREDIENT']['NAME']); $i < $iMax; $i++)
 		{
+			$IngredientId = null;
 			$recipeIngredient = \UP\Cake\Model\RecipeIngredientTable::createObject();
 			$IngredientQuery = \UP\Cake\Model\IngredientTable::query()->setSelect(['ID'])
 				->whereLike('NAME', $newRecipe['RECIPE_INGREDIENT']['NAME'][$i])
@@ -150,9 +151,15 @@ class RecipeService
 
 			if (empty($IngredientQuery))
 			{
-				continue;
+				$newRecipeIngredient = \UP\Cake\Model\IngredientTable::createObject();
+				$newRecipeIngredient->setName($newRecipe['RECIPE_INGREDIENT']['NAME'][$i])->save();
+				$IngredientId = $newRecipeIngredient->getId();
 			}
-			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientQuery->getId())
+			else
+			{
+				$IngredientId = $IngredientQuery->getId();
+			}
+			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientId)
 				->setCount($newRecipe['RECIPE_INGREDIENT']['VALUE'][$i])->setTypeId($newRecipe['RECIPE_INGREDIENT']['TYPE'][$i])->save();
 		}
 
@@ -216,16 +223,23 @@ class RecipeService
 
 		for ($i = 0, $iMax = count($updateRecipe['RECIPE_INGREDIENT']['NAME']); $i < $iMax; $i++)
 		{
+			$IngredientId = null;
 			$recipeIngredient = \UP\Cake\Model\RecipeIngredientTable::createObject();
 			$IngredientQuery = \UP\Cake\Model\IngredientTable::query()->setSelect(['ID'])
 				->whereLike('NAME', $updateRecipe['RECIPE_INGREDIENT']['NAME'][$i])->fetchObject();
 
 			if (empty($IngredientQuery))
 			{
-				continue;
+				$newRecipeIngredient = \UP\Cake\Model\IngredientTable::createObject();
+				$newRecipeIngredient->setName($updateRecipe['RECIPE_INGREDIENT']['NAME'][$i])->save();
+				$IngredientId = $newRecipeIngredient->getId();
+			}
+			else
+			{
+				$IngredientId = $IngredientQuery->getId();
 			}
 
-			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientQuery->getId())
+			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientId)
 				->setCount($updateRecipe['RECIPE_INGREDIENT']['VALUE'][$i])
 				->setTypeId($updateRecipe['RECIPE_INGREDIENT']['TYPE'][$i])->save();
 		}
