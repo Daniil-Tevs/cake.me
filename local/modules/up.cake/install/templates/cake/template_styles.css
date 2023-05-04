@@ -597,3 +597,29 @@ input[type=number]::-webkit-outer-spin-button {
 .box-user-search {
 	width: 80%;
 }
+
+.like{
+	background: transparent;
+	width: 54px;
+	height: 54px;
+	background-size: 54px 54px;
+	background-image: url(/local/templates/cake/images/like.png);
+	border: none;
+	align-self: flex-start;
+}
+
+.like-active{
+	background-image: url(/local/templates/cake/images/like-is-active.png);
+}
+
+.content-header {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+}
+
+.content-header .title{
+	max-width: 329px;
+}
