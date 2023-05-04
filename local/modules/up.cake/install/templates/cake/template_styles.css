@@ -302,10 +302,14 @@ a.dropdown-item {
 	color: black;
 }
 
-/*---------------------------------*/
+/* detail recipe */
 
 .detail-card {
 	margin-top: 30px;
+}
+
+.media-content-detail-page {
+	margin-top: 18px;
 }
 
 .detail-main-name-block {
@@ -566,7 +570,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .users-subs-icon {
 	align-items: center;
-
 }
 .users-subs-text {
 	text-decoration: none;
@@ -576,6 +579,16 @@ input[type=number]::-webkit-outer-spin-button {
 .users-subs-text-check {
 	margin-left: 5px;
 	margin-right: 20px;
+}
+
+.image-profile-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#image-box {
+	width: auto;
 }
 
 /* search-user */

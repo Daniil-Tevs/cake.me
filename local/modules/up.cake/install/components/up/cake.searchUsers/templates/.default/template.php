@@ -69,17 +69,21 @@ Loc::loadMessages(__FILE__);
 		<article class="media">
 			<div class="media-left">
 				<a href="/users/<?= (int)$user['ID'] ?>/">
-				<figure class="image is-64x64">
+
 					<?php if ((int)$user['PERSONAL_PHOTO'] === 0): ?>
 						<?php if ($user['PERSONAL_GENDER'] === 'M'): ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						<figure class="image is-96x96">
+							<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						</figure>
 						<?php elseif ($user['PERSONAL_GENDER'] === 'F'): ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						<figure class="image is-96x96">
+							<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						</figure>
 						<?php endif; ?>
 					<?php else: ?>
-						<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 400, 400, "border=1", ""); ?>
+						<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 96, 96, "border=1", ""); ?>
 					<?php endif; ?>
-				</figure>
+
 				</a>
 			</div>
 			<div class="media-content">

@@ -68,18 +68,22 @@ $isAuthor = $arResult['USER_AUTHOR'];
 			<div class="media">
 				<div class="media-left">
 					<a href="/users/<?= $recipe->getUser()->getId() ?>/">
-					<figure class="image is-48x48">
+
 						<?php if ($UserGender === 'M'): ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						<figure class="image is-64x64">
+							<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						</figure>
 						<?php elseif ($UserGender === 'F'): ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						<figure class="image is-64x64">
+							<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						</figure>
 						<?php else: ?>
-						<?= CFile::ShowImage($UserImage, 100, 100, "border=0", "", true); ?>
+							<?= CFile::ShowImage($UserImage, 64, 64, "border=0", "", false); ?>
 					<?php endif; ?>
-					</figure>
+
 				</div>
 				</a>
-				<div class="media-content">
+				<div class="media-content media-content-detail-page">
 					<p class="title is-4"><a href="/users/<?= $recipe->getUser()->getId() ?>/"> <?= htmlspecialcharsbx(
 								$recipe->getUser()->getName() . ' ' . $recipe->getUser()->getLastName()
 							) ?> (<?= htmlspecialcharsbx($recipe->getUser()->getLogin()) ?>)</a></p>
