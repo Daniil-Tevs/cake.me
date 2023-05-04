@@ -23,19 +23,27 @@ class CakeListComponent extends CBitrixComponent
 		$errorAuthUser = false;
 
 		$request = Context::getCurrent()->getRequest();
-
 		if ($request->get("success_auth") === "Y")
 		{
 			$successAuth = true;
 		}
 
 		$this->arResult['SUCCESS_AUTH_MESSAGE'] = $successAuth;
-
 		if ($request->get("authUser") === "N")
 		{
 			$errorAuthUser = true;
 		}
 
 		$this->arResult['ERROR_AUTH_USER'] = $errorAuthUser;
+
+		if ($request->get("create_success") === "Y")
+		{
+			$this->arResult['CREATE_SUCCESS'] = true;
+		}
+
+		if ($request->get("update_success") === "Y")
+		{
+			$this->arResult['UPDATE_SUCCESS'] = true;
+		}
 	}
 }

@@ -133,7 +133,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<div class="field">
 				<label class="label"><?=GetMessage("USER_NOTES")?></label>
 				<div class="control">
-					<textarea class="textarea" cols="30" rows="5" name="PERSONAL_NOTES"><?=$arResult["arUser"]["PERSONAL_NOTES"]?></textarea>
+					<textarea class="textarea" cols="30" rows="5" id="personal-notes" name="PERSONAL_NOTES"><?=$arResult["arUser"]["PERSONAL_NOTES"]?></textarea>
 				</div>
 			</div>
 
@@ -142,12 +142,29 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<p><input class="button is-link" type="submit" name="save" value="<?=(($arResult["ID"]>0) ? GetMessage("MAIN_SAVE") : GetMessage("MAIN_ADD"))?>">&nbsp;&nbsp;
 				<input class="button is-link is-light" type="reset" value="<?=GetMessage('MAIN_RESET');?>"></p>
 	</form>
-
-
-
-
-
-
-
 </div>
 </div>
+
+	<script>
+		document.forms.form1.onsubmit = function() {
+			let personalNotes = this.PERSONAL_NOTES.value.trim();
+			let error = false;
+
+			if (personalNotes.length >= 1000)
+			{
+				let personalNotesClass = document.querySelector('#personal-notes');
+				personalNotesClass.classList.add('is-danger', 'is-focused');
+				error = true;
+					alert('В поле "дополнительные заметки" слишком много текста!')
+					return false;
+			}
+
+			// if (error)
+			// {
+			// 	alert('Заполните обязательные поля рецепта!')
+			// 	return false;
+			// }
+			return true;
+		};
+	</script>
+

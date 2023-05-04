@@ -2,6 +2,7 @@
 
 namespace Up\Cake\Service;
 
+use Bitrix\Main\ORM\Query\Query;
 use UP\Cake\Model\UserSubsTable;
 use UP\Cake\Model\UserTable;
 
@@ -47,27 +48,40 @@ class UserService
 		return $result->isSuccess();
 	}
 
-	public static function getUserList(string $searchName, string $searchLastName): array
+	public static function getUserList(string $search): array
 	{
 		$userList = UserTable::query()
-			->setSelect(['ID', 'LOGIN', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHOTO', 'PERSONAL_NOTES']);
-		if ($searchName === '')
+			->setSelect(['ID', 'LOGIN', 'NAME', 'LOGIN', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHOTO', 'PERSONAL_NOTES']);
+
+		if ($search[0] === '@')
 		{
-			$userList = $userList->whereLike('LAST_NAME', "%{$searchLastName}%");
+			$search = substr($search, 1);
+			$search = mySqlHelper()->forSql($search);
+
+			$userList = $userList->whereLike('LOGIN', $search)->setLimit(10)->fetchAll();
+
+			return $userList;
 		}
 
-		elseif ($searchLastName === '')
+		$searchArray = explode(' ', $search);
+		$queryArray = [];
+		foreach ($searchArray as $item)
 		{
-			$userList = $userList->whereLike('NAME', "%{$searchName}%");
+			if ($item === '')
+			{
+				continue;
+			}
+			$item = mySqlHelper()->forSql($item);
+			$queryArray[] = ['NAME', 'like', "%$item%"];
+			$queryArray[] = ['LAST_NAME', 'like', "%$item%"];
+			$queryArray[] = ['LOGIN', 'like', "%$item%"];
 		}
+		// echo '<pre>';
+		// print_r($queryArray); die();
 
-		else
-		{
-			$userList = $userList->whereLike('NAME', "%{$searchName}%")
-				->whereLike('LAST_NAME', "%{$searchLastName}%");
-		}
+		$userList = $userList->where(Query::filter()->logic('or')->where($queryArray));
 
-		$userList = $userList->setLimit(20)->fetchAll();
+		$userList = $userList->setLimit(21)->fetchAll();
 
 		return $userList;
 	}

@@ -66,7 +66,7 @@ Loc::loadMessages(__FILE__);
 		<div class="column">
 			<div class="card-content">
 				<div class="profile-header">
-					<p class="title is-3 mb-0"><?= htmlspecialcharsbx("{$user['NAME']} {$user['LAST_NAME']}")?></p>
+					<p class="title is-3 mb-0"><?= htmlspecialcharsbx("{$user['NAME']} {$user['LAST_NAME']}")?> (<?= $user['LOGIN'] ?>)</p>
 
 					<?php if ($subCheck === true): ?>
 					<div class="field is-flex">

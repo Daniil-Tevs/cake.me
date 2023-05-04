@@ -41,17 +41,14 @@ Loc::loadMessages(__FILE__);
 
 	<div class="box box-search-user">
 		<h1>Поиск пользователей</h1>
-		<p>(Введите имя и фамилию пользователя)</p>
+		<p>(Введите имя, фамилию или логин пользователя. Если хотите найти пользователя только по нику, перед поиском укажите @)</p>
 		<hr>
 		<div class="field">
-			<form action="/search/users/" method="get">
+			<form name="form_user_search" action="/search/users/" method="get">
 			<div class="field has-addons">
 
 				<div class="control">
-					<input class="input input-search-user" type="text" name="search_name" placeholder="поиск по имени">
-				</div>
-				<div class="control">
-					<input class="input input-search-user" type="text" name="search_last" placeholder="поиск по фамилии">
+					<input class="input input-search-user" type="text" id="search-input" name="search" placeholder="поиск по имени">
 				</div>
 				<button type="submit" class="button button-user-search is-link">найти</button>
 			</div>
@@ -72,24 +69,28 @@ Loc::loadMessages(__FILE__);
 		<article class="media">
 			<div class="media-left">
 				<a href="/users/<?= (int)$user['ID'] ?>/">
-				<figure class="image is-64x64">
+
 					<?php if ((int)$user['PERSONAL_PHOTO'] === 0): ?>
 						<?php if ($user['PERSONAL_GENDER'] === 'M'): ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						<figure class="image is-96x96">
+							<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						</figure>
 						<?php elseif ($user['PERSONAL_GENDER'] === 'F'): ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						<figure class="image is-96x96">
+							<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						</figure>
 						<?php endif; ?>
 					<?php else: ?>
-						<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 400, 400, "border=1", ""); ?>
+						<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 96, 96, "border=1", ""); ?>
 					<?php endif; ?>
-				</figure>
+
 				</a>
 			</div>
 			<div class="media-content">
 				<div class="content">
 					<p>
 						<a href="/users/<?= (int)$user['ID'] ?>/">
-						<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?></strong>
+						<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?> (<?= htmlspecialcharsbx($user['LOGIN']) ?>)</strong>
 						</a>
 						<br>
 						<?= htmlspecialcharsbx($user['PERSONAL_NOTES']) ?>
@@ -103,3 +104,31 @@ Loc::loadMessages(__FILE__);
 
 	</div>
 </div>
+
+<script>
+	document.forms.form_user_search.onsubmit = function() {
+		let searchInput = this.search.value.trim();
+		let error = false;
+		searchInput = searchInput.replaceAll(' ', '');
+
+		if (searchInput.length  < 3)
+		{
+			let searchInputClass = document.querySelector('#search-input');
+			searchInputClass.classList.add('is-danger', 'is-focused');
+			error = true;
+				alert('Укажите более точную информацию о пользователе!')
+				return false;
+		}
+
+		if (searchInput.length  > 50)
+		{
+			let searchInputClass = document.querySelector('#search-input');
+			searchInputClass.classList.add('is-danger', 'is-focused');
+			error = true;
+			alert('Слишком много символов в поиске!')
+			return false;
+		}
+
+		return true;
+	};
+</script>

@@ -18,14 +18,26 @@ Loc::loadMessages(__FILE__);
 ?>
 
 <?php if ($arResult["ERROR_AUTH_USER"] === true): ?>
-	<div class="notification is-danger is-light auth-success-message">
+	<div class="notification is-danger is-light error-edit-recipe">
 		<p>Чтобы добавить рецепт, вы должны авторизоваться!</p>
 	</div>
 <?php endif; ?>
 
 <?php if ($arResult["SUCCESS_AUTH_MESSAGE"] === true): ?>
-	<div class="notification is-primary is-light auth-success-message">
+	<div class="notification is-primary is-light error-edit-recipe">
 		<p>Авторизация успешна!</p>
+	</div>
+<?php endif; ?>
+
+<?php if ($arResult["CREATE_SUCCESS"] === true): ?>
+	<div class="notification is-primary is-light error-edit-recipe">
+		<p>Рецепт создан!</p>
+	</div>
+<?php endif; ?>
+
+<?php if ($arResult["UPDATE_SUCCESS"] === true): ?>
+	<div class="notification is-primary is-light error-edit-recipe">
+		<p>Рецепт обновлен!</p>
 	</div>
 <?php endif; ?>
 

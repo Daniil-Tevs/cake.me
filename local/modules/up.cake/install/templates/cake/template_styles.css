@@ -302,10 +302,14 @@ a.dropdown-item {
 	color: black;
 }
 
-/*---------------------------------*/
+/* detail recipe */
 
 .detail-card {
 	margin-top: 30px;
+}
+
+.media-content-detail-page {
+	margin-top: 18px;
 }
 
 .detail-main-name-block {
@@ -392,6 +396,10 @@ a.dropdown-item {
 .create-page-main-label {
 	text-align: center;
 	margin-bottom: 20px;
+}
+
+.is-danger-image-recipe-form {
+	color: red;
 }
 
 .add-form-recipe-name {
@@ -562,7 +570,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .users-subs-icon {
 	align-items: center;
-
 }
 .users-subs-text {
 	text-decoration: none;
@@ -574,6 +581,16 @@ input[type=number]::-webkit-outer-spin-button {
 	margin-right: 20px;
 }
 
+.image-profile-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#image-box {
+	width: auto;
+}
+
 /* search-user */
 
 .box-search-user {
@@ -581,7 +598,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .input-search-user {
-	width: 300px;
+	width: 450px;
 	margin-right: 10px;
 }
 
@@ -591,7 +608,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .button-user-search {
-	width: 100px;
+	width: 120px;
 }
 
 .box-user-search {

@@ -46,9 +46,10 @@ class CakeDetailComponent extends CBitrixComponent
 			$this->arResult['ERROR_MESSAGE'][2] = $errorEmptyBlocks;
 		}
 
-
-
-
+	if ($request->get("error_update") === "Y")
+	{
+		$this->arResult['ERROR_MESSAGE'][3] = true;
+	}
 	}
 
 	protected function getTags(): void
@@ -104,9 +105,9 @@ class CakeDetailComponent extends CBitrixComponent
 		}
 
 		$updateRecipe = [
-			"RECIPE_NAME" => $request['RECIPE_NAME'],
+			"RECIPE_NAME" => trim($request['RECIPE_NAME']),
 			"RECIPE_IMAGES_MAIN" => $_FILES['RECIPE_IMAGES_MAIN'],
-			"RECIPE_DESC" => $request['RECIPE_DESC'],
+			"RECIPE_DESC" => trim($request['RECIPE_DESC']),
 			"RECIPE_PORTION" => (int)$request['RECIPE_PORTION'],
 			"RECIPE_TIME" => (int)$request['RECIPE_TIME'],
 			"RECIPE_CALORIES" => (int)$request['RECIPE_CALORIES'],
@@ -116,6 +117,11 @@ class CakeDetailComponent extends CBitrixComponent
 			"RECIPE_INSTRUCTION_IMAGES" => $_FILES['RECIPE_INSTRUCTION_IMAGES'],
 			"RECIPE_USER" => $USER->GetID(),
 		];
+
+		foreach ($updateRecipe['RECIPE_INGREDIENT']['NAME'] as $i => $name)
+		{
+			$updateRecipe['RECIPE_INGREDIENT']['NAME'][$i] = mb_strtolower(trim($name));
+		}
 
 		$errorParams = '?';
 
@@ -146,8 +152,15 @@ class CakeDetailComponent extends CBitrixComponent
 			LocalRedirect("/recipe/edit/{$this->arParams['ID']}/" . $errorParams);
 		}
 
+		if ($updateRecipe["RECIPE_NAME"] === '' || $updateRecipe["RECIPE_PORTION"] <= 0 || $updateRecipe["RECIPE_TIME"] <= 0 ||
+			$updateRecipe["RECIPE_CALORIES"] < 0 || empty($updateRecipe["RECIPE_TAGS"]) || empty($updateRecipe["RECIPE_INGREDIENT"]) ||
+			empty($updateRecipe["RECIPE_INSTRUCTION"]) || empty($updateRecipe["RECIPE_IMAGES_MAIN"]))
+		{
+			LocalRedirect("/recipe/edit/{$this->arParams['ID']}/?error_update=Y");
+		}
+
 		\Up\Cake\Service\RecipeService::updateRecipe($updateRecipe, $this->arParams['ID']);
-		LocalRedirect('/?updateSuccess=Y');
+		LocalRedirect('/?update_success=Y');
 	}
 
 	protected function fetchRecipeDetail(): void

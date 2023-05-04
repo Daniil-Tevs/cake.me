@@ -23,23 +23,23 @@ Loc::loadMessages(__FILE__);
 
 <div class="container mt-6">
 	<div class="columns profile">
-		<div class="column profile-img is-two-fifths">
-				<figure class="image card-image is-1by1">
+		<div id="image-box" class="column profile-img is-two-fifths image-profile-box">
+
 					<?php if ($arResult['DEFAULT_IMAGE'] === true): ?>
 					<?php if ($user['PERSONAL_GENDER']==='M'): ?>
-					<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" height="500" width="500" alt="/">
 					<?php else: ?>
-					<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
 					<?php endif; ?>
 					<?php endif; ?>
-					<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 1000, 1000, "border=0", "", true); ?>
+					<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 500, 500, "border=0", "", true); ?>
 
-				</figure>
+
 		</div>
 		<div class="column">
 			<div class="card-content">
 				<div class="profile-header">
-					<p class="title is-3 mb-0"><?= htmlspecialcharsbx("{$user['NAME']} {$user['LAST_NAME']}")?></p>
+					<p class="title is-3 mb-0"><?= htmlspecialcharsbx("{$user['NAME']} {$user['LAST_NAME']}")?> (<?= $user['LOGIN'] ?>)</p>
 					<a href="/profile/edit/">
 						<figure class="image is-32x32 is-pulled-right">
 							<img src="/local/modules/up.cake/install/templates/cake/images/profile-edit-logo.png" >
