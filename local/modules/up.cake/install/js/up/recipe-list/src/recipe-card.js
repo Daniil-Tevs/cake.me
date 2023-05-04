@@ -1,34 +1,41 @@
-import { Type, Tag } from 'main.core';
+import { Tag } from 'main.core';
 
-export class RecipeCard{
+export class RecipeCard
+{
 	cardNode;
-	constructor(recipeData,image,type)
+
+	constructor(recipeData, image, type)
 	{
 		this.recipeId = Number(recipeData.ID);
-		if(type === 'profile')
+		if (type === 'profile')
 		{
-			this.cardNode = this.profileCard(recipeData,image);
+			this.cardNode = this.profileCard(recipeData, image);
 		}
-		else{
-			this.cardNode = this.simpleCard(recipeData,image);
+		else
+		{
+			this.cardNode = this.simpleCard(recipeData, image);
 		}
 	}
 
-	simpleCard(recipeData,image)
+	simpleCard(recipeData, image)
 	{
 		return Tag.render`
 				<div class="column mt-5">
 					<div class="card card-list" id="${recipeData.ID}">
 						<div class="card-image">
 							<figure class="image">
-								<img src='${image??""}' alt="Placeholder image">
+								<img src='${image ?? ''}' alt="Placeholder image">
 							</figure>
 						</div>
 						<div class="card-content">
 							<div class="content">
-								<a class="title mb-2" href="/detail/${recipeData.ID}/">${recipeData.NAME} </a>
+								<div class="content-header">
+									<a class="title mb-2" href="/detail/${recipeData.ID}/">${recipeData.NAME} </a>
+									<button class="like ${recipeData.USER_REACTION?'like-active':''}" id="like-btn-${recipeData.ID}" value="${recipeData.ID}" onclick="window.CakeRecipeList.reaction.changeLike(this.value)"></button>
+								</div>
+								
 								<hr>
-								<p>${recipeData.DESCRIPTION.substring(0,this.LENGTH_DESCRIPTION)}...</p>
+								<p>${recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION)}...</p>
 							</div>
 						</div>
 						<footer class="card-footer">
@@ -39,7 +46,8 @@ export class RecipeCard{
 					</div>
 				</div>`;
 	}
-	profileCard(recipeData,image)
+
+	profileCard(recipeData, image)
 	{
 		console.log(recipeData);
 		return Tag.render`
@@ -47,14 +55,14 @@ export class RecipeCard{
 					<div class="card card-list" id="${recipeData.ID}">
 						<div class="card-image">
 							<figure class="image">
-								<img src='${image??""}' alt="Placeholder image">
+								<img src='${image ?? ''}' alt="Placeholder image">
 							</figure>
 						</div>
 						<div class="card-content">
 							<div class="content">
 								<a class="title mb-2" href="/detail/${recipeData.ID}/">${recipeData.NAME} </a>
 								<hr>
-								<p>${recipeData.DESCRIPTION.substring(0,this.LENGTH_DESCRIPTION)}...</p>
+								<p>${recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION)}...</p>
 							</div>
 						</div>
 						<footer class="card-footer">
