@@ -10,3 +10,4 @@ DROP TABLE IF EXISTS up_cake_type;
 DROP TABLE IF EXISTS up_cake_instructions;
 DROP TABLE IF EXISTS up_cake_recipe;
 DROP TABLE IF EXISTS up_cake_comment;
+DROP TABLE IF EXISTS up_cake_reaction;
