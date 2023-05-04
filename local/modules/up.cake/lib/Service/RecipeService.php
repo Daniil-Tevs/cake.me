@@ -25,7 +25,7 @@ class RecipeService
 			]
 		);
 
-		if ($title && strlen($title) > 3)
+		if ($title && strlen(trim($title)) > 3)
 		{
 			$searchTitle = '';
 			foreach (explode(' ',$title) as $word)
