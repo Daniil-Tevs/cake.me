@@ -37,7 +37,8 @@ Loc::loadMessages(__FILE__);
 	BX.ready(function() {
 		window.CakeRecipeList = new BX.Up.Cake.RecipeList({
 			rootNodeId: 'recipe-list',
-		})
+			userId: <?=$arParams['USER']?>,
+		});
 	})
 
 	function throttle(callee, timeout) {
