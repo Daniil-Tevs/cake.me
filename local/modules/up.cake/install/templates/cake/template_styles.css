@@ -27,6 +27,25 @@ body {
 	margin-top: 1px;
 }
 
+.recent-recipe-icon {
+	cursor: pointer;
+	position: relative;
+}
+.box-recent-recipe-header {
+
+	position: absolute;
+	right: 190px;
+	top: 65px;
+}
+
+.recent-recipe-none {
+	display: none;
+}
+
+.recent-recipe-active {
+	display: block;
+}
+
 .filters{
 	display: flex;
 	justify-content: center;

@@ -43,6 +43,19 @@ $APPLICATION->ShowPanel(); ?>
 		</div>
 
 		<div class="header-two">
+			<!--  recent!-->
+			<?php if ($USER->IsAuthorized()): ?>
+			<a onclick="displayRecentRecipes()">
+			<div class="logo-add recent-recipe-icon">
+				<figure class="image is-32x32">
+					<img class="profile-image" aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/recentRecipe.png">
+				</figure>
+			</div>
+			</a>
+			<div class="box box-recent-recipe-header recent-recipe-none " id="recent-recipe">
+				<?php $APPLICATION->IncludeComponent('up:cake.recentRecipes', '', []); ?>
+			</div>
+			<? endif; ?>
 			<!--  adding!-->
 			<a href="/recipe/create/" class="logo-add">
 				<figure class="image is-32x32">
@@ -125,6 +138,26 @@ $APPLICATION->ShowPanel(); ?>
 	</div>
 </div>
 
+
+<script>
+	function displayRecentRecipes()
+	{
+		let recentRecipe = document.getElementById('recent-recipe');
+		if (recentRecipe.classList.contains('recent-recipe-none'))
+		{
+			recentRecipe.classList.remove('recent-recipe-none');
+			recentRecipe.classList.add('recent-recipe-active');
+			return;
+		}
+
+		if (recentRecipe.classList.contains('recent-recipe-active'))
+		{
+			recentRecipe.classList.remove('recent-recipe-active');
+			recentRecipe.classList.add('recent-recipe-none');
+		}
+	}
+
+</script>
 
 <section class="section">
 	<div class="container">
