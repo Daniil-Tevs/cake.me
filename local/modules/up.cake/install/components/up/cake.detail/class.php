@@ -6,6 +6,7 @@ class CakeDetailComponent extends CBitrixComponent
 	{
 		$this->fetchRecipeDetail();
 		$this->fetchUser();
+		$this->addSession();
 		$this->includeComponentTemplate();
 	}
 
@@ -28,6 +29,54 @@ class CakeDetailComponent extends CBitrixComponent
 		$this->arResult['RECIPE_INSTRUCTIONS_IMAGES'] = $imagesArray ['RECIPE_INSTRUCTIONS_IMAGES'];
 		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById($this->arParams['ID']);
 		// $this->arResult['IMAGES'] = \Up\Cake\Service\ImageService::getById($this->arParams['ID']);
+	}
+
+	protected function addSession(): void
+	{
+		global $USER;
+
+		$session = \Bitrix\Main\Application::getInstance()->getSession();
+
+		if (!empty($session->get('recent_recipe')))
+		{
+			if ($session->get('recent_recipe')[0]['userId'] !== $USER->GetID())
+			{
+				$session->remove('recent_recipe');
+			}
+		}
+
+		if ($session->get('recent_recipe') === null)
+		{
+			$session->set('recent_recipe', [['userId' => $USER->GetID(), 'recipeId' => $this->arParams['ID']]]);
+
+		}
+		elseif (!empty($session->get('recent_recipe')))
+		{
+			$recentRecipe = $session->get('recent_recipe');
+
+			$isRepeatRecipe = false;
+			foreach ($recentRecipe as $item)
+			{
+				if ($item['recipeId'] === $this->arParams['ID'])
+				{
+					$isRepeatRecipe = true;
+					break;
+				}
+			}
+
+			if ($isRepeatRecipe === false)
+			{
+				array_unshift($recentRecipe, ['userId' => $USER->GetID(), 'recipeId' => $this->arParams['ID']]);
+
+				if (count($recentRecipe) === 4)
+				{
+					array_pop($recentRecipe);
+				}
+
+				$session->remove('recent_recipe');
+				$session->set('recent_recipe', $recentRecipe);
+			}
+		}
 	}
 
 	protected function fetchUser(): void
