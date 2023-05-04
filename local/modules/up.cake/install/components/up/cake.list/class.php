@@ -10,6 +10,13 @@ class CakeListComponent extends CBitrixComponent
 		$this->includeComponentTemplate();
 	}
 
+	public function onPrepareComponentParams($arParams)
+	{
+		global $USER;
+		$arParams['USER'] = $USER->getId() ?? 0;
+		return $arParams;
+	}
+
 	protected function getMessage(): void
 	{
 		$successAuth = false;

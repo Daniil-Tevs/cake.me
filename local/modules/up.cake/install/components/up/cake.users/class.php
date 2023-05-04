@@ -37,6 +37,13 @@ class CakeProfile extends CBitrixComponent
 		$this->includeComponentTemplate();
 	}
 
+	public function onPrepareComponentParams($arParams)
+	{
+		global $USER;
+		$arParams['USER'] = $USER->getId() ?? 0;
+		return $arParams;
+	}
+
 	protected function getMessages($request): void
 	{
 		$this->arResult['SUBS_ERROR'] = false;
