@@ -47,4 +47,17 @@ class ImageService
 		return ['RECIPE_MAIN_IMAGES' => $mainImages, 'RECIPE_INSTRUCTIONS_IMAGES' => $instructionImages];
 	}
 
+	public static function getRecentImages(array $recipeIds): array
+	{
+		// $mainImages = RecipeImageTable::query()->setSelect(['RECIPE_ID', 'IMAGE_ID', 'NUMBER'])->whereIn('RECIPE_ID', $recipeIds)
+		// 							  ->where('IS_MAIN', 1)->addOrder('RECIPE_ID', 'ASC')->addOrder('NUMBER', 'ASC')->fetchAll();
+		$Images = [];
+		foreach ($recipeIds as $id)
+		{
+			$Images[$id] = RecipeImageTable::query()->setSelect(['RECIPE_ID', 'IMAGE_ID', 'NUMBER'])->where('RECIPE_ID', $id)->where('IS_MAIN', 1)->addOrder('NUMBER', 'ASC')->fetch();
+		}
+
+		return $Images;
+	}
+
 }

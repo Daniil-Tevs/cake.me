@@ -87,6 +87,19 @@ class RecipeService
 		)->whereIn('USER_ID',$id)->setOffset($offset)->setLimit($limit)->fetchAll();
 	}
 
+	public static function getRecentRecipes(array $recipeIds): array
+	{
+		// TODO: сделать выборку одним запросом
+		$recipes = [];
+		foreach ($recipeIds as $id)
+		{
+			$recipes[] = RecipeTable::query()->setSelect(['ID', 'NAME'])->where('ID', $id)->fetch();
+		}
+		// $recipes = RecipeTable::query()->setSelect(['ID', 'NAME'])->whereIn('ID', $recipeIds)->fetchAll();
+
+		return $recipes;
+	}
+
 	public static function getRecipeDetailById(int $id)
 	{
 		$recipe = \UP\Cake\Model\RecipeTable::query()->setSelect(
