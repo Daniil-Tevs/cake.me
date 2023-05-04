@@ -41,7 +41,7 @@ Loc::loadMessages(__FILE__);
 
 	<div class="box box-search-user">
 		<h1>Поиск пользователей</h1>
-		<p>(Введите имя, фамилию или логин пользователя)</p>
+		<p>(Введите имя, фамилию или логин пользователя. Если хотите найти пользователя только по нику, перед поиском укажите @)</p>
 		<hr>
 		<div class="field">
 			<form name="form_user_search" action="/search/users/" method="get">
