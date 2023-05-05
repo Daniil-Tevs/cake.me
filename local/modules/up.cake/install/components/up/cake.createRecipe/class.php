@@ -68,8 +68,8 @@ class CakeDetailComponent extends CBitrixComponent
 			$newRecipe['RECIPE_INGREDIENT']['NAME'][$i] = mb_strtolower(trim($name));
 		}
 
-		\Up\Cake\Service\RecipeService::addRecipe($newRecipe);
+		$recipeId = \Up\Cake\Service\RecipeService::addRecipe($newRecipe);
 
-		LocalRedirect('/?create_success=Y');
+		LocalRedirect("/detail/{$recipeId}/?create_success=Y");
 	}
 }

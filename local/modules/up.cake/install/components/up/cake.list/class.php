@@ -35,15 +35,5 @@ class CakeListComponent extends CBitrixComponent
 		}
 
 		$this->arResult['ERROR_AUTH_USER'] = $errorAuthUser;
-
-		if ($request->get("create_success") === "Y")
-		{
-			$this->arResult['CREATE_SUCCESS'] = true;
-		}
-
-		if ($request->get("update_success") === "Y")
-		{
-			$this->arResult['UPDATE_SUCCESS'] = true;
-		}
 	}
 }

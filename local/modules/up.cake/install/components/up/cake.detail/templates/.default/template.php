@@ -27,6 +27,18 @@ $isAuthor = $arResult['USER_AUTHOR'];
 ?>
 <style> .search-container,.filter {display: none;}</style>
 
+<?php if ($arResult["CREATE_SUCCESS"] === true): ?>
+	<div class="notification is-primary is-light error-edit-recipe">
+		<p>Рецепт создан!</p>
+	</div>
+<?php endif; ?>
+
+<?php if ($arResult["UPDATE_SUCCESS"] === true): ?>
+	<div class="notification is-primary is-light error-edit-recipe">
+		<p>Рецепт обновлен!</p>
+	</div>
+<?php endif; ?>
+
 <div class="column">
 	<div class="card detail-card">
 		<div class="card-content">

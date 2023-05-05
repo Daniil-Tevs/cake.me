@@ -160,7 +160,7 @@ class CakeDetailComponent extends CBitrixComponent
 		}
 
 		\Up\Cake\Service\RecipeService::updateRecipe($updateRecipe, $this->arParams['ID']);
-		LocalRedirect('/?update_success=Y');
+		LocalRedirect("/detail/{$this->arParams['ID']}/?update_success=Y");
 	}
 
 	protected function fetchRecipeDetail(): void

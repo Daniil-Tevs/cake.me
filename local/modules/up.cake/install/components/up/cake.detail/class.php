@@ -1,5 +1,7 @@
 <?php
 
+use Bitrix\Main\Context;
+
 class CakeDetailComponent extends CBitrixComponent
 {
 	public function executeComponent()
@@ -7,6 +9,7 @@ class CakeDetailComponent extends CBitrixComponent
 		$this->fetchRecipeDetail();
 		$this->fetchUser();
 		$this->addSession();
+		$this->getMessage();
 		$this->includeComponentTemplate();
 	}
 
@@ -18,6 +21,22 @@ class CakeDetailComponent extends CBitrixComponent
 			throw new Exception('Invalid recipe ID');
 		}
 		return $arParams;
+	}
+
+	protected function getMessage(): void
+	{
+
+		$request = Context::getCurrent()->getRequest();
+
+		if ($request->get("create_success") === "Y")
+		{
+			$this->arResult['CREATE_SUCCESS'] = true;
+		}
+
+		if ($request->get("update_success") === "Y")
+		{
+			$this->arResult['UPDATE_SUCCESS'] = true;
+		}
 	}
 
 	protected function fetchRecipeDetail(): void

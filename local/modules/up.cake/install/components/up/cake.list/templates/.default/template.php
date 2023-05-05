@@ -84,7 +84,7 @@ Loc::loadMessages(__FILE__);
 		}
 	}
 
-	window.addEventListener('scroll', throttle(checkPosition,2000))
+	window.addEventListener('scroll', throttle(checkPosition))
 
 	document.categoryActive = false;
 	async function displayCategory()
