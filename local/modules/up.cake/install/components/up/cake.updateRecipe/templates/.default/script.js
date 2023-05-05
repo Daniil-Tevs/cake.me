@@ -1,7 +1,7 @@
 BX.ready(
 	function()
 	{
-		document.forms.form_add_recipe.onsubmit = function() {
+		document.forms.form_update_recipe.onsubmit = function() {
 			let recipeName = this.RECIPE_NAME.value.trim();
 			let recipePortion = this.RECIPE_PORTION.value.trim();
 			let recipeTime = this.RECIPE_TIME.value.trim();
@@ -79,30 +79,31 @@ BX.ready(
 				}
 			}
 
-			let isImage = false;
-			for (let i = 0; i < recipeMainImage.length; i++)
-			{
-				if (recipeMainImage[i].value !== '')
-				{
-					isImage = true;
-					break;
-				}
-			}
-
-			if (isImage === false)
-			{
-				let recipeMainImageClass = document.querySelector('#recipe-main-image');
-				let recipeMainImageLabelClass = document.querySelector('#recipe-main-image-label');
-				recipeMainImageClass.classList.add('is-danger-image-recipe-form');
-				recipeMainImageLabelClass.classList.add('is-danger-image-recipe-form');
-
-				error = true;
-			}
+			// let isImage = false;
+			// for (let i = 0; i < recipeMainImage.length; i++)
+			// {
+			// 	if (recipeMainImage[i].value !== '')
+			// 	{
+			// 		isImage = true;
+			// 		break;
+			// 	}
+			// }
+			//
+			// console.log(isImage);
+			// if (isImage === false)
+			// {
+			// 	let recipeMainImageClass = document.querySelector('#recipe-main-image');
+			// 	let recipeMainImageLabelClass = document.querySelector('#recipe-main-image-label');
+			// 	recipeMainImageClass.classList.add('is-danger-image-recipe-form');
+			// 	recipeMainImageLabelClass.classList.add('is-danger-image-recipe-form');
+			//
+			// 	error = true;
+			// }
 
 			if (error)
 			{
 				alert('Заполните обязательные поля рецепта!')
-				document.querySelector('#recipe-form').scrollIntoView();
+				document.querySelector('#update-form').scrollIntoView();
 				return false;
 			}
 
@@ -116,9 +117,9 @@ BX.ready(
 						if ($tagValue === recipeTags[j].value)
 						{
 							let recipeTag1Class = document.querySelector('#tag-' + (j+1));
-							recipeTag1Class.classList.add('is-danger', 'is-focused');
+							recipeTag1Class.classList.add('is-danger-tag-recipe', 'is-focused');
 							let recipeTag2Class = document.querySelector('#tag-' + (i+1));
-							recipeTag2Class.classList.add('is-danger', 'is-focused');
+							recipeTag2Class.classList.add('is-danger-tag-recipe', 'is-focused');
 							error = true;
 						}
 					}
@@ -142,9 +143,9 @@ BX.ready(
 						if ($ingredientValue === recipeIngredientName[j].value)
 						{
 							let recipeIngredient1Class = document.querySelector('#recipe-ingredient-name-' + (j+1));
-							recipeIngredient1Class.classList.add('is-danger-tag-recipe', 'is-focused');
+							recipeIngredient1Class.classList.add('is-danger', 'is-focused');
 							let recipeIngredient2Class = document.querySelector('#recipe-ingredient-name-' + (i+1));
-							recipeIngredient2Class.classList.add('is-danger-tag-recipe', 'is-focused');
+							recipeIngredient2Class.classList.add('is-danger', 'is-focused');
 							error = true;
 						}
 					}
@@ -160,6 +161,7 @@ BX.ready(
 
 			return true;
 		};
-	}
-);
 
+	}
+
+);

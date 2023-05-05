@@ -45,7 +45,7 @@ Loc::loadMessages(__FILE__); ?>
 	<?php endif; ?>
 
 <div class="content">
-	<form class="box" name="form_update_recipe" method="post" target="_top" action="/recipe/edit/<?=$recipe->getId()?>/" enctype="multipart/form-data">
+	<form class="box" name="form_update_recipe" id="update-form" method="post" target="_top" action="/recipe/edit/<?=$recipe->getId()?>/" enctype="multipart/form-data">
 
 		<div class="create-page-main-label create-header">Редактирование рецепта</div>
 		<div class="block is-flex add-form-recipe-name">
@@ -66,7 +66,7 @@ Loc::loadMessages(__FILE__); ?>
 
 		<div class="field is-flex add-form-recipe-image-buttons">
 		<a class="image-button button is-primary is-light">добавить изображение</a>
-			<a class="image-delete-button button is-danger is-light">Удалить изображение</a>
+			<a class="image-delete-button button is-warning is-light">Удалить изображение</a>
 		</div>
 
 		<hr>
@@ -92,10 +92,10 @@ Loc::loadMessages(__FILE__); ?>
 			</div>
 
 			<div class="field">
-				<label class="label">Время приготовления (мин):</label>
+				<label id="recipe-time" class="label">Время приготовления (мин):</label>
 				<div class="control">
 					<input class="input add-recipe-info-block-time" id="recipe-time" name="RECIPE_TIME"
-						   value="<?= htmlspecialcharsbx($recipe->getTime()) ?>" type="number" placeholder="">
+						   value="<?= htmlspecialcharsbx($recipe->getTime()) ?>" type="number" min="1" max="1000" placeholder="">
 				</div>
 			</div>
 
@@ -115,7 +115,7 @@ Loc::loadMessages(__FILE__); ?>
 				<?php $tagCount = 1;
 				foreach ($recipe->getTags() as $item): ?>
 				<div class="select add-recipe-tags-select update-tag-delete-<?= $tagCount ?>">
-					<select name="RECIPE_TAGS[]">
+					<select id="tag-<?= $tagCount ?>" name="RECIPE_TAGS[]">
 						<?php foreach ($tags as $tag): ?>
 
 						<?php if (htmlspecialcharsbx($item->getName()) === htmlspecialcharsbx($tag->getName())): ?>
@@ -131,8 +131,8 @@ Loc::loadMessages(__FILE__); ?>
 
 			</div>
 				<div class="field">
-					<a class="tag-button button is-primary is-light">добавить тег</a>
-					<a class="tag-delete-button button is-danger is-light">Удалить тег</a>
+					<a id="tag-button" class="tag-button button is-primary is-light">добавить тег</a>
+					<a class="tag-delete-button button is-warning is-light">Удалить тег</a>
 				</div>
 			</div>
 
@@ -157,7 +157,7 @@ Loc::loadMessages(__FILE__); ?>
 							<td><input class="input" id="recipe-ingredient-name-<?= $countIngredient ?>" name="RECIPE_INGREDIENT[NAME][]"
 									   value="<?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?>" type="text"></td>
 							<td><input class="input" id="recipe-ingredient-value-<?= $countIngredient ?>" name="RECIPE_INGREDIENT[VALUE][]"
-									   value="<?= htmlspecialcharsbx($ingredient->getCount()) ?>" type="number" max="10000"></td>
+									   value="<?= htmlspecialcharsbx($ingredient->getCount()) ?>" type="number" step="0.1" min="0.1" max="10000"></td>
 							<td>
 								<div class="select add-recipe-tags-select" id="recipe-ingredient-type-<?= $countIngredient ?>">
 									<select name="RECIPE_INGREDIENT[TYPE][]">
@@ -182,7 +182,7 @@ Loc::loadMessages(__FILE__); ?>
 
 				<div class="field">
 				<a class="table-button button is-primary is-light">Добавить ингредиент</a>
-				<a class="ingredient-delete-button button is-danger is-light">Удалить ингредиент</a>
+				<a class="ingredient-delete-button button is-warning is-light">Удалить ингредиент</a>
 				</div>
 			</div>
 				<hr>
@@ -214,7 +214,7 @@ Loc::loadMessages(__FILE__); ?>
 
 				<div class="field">
 					<a class="instruction-button button is-primary is-light">Добавить шаг</a>
-					<a class="instruction-delete-button button is-danger is-light">Удалить шаг</a>
+					<a class="instruction-delete-button button is-warning is-light">Удалить шаг</a>
 				</div>
 
 
@@ -233,115 +233,6 @@ Loc::loadMessages(__FILE__); ?>
 				</div>
 	</form>
 </div>
-
-<script>
-	document.forms.form_update_recipe.onsubmit = function() {
-		let recipeName = this.RECIPE_NAME.value.trim();
-		let recipePortion = this.RECIPE_PORTION.value.trim();
-		let recipeTime = this.RECIPE_TIME.value.trim();
-		let recipeCalories = this.RECIPE_CALORIES.value.trim();
-		let recipeInstruction = document.getElementsByName('RECIPE_INSTRUCTION[]');
-		let recipeIngredientName = document.getElementsByName('RECIPE_INGREDIENT[NAME][]');
-		let recipeIngredientValue = document.getElementsByName('RECIPE_INGREDIENT[VALUE][]');
-		let recipeIngredientType = document.getElementsByName('RECIPE_INGREDIENT[TYPE][]');
-		let recipeMainImage = document.getElementsByName('RECIPE_IMAGES_MAIN[]');
-		let error = false;
-
-		Array.from(document.querySelectorAll('.is-danger')).forEach(function(el) {
-			el.classList.remove('is-danger');
-			el.classList.remove('is-focused');
-		});
-		Array.from(document.querySelectorAll('#recipe-main-image-label')).forEach(function(el) {
-			el.classList.remove('is-danger-image-recipe-form');
-		});
-		Array.from(document.querySelectorAll('#recipe-main-image')).forEach(function(el) {
-			el.classList.remove('is-danger-image-recipe-form');
-		});
-
-		if (recipeName === '')
-		{
-			let recipeNameClass = document.querySelector('#recipe-name');
-			recipeNameClass.classList.add('is-danger', 'is-focused');
-			error = true;
-		}
-
-		if (recipePortion === '')
-		{
-			let recipePortionClass = document.querySelector('#recipe-portion');
-			recipePortionClass.classList.add('is-danger', 'is-focused');
-			error = true;
-		}
-
-		if (recipeTime === '')
-		{
-			let recipeTimeClass = document.querySelector('#recipe-time');
-			recipeTimeClass.classList.add('is-danger', 'is-focused');
-
-			error = true;
-		}
-
-		for (let i = 0; i < recipeInstruction.length; i++) {
-			if (recipeInstruction[i].value.trim() === '')
-			{
-				let recipeInstructionClass = document.querySelector('#recipe-instruction-' + (i+1));
-				recipeInstructionClass.classList.add('is-danger', 'is-focused');
-				error = true;
-			}
-		}
-
-		for (let i = 0; i < recipeIngredientName.length; i++) {
-
-			if (recipeIngredientName[i].value.trim() === '')
-			{
-
-				let recipeInstructionClass = document.querySelector('#recipe-ingredient-name-' + (i+1));
-				recipeInstructionClass.classList.add('is-danger', 'is-focused');
-				error = true;
-			}
-			if (recipeIngredientValue[i].value.trim() === '')
-			{
-				let recipeInstructionClass = document.querySelector('#recipe-ingredient-value-' + (i+1));
-				recipeInstructionClass.classList.add('is-danger', 'is-focused');
-				error = true;
-			}
-			if (recipeIngredientType[i].value.trim() === '')
-			{
-				let recipeInstructionClass = document.querySelector('#recipe-ingredient-type-' + (i+1));
-				recipeInstructionClass.classList.add('is-danger', 'is-focused');
-				error = true;
-			}
-		}
-
-		// let isImage = false;
-		// for (let i = 0; i < recipeMainImage.length; i++)
-		// {
-		// 	if (recipeMainImage[i].value !== '')
-		// 	{
-		// 		isImage = true;
-		// 		break;
-		// 	}
-		// }
-		//
-		// console.log(isImage);
-		// if (isImage === false)
-		// {
-		// 	let recipeMainImageClass = document.querySelector('#recipe-main-image');
-		// 	let recipeMainImageLabelClass = document.querySelector('#recipe-main-image-label');
-		// 	recipeMainImageClass.classList.add('is-danger-image-recipe-form');
-		// 	recipeMainImageLabelClass.classList.add('is-danger-image-recipe-form');
-		//
-		// 	error = true;
-		// }
-
-		if (error)
-		{
-			alert('Заполните обязательные поля рецепта!')
-			return false;
-		}
-
-		return true;
-	};
-</script>
 
 	<script>
 		let $countMainImage = <?= $imageCount ?>;
@@ -425,7 +316,8 @@ Loc::loadMessages(__FILE__); ?>
 				<tr class="update-ingredient-delete-${$countTable}">
 							<th>${$countTable}</th>
 							<td><input class="input" id="recipe-ingredient-name-${$countTable}" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
-							<td><input class="input" id="recipe-ingredient-value-${$countTable}" name="RECIPE_INGREDIENT[VALUE][]" type="number"></td>
+							<td><input class="input" id="recipe-ingredient-value-${$countTable}" name="RECIPE_INGREDIENT[VALUE][]"
+							step="0.1" min="0.1" max="10000" type="number"></td>
 							<td>
 								<div class="select add-recipe-tags-select">
 									<select name="RECIPE_INGREDIENT[TYPE][]" id="recipe-ingredient-type-${$countTable}">
@@ -464,7 +356,7 @@ Loc::loadMessages(__FILE__); ?>
 
 			const modalTag = $(`
 				<div class="select add-recipe-tags-select update-tag-delete-${$countTags}">
-					<select name="RECIPE_TAGS[]">
+					<select id="tag-${$countTags}" name="RECIPE_TAGS[]">
 						<?php foreach ($tags as $tag): ?>
 						<option><?= $tag->getName() ?></option>
 						<?php endforeach; ?>
