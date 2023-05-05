@@ -71,7 +71,7 @@ $APPLICATION->ShowPanel(); ?>
 			<div class="dropdown is-right profile-icon filter" id="category">
 				<div class="dropdown-trigger" >
 					<figure class="image is-32x32">
-						<img class="profile-image " onclick="displayCategory()" aria-controls="dropdown-menu5" src="/local/modules/up.cake/install/templates/cake/images/categories.png">
+						<img title="Категории" class="profile-image " onclick="displayCategory()" aria-controls="dropdown-menu5" src="/local/modules/up.cake/install/templates/cake/images/categories.png">
 					</figure>
 					</div>
 				<div class="dropdown-menu profile header-category" id="dropdown-menu5" role="menu">
@@ -117,6 +117,10 @@ $APPLICATION->ShowPanel(); ?>
 						<?php if ($USER->IsAuthorized()): ?>
 							<a href="/profile/" class="dropdown-item">
 								Профиль
+							</a>
+							<hr class="dropdown-divider">
+							<a href="/profile/subs/" class="dropdown-item">
+								Подписки
 							</a>
 							<hr class="dropdown-divider">
 							<a href="/search/users/" class="dropdown-item">
