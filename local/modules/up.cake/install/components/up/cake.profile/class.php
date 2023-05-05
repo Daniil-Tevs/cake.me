@@ -1,4 +1,7 @@
 <?php
+
+use Bitrix\Main\Context;
+
 /**
  * @global CUser $USER
  */
@@ -8,7 +11,17 @@ class CakeProfile extends CBitrixComponent
 	public function executeComponent()
 	{
 		$this->fetchUser();
+		$this->getMessage();
 		$this->includeComponentTemplate();
+	}
+
+	protected function getMessage(): void
+	{
+		$request = Context::getCurrent()->getRequest();
+		if ($request->get("data_saved") === "Y")
+		{
+			$this->arResult['DATA_SAVED'] = true;
+		}
 	}
 
 	public function fetchUser(): void

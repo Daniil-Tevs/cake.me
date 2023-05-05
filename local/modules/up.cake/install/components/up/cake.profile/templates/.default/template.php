@@ -21,6 +21,12 @@ Loc::loadMessages(__FILE__);
 
 <style> .recently,.search-container,.filter {display: none;}</style>
 
+<?php if ($arResult['DATA_SAVED'] === true): ?>
+	<div class="notification is-primary is-light error-edit-recipe">
+		<p>Изменения сохранены</p>
+	</div>
+<?php endif; ?>
+
 <div class="container mt-6">
 	<div class="columns profile">
 		<div id="image-box" class="column profile-img image-profile-box">

@@ -6,6 +6,11 @@
  */
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	die();
+
+if ($arResult['DATA_SAVED'] === 'Y')
+{
+	LocalRedirect('/profile/?data_saved=Y');
+}
 ?>
 
 <style> .recently,.search-container,.filter {display: none;}</style>
@@ -17,11 +22,6 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	</div>
 	<? endif; ?>
 
-<?php if ($arResult['DATA_SAVED'] === 'Y'): ?>
-	<div class="notification is-primary is-light auth-success-message">
-		<p><?= GetMessage('PROFILE_DATA_SAVED') ?></p>
-	</div>
-<?php endif; ?>
 	<div id="bx_profile_error" style="display:none"><?ShowError("error")?></div>
 
 	<div id="bx_profile_resend"></div>
