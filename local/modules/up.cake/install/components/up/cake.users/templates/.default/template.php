@@ -50,18 +50,15 @@ Loc::loadMessages(__FILE__);
 
 <div class="container mt-6">
 	<div class="columns profile">
-		<div class="column profile-img is-two-fifths">
-				<figure class="image card-image is-1by1">
+		<div id="image-box" class="column profile-img is-two-fifths image-profile-box">
 					<?php if ($user['PERSONAL_PHOTO'] === null): ?>
 					<?php if ($user['PERSONAL_GENDER']==='M'): ?>
-					<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+					<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" height="500" width="500" alt="/">
 					<?php else: ?>
-					<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+					<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" height="500" width="500" alt="/">
 					<?php endif; ?>
 					<?php endif; ?>
-					<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 1000, 1000, "border=0", "", true); ?>
-
-				</figure>
+					<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 500, 500, "border=0", "", true); ?>
 		</div>
 		<div class="column">
 			<div class="card-content">

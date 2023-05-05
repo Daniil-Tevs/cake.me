@@ -29,7 +29,7 @@ Loc::loadMessages(__FILE__);
 					<?php if ($user['PERSONAL_GENDER']==='M'): ?>
 						<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" height="500" width="500" alt="/">
 					<?php else: ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" height="500" width="500" alt="/">
 					<?php endif; ?>
 					<?php endif; ?>
 					<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 500, 500, "border=0", "", true); ?>
