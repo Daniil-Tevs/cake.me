@@ -119,7 +119,7 @@ class RecipeService
 		return [$recipe, $ingredients];
 	}
 
-	public static function addRecipe(array $newRecipe): void
+	public static function addRecipe(array $newRecipe): int
 	{
 		$recipe = \UP\Cake\Model\RecipeTable::createObject();
 		$recipe->setName($newRecipe['RECIPE_NAME'])->setDescription($newRecipe['RECIPE_DESC'])
@@ -194,6 +194,7 @@ class RecipeService
 
 			$instructionQuery->setDescription($instruction)->setStep($iStep+1)->setRecipeId($recipeId)->save();
 		}
+		return (int)$recipeId;
 	}
 
 	public static function updateRecipe(array $updateRecipe, int $recipeId): void
