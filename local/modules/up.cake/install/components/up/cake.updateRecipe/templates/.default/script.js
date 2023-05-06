@@ -1,3 +1,16 @@
+function fileValidation(imageId) {
+	let recipeMainImage = document.getElementById(imageId);
+
+	let filePath = recipeMainImage.value;
+
+	let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+	if (!allowedExtensions.exec(filePath)) {
+		alert('Можно добавить только изображение!');
+		recipeMainImage.value = '';
+		return false;
+	}
+}
+
 BX.ready(
 	function()
 	{

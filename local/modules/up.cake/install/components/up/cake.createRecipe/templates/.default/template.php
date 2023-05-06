@@ -41,7 +41,7 @@ endif; ?>
 		<div class="block is-flex add-form-recipe-main-image">
 			<div class="field update-image-delete-1">
 				<label id="recipe-main-image-label" class="label create-page-main-label-image">Изображение 1:</label>
-				<input type="file" id="recipe-main-image" name="RECIPE_IMAGES_MAIN[]"/>
+				<input type="file" id="recipe-main-image-1" name="RECIPE_IMAGES_MAIN[]" onchange="return fileValidation('recipe-main-image-1')" />
 			</div>
 		</div>
 
@@ -196,7 +196,7 @@ endif; ?>
 		const modalImage = $(`
 			<div class="field update-image-delete-${$countMainImage}">
 				<label class="label create-page-main-label-image">Изображение ${$countMainImage}:</label>
-				<input type="file" name="RECIPE_IMAGES_MAIN[]" />
+				<input type="file" id="recipe-main-image-${$countMainImage}" name="RECIPE_IMAGES_MAIN[]" onchange="return fileValidation('recipe-main-image-${$countMainImage}')"/>
 			</div>
 	`);
 		$countMainImage++;

@@ -58,7 +58,8 @@ Loc::loadMessages(__FILE__); ?>
 				<div class="field update-image-delete-<?= $imageCount ?>">
 			<?= CFile::ShowImage($image['IMAGE_ID'], 100, 50, "border=0", "", true); ?>
 			<label id="recipe-main-image-label" class="label create-page-main-label-image">Изображение <?= $imageCount ?>:</label>
-			<input type="file" id="recipe-main-image" name="RECIPE_IMAGES_MAIN[]" />
+			<input type="file" id="recipe-main-image-<?= $imageCount ?>" name="RECIPE_IMAGES_MAIN[]"
+				   onchange="return fileValidation('recipe-main-image-<?= $imageCount ?>')"/>
 				</div>
 			<?php $imageCount++;
 			endforeach; ?>
@@ -242,7 +243,8 @@ Loc::loadMessages(__FILE__); ?>
 			const modalImage = $(`
 			<div class="field update-image-delete-${$countMainImage}">
 			<label class="label create-page-main-label-image">Изображение ${$countMainImage}:</label>
-			<input type="file" name="RECIPE_IMAGES_MAIN[]" />
+			<input type="file" id="recipe-main-image-${$countMainImage}" name="RECIPE_IMAGES_MAIN[]"
+			onchange="return fileValidation('recipe-main-image-${$countMainImage}')"/>
 			</div>
 	`);
 			$countMainImage++;

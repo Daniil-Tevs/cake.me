@@ -1,3 +1,16 @@
+function fileValidation(imageId) {
+	let recipeMainImage = document.getElementById(imageId);
+
+	let filePath = recipeMainImage.value;
+
+	let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+	if (!allowedExtensions.exec(filePath)) {
+		alert('Можно добавить только изображение!');
+		recipeMainImage.value = '';
+		return false;
+	}
+}
+
 BX.ready(
 	function()
 	{
@@ -91,7 +104,7 @@ BX.ready(
 
 			if (isImage === false)
 			{
-				let recipeMainImageClass = document.querySelector('#recipe-main-image');
+				let recipeMainImageClass = document.querySelector('#recipe-main-image-1');
 				let recipeMainImageLabelClass = document.querySelector('#recipe-main-image-label');
 				recipeMainImageClass.classList.add('is-danger-image-recipe-form');
 				recipeMainImageLabelClass.classList.add('is-danger-image-recipe-form');
