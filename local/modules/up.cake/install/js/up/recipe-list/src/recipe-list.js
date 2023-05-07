@@ -1,11 +1,10 @@
-import { Type, Tag } from 'main.core';
+import { Type } from 'main.core';
 import { RecipeCard } from './recipe-card.js';
 import { Reaction } from './recipe-reaction.js';
+import { RecipeMessage } from './recipe-message';
 
 export class RecipeList
 {
-	COUNT_RECIPE_IN_ROW = 3;
-	LENGTH_DESCRIPTION = 200;
 	title = '';
 	filters = [];
 	recipeList = [];
@@ -15,6 +14,7 @@ export class RecipeList
 	anotherUserId = null;
 	reaction = null;
 	END_PAGE = false;
+	MAX_COLOR = 3;
 
 	constructor(options = {})
 	{
@@ -109,20 +109,18 @@ export class RecipeList
 		this.rootNode.innerHTML = '';
 		let index = 1;
 
-		let recipeContainerNode = Tag.render`<div class="columns card-lists"></div>`;
-
 		this.recipeList.forEach(recipeData => {
 			recipeData['USER_REACTION'] = (this.userReactions.indexOf(Number(recipeData.ID)) !== -1)
 			const recipeNode = (new RecipeCard(recipeData, this.imageList[recipeData.ID], this.type,this.userId)).cardNode;
-			recipeContainerNode.appendChild(recipeNode);
-			if (index % this.COUNT_RECIPE_IN_ROW === 0)
-			{
-				this.rootNode.appendChild(recipeContainerNode);
-				recipeContainerNode = Tag.render`<div class="columns card-lists"></div>`;
-			}
+			this.rootNode.appendChild(recipeNode)
 			index++;
 		});
-		this.rootNode.appendChild(recipeContainerNode);
+
+		if(this.recipeList.length === 0)
+		{
+			this.END_PAGE = true;
+			this.rootNode.appendChild((new RecipeMessage(this.type)).messageNode);
+		}
 
 		if(this.userId === null || this.userId <= 0)
 		{
@@ -135,6 +133,12 @@ export class RecipeList
 			{
 				cardHeader[i].style.justifyContent = 'flex-start';
 			}
+		}
+
+		let cardContainers = this.rootNode.getElementsByClassName('card-content');
+		for (let i = 0; i < cardContainers.length; i++)
+		{
+			cardContainers[i].classList.add(`color-${1+i%this.MAX_COLOR}`);
 		}
 	}
 
