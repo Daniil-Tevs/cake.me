@@ -3,6 +3,7 @@ import { Tag } from 'main.core';
 export class RecipeCard
 {
 	cardNode;
+	LENGTH_DESCRIPTION = 110;
 
 	constructor(recipeData, image, type)
 	{
@@ -17,25 +18,36 @@ export class RecipeCard
 		}
 	}
 
+	getDescription(description = '')
+	{
+		if (description.length <= this.LENGTH_DESCRIPTION)
+		{
+			return description;
+		}
+		else
+		{
+			return description.substring(0, this.LENGTH_DESCRIPTION) + '...';
+		}
+	}
+
 	simpleCard(recipeData, image)
 	{
 		return Tag.render`
-				<div class="column mt-5">
-					<div class="card card-list" id="${recipeData.ID}">
+				<div class="card card-list" id="${recipeData.ID}">
 						<div class="card-image">
 							<figure class="image">
-								<img src='${image ?? ''}' alt="Placeholder image">
+								<img src='${image ?? ''}'>
 							</figure>
 						</div>
 						<div class="card-content">
 							<div class="content">
 								<div class="content-header">
 									<a class="title mb-2" href="/detail/${recipeData.ID}/">${recipeData.NAME} </a>
-									<button class="like ${recipeData.USER_REACTION?'like-active':''}" id="like-btn-${recipeData.ID}" value="${recipeData.ID}" onclick="window.CakeRecipeList.reaction.changeLike(this.value)"></button>
+									<button class="like ${recipeData.USER_REACTION ? 'like-active' : ''}" id="like-btn-${recipeData.ID}" value="${recipeData.ID}" onclick="window.CakeRecipeList.reaction.changeLike(this.value)"></button>
 								</div>
 								
 								<hr>
-								<p>${recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION)}...</p>
+								<p>${this.getDescription(recipeData.DESCRIPTION)}</p>
 							</div>
 						</div>
 						<footer class="card-footer">
@@ -43,26 +55,24 @@ export class RecipeCard
 							<div class="card-footer-item">🔥 ${recipeData.CALORIES} calories</div>
 							<div class="card-footer-item "><a href="/users/${recipeData.UP_CAKE_MODEL_RECIPE_USER_ID}/">👨‍🍳${recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME}</a></div>
 						</footer>
-					</div>
-				</div>`;
+					</div>`;
 	}
 
 	profileCard(recipeData, image)
 	{
-		console.log(recipeData);
 		return Tag.render`
 				<div class="column mt-5">
 					<div class="card card-list" id="${recipeData.ID}">
 						<div class="card-image">
 							<figure class="image">
-								<img src='${image ?? ''}' alt="Placeholder image">
+								<img src='${image ?? ''}'>
 							</figure>
 						</div>
 						<div class="card-content">
 							<div class="content">
 								<a class="title mb-2" href="/detail/${recipeData.ID}/">${recipeData.NAME} </a>
 								<hr>
-								<p>${recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION)}...</p>
+								<p>${this.getDescription(recipeData.DESCRIPTION)}</p>
 							</div>
 						</div>
 						<footer class="card-footer">
