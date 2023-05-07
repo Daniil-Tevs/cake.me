@@ -1,12 +1,19 @@
 function fileValidation(imageId) {
-	let recipeMainImage = document.getElementById(imageId);
+	let recipeImage = document.getElementById(imageId);
 
-	let filePath = recipeMainImage.value;
+	let filePath = recipeImage.value;
 
 	let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 	if (!allowedExtensions.exec(filePath)) {
 		alert('Можно добавить только изображение!');
-		recipeMainImage.value = '';
+		recipeImage.value = '';
+		return false;
+	}
+	let file = recipeImage.files[0];
+	if (file.size > 10485760)
+	{
+		alert('Размер файла не может превышать 10 мб!');
+		recipeImage.value = '';
 		return false;
 	}
 }

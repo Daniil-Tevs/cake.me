@@ -30,6 +30,12 @@ endif; ?>
 
 <style> .recently,.search-container,.filter {display: none;}</style>
 
+<?php if ($arResult['IMAGE_ERROR']): ?>
+	<div class="notification is-danger is-light error-edit-recipe">
+		<p>Ошибка при добавлении изображений!</p>
+	</div>
+<?php endif; ?>
+
 <div class="content">
 	<form class="box" name="form_add_recipe" method="post" id="recipe-form" target="_top" action="/recipe/create/" enctype="multipart/form-data">
 		<div class="create-page-main-label create-header">Новый рецепт</div>
@@ -152,7 +158,8 @@ endif; ?>
 					<div class="field instruct update-instruction-delete-1">
 						<div class="step-head">
 							<label class="label">Шаг 1:</label>
-							<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]"/>
+							<input type="file" id="recipe-instruction-image-1" name="RECIPE_INSTRUCTION_IMAGES[]"
+								   onchange="return fileValidation('recipe-instruction-image-1')"/>
 						</div>
 
 						<div class="field is-flex  add-recipe-instruction-textarea">
@@ -169,7 +176,7 @@ endif; ?>
 
 				<div class="field">
 					<a class="instruction-button button is-primary is-light">Добавить шаг</a>
-					<a class="instruction-delete-button button is-danger is-light">Удалить шаг</a>
+					<a class="instruction-delete-button button is-warning is-light">Удалить шаг</a>
 				</div>
 
 
@@ -225,7 +232,8 @@ endif; ?>
 				<label class="label">Шаг ${$countInstruction}:</label>
 
 					<div class="field is-flex  add-recipe-instruction-textarea">
-						<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]" />
+						<input type="file" id="recipe-instruction-image-${$countInstruction}" name="RECIPE_INSTRUCTION_IMAGES[]"
+						onchange="return fileValidation('recipe-instruction-image-${$countInstruction}')"/>
 
 						<div class="field">
 							<div class="control">

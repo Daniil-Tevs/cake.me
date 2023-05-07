@@ -27,6 +27,11 @@ class CakeDetailComponent extends CBitrixComponent
 		{
 			$this->arResult['ERROR_CREATE'] = true;
 		}
+
+		if ($request->get("image_error") === "Y")
+		{
+			$this->arResult['IMAGE_ERROR'] = true;
+		}
 	}
 
 	protected function getTags(): void
@@ -61,6 +66,31 @@ class CakeDetailComponent extends CBitrixComponent
 			empty($newRecipe["RECIPE_INSTRUCTION"]) || empty($newRecipe["RECIPE_IMAGES_MAIN"]))
 		{
 			LocalRedirect('/recipe/create/?error_create=Y');
+		}
+
+		$imageArray = array_merge($newRecipe['RECIPE_IMAGES_MAIN'], $newRecipe['RECIPE_INSTRUCTION_IMAGES']);
+		for ($i = 0, $iMax = count($imageArray['name']); $i < $iMax; $i++)
+		{
+			$arrImage = [];
+			if ($imageArray['error'][$i] === 4)
+			{
+				continue;
+			}
+
+			$arrImage = [
+				'name' => $imageArray['name'][$i],
+				'size' => $imageArray['size'][$i],
+				'tmp_name' => $imageArray['tmp_name'][$i],
+				'type' => $imageArray['type'][$i],
+				"del" => "",
+				"MODULE_ID" => ""
+			];
+
+			$res = CFile::CheckImageFile($arrImage, 10485760);
+			if ($res !== null)
+			{
+				LocalRedirect('/recipe/create/?image_error=Y');
+			}
 		}
 
 		foreach ($newRecipe['RECIPE_INGREDIENT']['NAME'] as $i => $name)
