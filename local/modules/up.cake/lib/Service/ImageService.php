@@ -36,14 +36,11 @@ class ImageService
 	public static function getImageDetail(int $recipeId): array
 	{
 		$mainImages = RecipeImageTable::query()->setSelect(['IMAGE_ID', 'NUMBER'])->where('RECIPE_ID', $recipeId)
-			->where('IS_MAIN', 1)->fetchAll();
+			->where('IS_MAIN', 1)->addOrder('NUMBER', 'ASC')->fetchAll();
 
 		$instructionImages = RecipeImageTable::query()->setSelect(['IMAGE_ID', 'NUMBER'])->where('RECIPE_ID', $recipeId)
-			->where('IS_MAIN', 0)->fetchAll();
+			->where('IS_MAIN', 0)->addOrder('NUMBER', 'ASC')->fetchAll();
 
-		// echo '<pre>';
-		// print_r($mainImages);
-		// print_r($instructionImages); die;
 		return ['RECIPE_MAIN_IMAGES' => $mainImages, 'RECIPE_INSTRUCTIONS_IMAGES' => $instructionImages];
 	}
 
