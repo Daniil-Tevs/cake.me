@@ -7,7 +7,7 @@
 use Bitrix\Main\Context;
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Авторизация");
+$APPLICATION->SetTitle("Поиск пользователей");
 
 global $USER;
 $AuthResult = $APPLICATION->arAuthResult;

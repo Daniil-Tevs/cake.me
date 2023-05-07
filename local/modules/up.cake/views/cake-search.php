@@ -4,7 +4,7 @@
  */
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Cake.Me");
+$APPLICATION->SetTitle("Поиск");
 
 $APPLICATION->IncludeComponent('up:cake.search', '', [
 	'COUNT_ELEMENTS' => 3,

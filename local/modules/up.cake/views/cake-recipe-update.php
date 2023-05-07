@@ -4,7 +4,7 @@
  */
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Create recipe");
+$APPLICATION->SetTitle("Обновить рецепт");
 
 if (!$USER->IsAuthorized())
 {

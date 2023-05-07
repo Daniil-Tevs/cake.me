@@ -5,7 +5,7 @@
  */
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Авторизация");
+$APPLICATION->SetTitle("Выход");
 
 if ($USER->IsAuthorized())
 {
