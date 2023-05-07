@@ -46,10 +46,15 @@ class CakeDetailComponent extends CBitrixComponent
 			$this->arResult['ERROR_MESSAGE'][2] = $errorEmptyBlocks;
 		}
 
-	if ($request->get("error_update") === "Y")
-	{
-		$this->arResult['ERROR_MESSAGE'][3] = true;
-	}
+		if ($request->get("error_update") === "Y")
+		{
+			$this->arResult['ERROR_MESSAGE'][3] = true;
+		}
+
+		if ($request->get("image_error") === "Y")
+		{
+			$this->arResult['IMAGE_ERROR'] = true;
+		}
 	}
 
 	protected function getTags(): void
@@ -159,6 +164,34 @@ class CakeDetailComponent extends CBitrixComponent
 			LocalRedirect("/recipe/edit/{$this->arParams['ID']}/?error_update=Y");
 		}
 
+		echo '<pre>';
+
+		$this->imageValidate($updateRecipe['RECIPE_IMAGES_MAIN']);
+		// for ($i = 0, $iMax = count($imageArray['name']); $i < $iMax; $i++)
+		// {
+		// 	$arrImage = [];
+		// 	if ($imageArray['error'][$i] === 4 || $imageArray['error'][$i] === 100)
+		// 	{
+		// 		continue;
+		// 	}
+		//
+		// 	$arrImage = [
+		// 		'name' => $imageArray['name'][$i],
+		// 		'size' => $imageArray['size'][$i],
+		// 		'tmp_name' => $imageArray['tmp_name'][$i],
+		// 		'type' => $imageArray['type'][$i],
+		// 		"del" => "",
+		// 		"MODULE_ID" => ""
+		// 	];
+		//
+		// 	$res = CFile::CheckImageFile($arrImage, 10);
+		// 	if ($res !== '')
+		// 	{
+		// 		LocalRedirect("/recipe/edit/{$this->arParams['ID']}/?image_error=Y");
+		// 	}
+		// }
+		$this->imageValidate($updateRecipe['RECIPE_INSTRUCTION_IMAGES']);
+
 		\Up\Cake\Service\RecipeService::updateRecipe($updateRecipe, $this->arParams['ID']);
 		LocalRedirect("/detail/{$this->arParams['ID']}/?update_success=Y");
 	}
@@ -170,5 +203,32 @@ class CakeDetailComponent extends CBitrixComponent
 		$this->arResult['RECIPE_MAIN_IMAGES'] = $imagesArray ['RECIPE_MAIN_IMAGES'];
 		$this->arResult['RECIPE_INSTRUCTIONS_IMAGES'] = $imagesArray ['RECIPE_INSTRUCTIONS_IMAGES'];
 		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById($this->arParams['ID']);
+	}
+
+	private function imageValidate(array $imageArray): void
+	{
+		for ($i = 0, $iMax = count($imageArray['name']); $i < $iMax; $i++)
+		{
+			$arrImage = [];
+			if ($imageArray['error'][$i] === 4 || $imageArray['error'][$i] === 100)
+			{
+				continue;
+			}
+
+			$arrImage = [
+				'name' => $imageArray['name'][$i],
+				'size' => $imageArray['size'][$i],
+				'tmp_name' => $imageArray['tmp_name'][$i],
+				'type' => $imageArray['type'][$i],
+				"del" => "",
+				"MODULE_ID" => ""
+			];
+
+			$res = CFile::CheckImageFile($arrImage, 10485760);
+			if ($res !== null)
+			{
+				LocalRedirect("/recipe/edit/{$this->arParams['ID']}/?image_error=Y");
+			}
+		}
 	}
 }

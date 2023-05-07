@@ -44,6 +44,12 @@ Loc::loadMessages(__FILE__); ?>
 	</div>
 	<?php endif; ?>
 
+<?php if ($arResult['IMAGE_ERROR']): ?>
+	<div class="notification is-danger is-light error-edit-recipe">
+		<p>Ошибка при добавлении изображений!</p>
+	</div>
+<?php endif; ?>
+
 <div class="content">
 	<form class="box" name="form_update_recipe" id="update-form" method="post" target="_top" action="/recipe/edit/<?=$recipe->getId()?>/" enctype="multipart/form-data">
 
@@ -199,7 +205,8 @@ Loc::loadMessages(__FILE__); ?>
 						<div class="step-head">
 							<label class="label">Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?>:</label>
 							<?= CFile::ShowImage($instructionImages[$instructionCount - 1]['IMAGE_ID'], 100, 100, "border=0", "", true); ?>
-							<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]" />
+							<input type="file" id="recipe-instruction-image-<?= $instructionCount ?>" name="RECIPE_INSTRUCTION_IMAGES[]"
+								   onchange="return fileValidation('recipe-instruction-image-<?= $instructionCount ?>')"/>
 						</div>
 					<div class="field is-flex  add-recipe-instruction-textarea">
 						<div class="field">
@@ -276,7 +283,8 @@ Loc::loadMessages(__FILE__); ?>
 			<div class="field instruct update-instruction-delete-${$countInstruction}">
 				<div class="step-head">
 					<label class="label">Шаг ${$countInstruction}:</label>
-					<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]"/>
+					<input type="file" id="recipe-instruction-image-${$countInstruction}" name="RECIPE_INSTRUCTION_IMAGES[]"
+					onchange="return fileValidation('recipe-instruction-image-${$countInstruction}')"/>
 				</div>
 					<div class="field is-flex  add-recipe-instruction-textarea">
 						<div class="field">
