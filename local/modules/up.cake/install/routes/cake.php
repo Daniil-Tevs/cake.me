@@ -22,6 +22,7 @@ return function (RoutingConfigurator $routes) {
 	$routes->get('/profile/', new PublicPageController('/local/modules/up.cake/views/cake-profile.php'));
 	$routes->get('/profile/edit/', new PublicPageController('/local/modules/up.cake/views/cake-profile-edit.php'));
 	$routes->post('/profile/edit/', new PublicPageController('/local/modules/up.cake/views/cake-profile-edit.php'));
+	$routes->get('/profile/subs/', new PublicPageController('/local/modules/up.cake/views/cake-profile-subs.php'));
 
 	//рецепт
 	$routes->get('/recipe/create/', new PublicPageController('/local/modules/up.cake/views/cake-recipe-create.php'));
@@ -33,4 +34,5 @@ return function (RoutingConfigurator $routes) {
 	//Страница пользователя
 	$routes->get('/users/{id}/', new PublicPageController('/local/modules/up.cake/views/cake-users.php'));
 	$routes->get('/search/users/', new PublicPageController('/local/modules/up.cake/views/cake-search-users.php'));
+
 };
