@@ -7,6 +7,7 @@ this.BX.Up = this.BX.Up || {};
 	var RecipeCard = /*#__PURE__*/function () {
 	  function RecipeCard(recipeData, image, type) {
 	    babelHelpers.classCallCheck(this, RecipeCard);
+	    babelHelpers.defineProperty(this, "LENGTH_DESCRIPTION", 110);
 	    this.recipeId = Number(recipeData.ID);
 	    if (type === 'profile') {
 	      this.cardNode = this.profileCard(recipeData, image);
@@ -15,15 +16,24 @@ this.BX.Up = this.BX.Up || {};
 	    }
 	  }
 	  babelHelpers.createClass(RecipeCard, [{
+	    key: "getDescription",
+	    value: function getDescription() {
+	      var description = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+	      if (description.length <= this.LENGTH_DESCRIPTION) {
+	        return description;
+	      } else {
+	        return description.substring(0, this.LENGTH_DESCRIPTION) + '...';
+	      }
+	    }
+	  }, {
 	    key: "simpleCard",
 	    value: function simpleCard(recipeData, image) {
-	      return main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "' alt=\"Placeholder image\">\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<div class=\"content-header\">\n\t\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t\t<button class=\"like ", "\" id=\"like-btn-", "\" value=\"", "\" onclick=\"window.CakeRecipeList.reaction.changeLike(this.value)\"></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "...</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD54 ", " min</div>\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD25 ", " calories</div>\n\t\t\t\t\t\t\t<div class=\"card-footer-item \"><a href=\"/users/", "/\">\uD83D\uDC68\u200D\uD83C\uDF73", "</a></div>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : '', recipeData.ID, recipeData.NAME, recipeData.USER_REACTION ? 'like-active' : '', recipeData.ID, recipeData.ID, recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION), recipeData.TIME, recipeData.CALORIES, recipeData.UP_CAKE_MODEL_RECIPE_USER_ID, recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME);
+	      return main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "'>\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<div class=\"content-header\">\n\t\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t\t<button class=\"like ", "\" id=\"like-btn-", "\" value=\"", "\" onclick=\"window.CakeRecipeList.reaction.changeLike(this.value)\"></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD54 ", " min</div>\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD25 ", " calories</div>\n\t\t\t\t\t\t\t<div class=\"card-footer-item \"><a href=\"/users/", "/\">\uD83D\uDC68\u200D\uD83C\uDF73", "</a></div>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : '', recipeData.ID, recipeData.NAME, recipeData.USER_REACTION ? 'like-active' : '', recipeData.ID, recipeData.ID, this.getDescription(recipeData.DESCRIPTION), recipeData.TIME, recipeData.CALORIES, recipeData.UP_CAKE_MODEL_RECIPE_USER_ID, recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME);
 	    }
 	  }, {
 	    key: "profileCard",
 	    value: function profileCard(recipeData, image) {
-	      console.log(recipeData);
-	      return main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "' alt=\"Placeholder image\">\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "...</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">Likes: ", "</div> \t\n\t\t\t\t\t\t\t<a href=\"/recipe/edit/", "/\" class=\"card-footer-item button profile-button-edit\">Edit</a>\n    \t\t\t\t\t\t<button class=\"card-footer-item button profile-button-delete\" value=\"", "\" onclick=\" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);\">Delete</button>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : '', recipeData.ID, recipeData.NAME, recipeData.DESCRIPTION.substring(0, this.LENGTH_DESCRIPTION), recipeData.REACTION, recipeData.ID, recipeData.ID);
+	      return main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "'>\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">Likes: ", "</div> \t\n\t\t\t\t\t\t\t<a href=\"/recipe/edit/", "/\" class=\"card-footer-item button profile-button-edit\">Edit</a>\n    \t\t\t\t\t\t<button class=\"card-footer-item button profile-button-delete\" value=\"", "\" onclick=\" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);\">Delete</button>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : '', recipeData.ID, recipeData.NAME, this.getDescription(recipeData.DESCRIPTION), recipeData.REACTION, recipeData.ID, recipeData.ID);
 	    }
 	  }]);
 	  return RecipeCard;
@@ -129,12 +139,34 @@ this.BX.Up = this.BX.Up || {};
 	}();
 
 	var _templateObject$1, _templateObject2$1;
+	var RecipeMessage = /*#__PURE__*/function () {
+	  function RecipeMessage(type) {
+	    babelHelpers.classCallCheck(this, RecipeMessage);
+	    if (type === 'profile') {
+	      this.messageNode = this.profileMessage();
+	    } else {
+	      this.messageNode = this.simpleMessage();
+	    }
+	  }
+	  babelHelpers.createClass(RecipeMessage, [{
+	    key: "simpleMessage",
+	    value: function simpleMessage() {
+	      return main_core.Tag.render(_templateObject$1 || (_templateObject$1 = babelHelpers.taggedTemplateLiteral(["<div class=\"not-found-block\">\n<figure class=\"image not-found\">\n<img src=\"/local/modules/up.cake/install/templates/cake/images/NotFound.png\">\n<figcaption>\u041D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E</figcaption>\n</div>\n\n</figure>"])));
+	    }
+	  }, {
+	    key: "profileMessage",
+	    value: function profileMessage() {
+	      document.getElementsByClassName('your-recipe').item(0).innerHTML = "<p>\u0423 \u0432\u0430\u0441 \u043F\u043E\u043A\u0430 \u043D\u0435\u0442 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432</p>";
+	      return main_core.Tag.render(_templateObject2$1 || (_templateObject2$1 = babelHelpers.taggedTemplateLiteral([""])));
+	    }
+	  }]);
+	  return RecipeMessage;
+	}();
+
 	var RecipeList = /*#__PURE__*/function () {
 	  function RecipeList() {
 	    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	    babelHelpers.classCallCheck(this, RecipeList);
-	    babelHelpers.defineProperty(this, "COUNT_RECIPE_IN_ROW", 3);
-	    babelHelpers.defineProperty(this, "LENGTH_DESCRIPTION", 200);
 	    babelHelpers.defineProperty(this, "title", '');
 	    babelHelpers.defineProperty(this, "filters", []);
 	    babelHelpers.defineProperty(this, "recipeList", []);
@@ -144,6 +176,7 @@ this.BX.Up = this.BX.Up || {};
 	    babelHelpers.defineProperty(this, "anotherUserId", null);
 	    babelHelpers.defineProperty(this, "reaction", null);
 	    babelHelpers.defineProperty(this, "END_PAGE", false);
+	    babelHelpers.defineProperty(this, "MAX_COLOR", 3);
 	    if (main_core.Type.isStringFilled(options.rootNodeId)) {
 	      this.rootNodeId = options.rootNodeId;
 	    } else {
@@ -220,19 +253,15 @@ this.BX.Up = this.BX.Up || {};
 	    value: function render() {
 	      var _this3 = this;
 	      this.rootNode.innerHTML = '';
-	      var index = 1;
-	      var recipeContainerNode = main_core.Tag.render(_templateObject$1 || (_templateObject$1 = babelHelpers.taggedTemplateLiteral(["<div class=\"columns card-lists\"></div>"])));
 	      this.recipeList.forEach(function (recipeData) {
 	        recipeData['USER_REACTION'] = _this3.userReactions.indexOf(Number(recipeData.ID)) !== -1;
 	        var recipeNode = new RecipeCard(recipeData, _this3.imageList[recipeData.ID], _this3.type, _this3.userId).cardNode;
-	        recipeContainerNode.appendChild(recipeNode);
-	        if (index % _this3.COUNT_RECIPE_IN_ROW === 0) {
-	          _this3.rootNode.appendChild(recipeContainerNode);
-	          recipeContainerNode = main_core.Tag.render(_templateObject2$1 || (_templateObject2$1 = babelHelpers.taggedTemplateLiteral(["<div class=\"columns card-lists\"></div>"])));
-	        }
-	        index++;
+	        _this3.rootNode.appendChild(recipeNode);
 	      });
-	      this.rootNode.appendChild(recipeContainerNode);
+	      if (this.recipeList.length === 0) {
+	        this.END_PAGE = true;
+	        this.rootNode.appendChild(new RecipeMessage(this.type).messageNode);
+	      }
 	      if (this.userId === null || this.userId <= 0) {
 	        var likes = this.rootNode.getElementsByClassName('like');
 	        while (likes.length) {
@@ -242,6 +271,10 @@ this.BX.Up = this.BX.Up || {};
 	        for (var i = 0; i < cardHeader.length; i++) {
 	          cardHeader[i].style.justifyContent = 'flex-start';
 	        }
+	      }
+	      var cardContainers = this.rootNode.getElementsByClassName('card-content');
+	      for (var _i = 0; _i < cardContainers.length; _i++) {
+	        cardContainers[_i].classList.add("color-".concat(1 + _i % this.MAX_COLOR));
 	      }
 	    }
 	  }, {
