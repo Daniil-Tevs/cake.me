@@ -85,4 +85,21 @@ class UserService
 
 		return $userList;
 	}
+
+	public static function getUserSubsList(int $userId): array
+	{
+		$subsList = UserSubsTable::query()->setSelect(['SUB_ID'])->where('USER_ID', $userId)->fetchAll();
+
+		$subsId = [];
+		foreach ($subsList as $item)
+		{
+			$subsId[] = (int)$item['SUB_ID'];
+		}
+
+		$userList = UserTable::query()
+			->setSelect(['ID', 'LOGIN', 'NAME', 'LOGIN', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHOTO', 'PERSONAL_NOTES'])
+			->whereIn('ID', $subsId)->setLimit(50)->fetchAll();
+
+		return $userList;
+	}
 }
