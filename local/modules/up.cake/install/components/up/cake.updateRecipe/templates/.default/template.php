@@ -23,6 +23,8 @@ $errors = $arResult['ERROR_MESSAGE'];
 
 Loc::loadMessages(__FILE__); ?>
 
+<style> .recently,.search-container,.filter {display: none;}</style>
+
 <?php if (!empty($errors)): ?>
 	<div class="notification is-danger is-light error-edit-recipe">
 	<?php if ($errors[0] === true): ?>
@@ -45,14 +47,12 @@ Loc::loadMessages(__FILE__); ?>
 <div class="content">
 	<form class="box" name="form_update_recipe" method="post" target="_top" action="/recipe/edit/<?=$recipe->getId()?>/" enctype="multipart/form-data">
 
-		<div class="create-page-main-label">Изменить рецепт</div>
+		<div class="create-page-main-label create-header">Редактирование рецепта</div>
 		<div class="block is-flex add-form-recipe-name">
 			<input class="input is-large add-form-recipe-name-input" id="recipe-name" name="RECIPE_NAME" type="text" value="<?= htmlspecialcharsbx($recipe->getName()) ?>" placeholder="Название рецепта">
 		</div>
 		<hr>
-		<div class="create-page-main-label">Главное изображение:</div>
 		<div class="block is-flex add-form-recipe-main-image">
-
 			<?php $imageCount = 1;
 			foreach ($mainImages as $image): ?>
 				<div class="field update-image-delete-<?= $imageCount ?>">
@@ -134,9 +134,11 @@ Loc::loadMessages(__FILE__); ?>
 					<a class="tag-button button is-primary is-light">добавить тег</a>
 					<a class="tag-delete-button button is-danger is-light">Удалить тег</a>
 				</div>
+			</div>
 
 
 				<hr>
+			<div class="field is-flex add-form-recipe-tag-block">
 				<label class="label create-page-label-tag">Ингредиенты:</label>
 				<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 					<thead>
@@ -182,22 +184,23 @@ Loc::loadMessages(__FILE__); ?>
 				<a class="table-button button is-primary is-light">Добавить ингредиент</a>
 				<a class="ingredient-delete-button button is-danger is-light">Удалить ингредиент</a>
 				</div>
+			</div>
 				<hr>
-				<label class="label create-page-label-tag">Шаги:</label>
-				<hr>
-
+			<div class="field is-flex add-form-recipe-tag-block">
+				<label class="label create-page-label-tag">Шаги приготовления блюда:</label>
 
 
 				<div class="field add-recipe-instruction">
 					<?php
 					$instructionCount = 1;
 					foreach ($recipe->getInstructions() as $instruction): ?>
-					<div class="field update-instruction-delete-<?= $instructionCount ?>">
-					<label class="label">Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?>:</label>
-						<?= CFile::ShowImage($instructionImages[$instructionCount - 1]['IMAGE_ID'], 100, 100, "border=0", "", true); ?>
-
+					<div class="field instruct update-instruction-delete-<?= $instructionCount ?>">
+						<div class="step-head">
+							<label class="label">Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?>:</label>
+							<?= CFile::ShowImage($instructionImages[$instructionCount - 1]['IMAGE_ID'], 100, 100, "border=0", "", true); ?>
+							<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]" />
+						</div>
 					<div class="field is-flex  add-recipe-instruction-textarea">
-						<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]" />
 						<div class="field">
 							<div class="control">
 								<textarea class="textarea add-recipe-textarea-input" id="recipe-instruction-<?= $instructionCount ?>" maxlength="1000" name="RECIPE_INSTRUCTION[]"><?= htmlspecialcharsbx($instruction->getDescription()) ?></textarea>
@@ -377,19 +380,20 @@ Loc::loadMessages(__FILE__); ?>
 		{
 
 			const modalInstruction = $(`
-			<div class="field update-instruction-delete-${$countInstruction}">
-				<label class="label">Шаг ${$countInstruction}:</label>
-
+			<div class="field instruct update-instruction-delete-${$countInstruction}">
+				<div class="step-head">
+					<label class="label">Шаг ${$countInstruction}:</label>
+					<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]"/>
+				</div>
 					<div class="field is-flex  add-recipe-instruction-textarea">
-						<input type="file" name="RECIPE_INSTRUCTION_IMAGES[]" />
-
 						<div class="field">
 							<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000" id="recipe-instruction-${$countInstruction}" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
+								<textarea class="textarea add-recipe-textarea-input" maxlength="1000"
+									id="recipe-instruction-${$countInstruction}" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
 							</div>
 						</div>
 					</div>
-			</div>
+				</div>
 	`);
 			$countInstruction++;
 			$('.add-recipe-instruction').append(modalInstruction);

@@ -8,6 +8,8 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 	die();
 ?>
 
+<style> .recently,.search-container,.filter {display: none;}</style>
+
 <div class="bx-auth-profile">
 	<?php if (!empty($arResult["strProfileError"])): ?>
 	<div class="notification is-danger is-light auth-success-message">
@@ -114,13 +116,14 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 			<div class="field">
 				<label class="label"><?=GetMessage("USER_PHOTO")?></label>
 				<div class="control">
-					<?=$arResult["arUser"]["PERSONAL_PHOTO_INPUT"]?>
+
 
 					<?php if ($arResult["arUser"]["PERSONAL_PHOTO"] <> ''): ?>
-						<br />
+
 						<?=$arResult["arUser"]["PERSONAL_PHOTO_HTML"]?>
 						<?php endif; ?>
 				</div>
+				<input name="PERSONAL_PHOTO" class="typefile" size="20" type="file">
 			</div>
 
 			<div class="field">

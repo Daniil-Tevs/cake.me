@@ -11,6 +11,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
  * @var CBitrixComponent $component
  */
 
+
 if ($arParams["SUCCESS_REG"] === true): ?>
 	<div class="notification is-primary is-light reg-success-message">
 		<p><?=GetMessage("REG_SUCCESS_INFO")?></p>
@@ -34,7 +35,8 @@ if($arResult['ERROR_MESSAGE'] <> ''):
 	</div>
 <?endif?>
 
-<style> .tags {display: none;}</style>
+<style> .recently,.search-container,.filter {display: none;}</style>
+
 <div class="content">
 
 	<div class="field is-grouped is-grouped-centered">

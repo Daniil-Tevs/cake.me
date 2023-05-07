@@ -41,16 +41,15 @@ elseif ($arResult["USE_EMAIL_CONFIRMATION"] === "Y"): ?>
 endif; ?>
 
 
-<style> .tags {
-		display: none;
-	}</style>
+<style> .recently,.search-container,.filter {display: none;}</style>
+
 <div class="content">
 	<form method="post" class="box box-reg" action="<?= POST_FORM_ACTION_URI ?>" name="regform" enctype="multipart/form-data">
 		<?if ($arResult["BACKURL"] <> ''): ?>
 			<input type="hidden" name="backurl" value="<?= $arResult["BACKURL"] ?>"/>
 		<?
 		endif; ?>
-		<label class="label label-reg-name is-size-2"><?= GetMessage("AUTH_REGISTER") ?></label>
+		<label class="label label-reg-name"><?= GetMessage("AUTH_REGISTER") ?></label>
 
 		<?
 		foreach ($arResult["SHOW_FIELDS"] as $FIELD): ?>

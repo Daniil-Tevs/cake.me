@@ -41,7 +41,7 @@ Loc::loadMessages(__FILE__);
 	</div>
 <?php endif; ?>
 
-<div id="recipe-list"></div>
+<div id="recipe-list" class = "card-lists"></div>
 
 <script>
 	window.step = 1
@@ -84,7 +84,7 @@ Loc::loadMessages(__FILE__);
 		}
 	}
 
-	window.addEventListener('scroll', throttle(checkPosition))
+	window.addEventListener('scroll', throttle(checkPosition,2000))
 
 	document.categoryActive = false;
 	async function displayCategory()

@@ -19,11 +19,11 @@ $user = $arResult['USER'];
 Loc::loadMessages(__FILE__);
 ?>
 
-<style> .tags {display: none;}</style>
+<style> .recently,.search-container,.filter {display: none;}</style>
 
 <div class="container mt-6">
 	<div class="columns profile">
-		<div id="image-box" class="column profile-img is-two-fifths image-profile-box">
+		<div id="image-box" class="column profile-img image-profile-box">
 
 					<?php if ($arResult['DEFAULT_IMAGE'] === true): ?>
 					<?php if ($user['PERSONAL_GENDER']==='M'): ?>
@@ -36,7 +36,7 @@ Loc::loadMessages(__FILE__);
 
 
 		</div>
-		<div class="column">
+		<div class="column is-9">
 			<div class="card-content">
 				<div class="profile-header">
 					<p class="title is-3 mb-0"><?= htmlspecialcharsbx("{$user['NAME']} {$user['LAST_NAME']}")?> (<?= $user['LOGIN'] ?>)</p>
@@ -58,13 +58,10 @@ Loc::loadMessages(__FILE__);
 			</div>
 		</div>
 	</div>
-	<div>
-		<div class="your-recipe">
-			<p>Ваши рецепты</p>
-		</div>
-		<div id="recipe-list"></div>
+	<div class="your-recipe">
+		<p>Ваши рецепты</p>
 	</div>
-
+	<div id="recipe-list" class="card-lists"></div>
 </div>
 
 
@@ -114,6 +111,6 @@ Loc::loadMessages(__FILE__);
 		}
 	}
 
-	window.addEventListener('scroll', throttle(checkPosition));
+	window.addEventListener('scroll', throttle(checkPosition,2000));
 
 </script>

@@ -22,12 +22,11 @@ Loc::loadMessages(__FILE__);
 ?>
 
 <div class="content">
-	<div>
-		<h3>Вы недавно посещали:</h3>
-		<hr>
-	</div>
+
+	<h3>Вы недавно посещали:</h3>
+
 	<?php if (empty($recipes)): ?>
-		<p>Здесь пусто. Пока что.</p>
+		<p>Здесь пока пусто</p>
 	 <?php else: ?>
 	<?php foreach ($recipes as $recipe): ?>
 	<div class="box box-user-search">

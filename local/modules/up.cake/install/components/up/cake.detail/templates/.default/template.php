@@ -25,17 +25,22 @@ $UserImage = $arResult['PERSONAL_PHOTO'];
 $UserGender = $arResult['GENDER'];
 $isAuthor = $arResult['USER_AUTHOR'];
 ?>
+<style> .search-container,.filter {display: none;}</style>
 
 <div class="column">
 	<div class="card detail-card">
 		<div class="card-content">
 			<div class="content is-size-6">
-				<div class="field is-flex detail-main-name-block">
-					<div class="title mb-2"><?= htmlspecialcharsbx($recipe->getName()) ?> </div>
-					<?php if ($isAuthor): ?>
-					<a href="/recipe/edit/<?= $recipe->getId() ?>/" class="button is-info detail-edit-href">Редактировать</a>
-					<?php endif; ?>
+				<div class="content-header">
+					<div class="field is-flex detail-main-name-block">
+						<div class="title mb-2"><?= htmlspecialcharsbx($recipe->getName()) ?> </div>
+						<?php if ($isAuthor): ?>
+							<a href="/recipe/edit/<?= $recipe->getId() ?>/" class="button is-info detail-edit-href">Редактировать</a>
+						<?php endif; ?>
+					</div>
+					<button class="like ${recipeData.USER_REACTION ? 'like-active' : ''}" id="like-btn-${recipeData.ID}" value="${recipeData.ID}" onclick="window.CakeRecipeList.reaction.changeLike(this.value)"></button>
 				</div>
+
 				<hr>
 				<div class="tags are-large">
 					<?php
@@ -45,126 +50,124 @@ $isAuthor = $arResult['USER_AUTHOR'];
 					endforeach; ?>
 				</div>
 				<p><?= htmlspecialcharsbx($recipe->getDescription()) ?></p>
-			</div>
-		</div>
+				<div class="media">
+					<div class="media-left">
+						<a href="/users/<?= $recipe->getUser()->getId() ?>/">
 
-		<div class="swiper">
-			<div class="swiper-wrapper">
-				<?php
-				for ($i = 0, $iMax = count($mainImages); $i < $iMax; $i++): ?>
-					<div class="swiper-slide">
-						<?= CFile::ShowImage($mainImages[$i]['IMAGE_ID'], 200, 200, "border=0", "", true); ?>
+							<?php if ($UserGender === 'M'): ?>
+								<figure class="image is-48x48">
+									<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/" class="'is-rounded">
+								</figure>
+							<?php elseif ($UserGender === 'F'): ?>
+								<figure class="image is-48x48">
+									<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png " alt="/" class="'is-rounded">
+								</figure>
+							<?php else: ?>
+								<?= CFile::ShowImage($UserImage, 48, 48,"border-radius=10px", "", false); ?>
+							<?php endif; ?>
 					</div>
-				<?php
-				endfor; ?>
-				<div class="swiper-pagination"></div>
+					</a>
+					<div class="media-content media-content-detail-page">
+						<p class="title is-5"><a href="/users/<?= $recipe->getUser()->getId() ?>/"> <?= htmlspecialcharsbx(
+									$recipe->getUser()->getName() . ' ' . $recipe->getUser()->getLastName()
+								) ?> (<?= htmlspecialcharsbx($recipe->getUser()->getLogin()) ?>)</a></p>
+					</div>
+				</div>
 			</div>
-
-			<div class="swiper-button-next"></div>
-			<div class="swiper-button-prev"></div>
-		</div>
-
-		<div class="card-content">
-			<div class="media">
-				<div class="media-left">
-					<a href="/users/<?= $recipe->getUser()->getId() ?>/">
-
-						<?php if ($UserGender === 'M'): ?>
-						<figure class="image is-64x64">
-							<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
-						</figure>
-						<?php elseif ($UserGender === 'F'): ?>
-						<figure class="image is-64x64">
-							<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
-						</figure>
-						<?php else: ?>
-							<?= CFile::ShowImage($UserImage, 64, 64, "border=0", "", false); ?>
-					<?php endif; ?>
-
+			<div class="swiper">
+				<div class="swiper-wrapper">
+					<?php
+					for ($i = 0, $iMax = count($mainImages); $i < $iMax; $i++): ?>
+						<div class="swiper-slide">
+							<?= CFile::ShowImage($mainImages[$i]['IMAGE_ID'], 200, 200, "border=0", "", true); ?>
+						</div>
+					<?php
+					endfor; ?>
+					<div class="swiper-pagination"></div>
 				</div>
-				</a>
-				<div class="media-content media-content-detail-page">
-					<p class="title is-4"><a href="/users/<?= $recipe->getUser()->getId() ?>/"> <?= htmlspecialcharsbx(
-								$recipe->getUser()->getName() . ' ' . $recipe->getUser()->getLastName()
-							) ?> (<?= htmlspecialcharsbx($recipe->getUser()->getLogin()) ?>)</a></p>
-				</div>
+
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
 			</div>
 		</div>
 
 		<footer class="card-footer">
-			<div class="card-footer-item is-size-6">Время приготовления: <?= htmlspecialcharsbx(
+			<div class="card-footer-item is-size-6">🕔 Время приготовления: <?= htmlspecialcharsbx(
 					$recipe->getTime()
 				) ?> минут
 			</div>
-			<div class="card-footer-item is-size-6">Калории: <?= htmlspecialcharsbx($recipe->getCalories()) ?></div>
-			<div class="card-footer-item is-size-6">Количество порций: <?= htmlspecialcharsbx(
+			<div class="card-footer-item is-size-6">🔥 Калории: <?= htmlspecialcharsbx($recipe->getCalories()) ?></div>
+			<div class="card-footer-item is-size-6">🍽️ Количество порций: <?= htmlspecialcharsbx(
 					$recipe->getPortionCount()
 				) ?></div>
 		</footer>
-		<hr>
-		<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-			<thead>
-			<tr>
-				<th></th>
-				<th>Название</th>
-				<th>Количество</th>
-			</tr>
-			</thead>
-			<tbody>
-			<?php
-			$countIngredient = 0;
-			foreach ($ingredients as $ingredient): ?>
+		<p class="title is-4 detail-ingredient" style="margin:0">Ингредиенты:</p>
+			<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="margin:0">
+				<thead>
 				<tr>
-					<th><?= $countIngredient + 1 ?></th>
-					<td><?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?></td>
-					<td><?= htmlspecialcharsbx($ingredient->getCount()) ?> <?= htmlspecialcharsbx(
-							$ingredient->getTypeId()
-						) ?></td>
+					<th></th>
+					<th>Название</th>
+					<th>Количество</th>
 				</tr>
+				</thead>
+				<tbody>
 				<?php
-				$countIngredient++; endforeach; ?>
-			</tbody>
-		</table>
-
-		<?php
-		$instructionCount = 0;
-		foreach ($recipe->getInstructions() as $instruction): ?>
-			<div class="field is-flex">
-				<div class="detail-instruction-image">
-					<?= CFile::ShowImage(
-						$instructionImages[$instructionCount]['IMAGE_ID'],
-						200,
-						200,
-						"border=0",
-						"",
-						true
-					); ?>
-				</div>
-				<div class="box is-size-6 detail-instruction-box">
-					<div class="content ml-2">
-						<h2>Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?> </h2>
-					</div>
-					<?= htmlspecialcharsbx($instruction->getDescription()) ?>
-				</div>
-			</div>
+				$countIngredient = 0;
+				foreach ($ingredients as $ingredient): ?>
+					<tr>
+						<th><?= $countIngredient + 1 ?></th>
+						<td><?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?></td>
+						<td><?= htmlspecialcharsbx($ingredient->getCount()) ?> <?= htmlspecialcharsbx(
+								$ingredient->getTypeId()
+							) ?></td>
+					</tr>
+					<?php
+					$countIngredient++; endforeach; ?>
+				</tbody>
+			</table>
+		<div class="instructions">
 			<?php
-			$instructionCount++;
-		endforeach; ?>
-		<hr>
-	</div>
-
-	<div class="container comment-section">
-		<h2>Комментарии:</h2>
-		<hr>
-		<div id="comment-list" class="comments">Будьте первым!</div>
-		<div class="add-comment">
-			<form id = "comment-form" action="" class="comment-form">
-				<textarea id = "comment-textarea" class="textarea" placeholder="Добавить комментарий"></textarea>
-				<input type="image" class="comment-form-image"  src="/local/modules/up.cake/install/templates/cake/images/comment.png" alt="Submit Form" />
-			</form>
+			$instructionCount = 0;
+			foreach ($recipe->getInstructions() as $instruction): ?>
+				<div class="field is-flex">
+					<div class="detail-instruction-image">
+						<?= CFile::ShowImage(
+							$instructionImages[$instructionCount]['IMAGE_ID'],
+							200,
+							200,
+							"border=0",
+							"",
+							true
+						); ?>
+					</div>
+					<div class="box is-size-6 detail-instruction-box">
+						<div class="content ml-2">
+							<h2>Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?> </h2>
+						</div>
+						<?= htmlspecialcharsbx($instruction->getDescription()) ?>
+					</div>
+				</div>
+				<?php
+				$instructionCount++;
+			endforeach; ?>
 		</div>
-	</div>
+		</div>
+
+		<div class="container comment-section">
+			<h2>Комментарии:</h2>
+			<hr>
+			<div id="comment-list" class="comments">Будьте первым!</div>
+			<div class="add-comment">
+				<form id = "comment-form" action="" class="comment-form">
+					<textarea id = "comment-textarea" class="textarea" placeholder="Добавить комментарий"></textarea>
+					<input type="image" class="comment-form-image"  src="/local/modules/up.cake/install/templates/cake/images/comment.png" alt="Submit Form" />
+				</form>
+			</div>
+		</div>
+
 </div>
+
+
 
 </div>
 
@@ -233,7 +236,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		}
 	}
 
-	comments.addEventListener('scroll', throttle(checkPosition))
+	comments.addEventListener('scroll', throttle(checkPosition,2000))
 
 	let form = document.getElementById('comment-form');
 	form.addEventListener('submit', addComment);
