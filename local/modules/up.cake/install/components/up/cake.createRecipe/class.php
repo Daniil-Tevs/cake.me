@@ -68,7 +68,21 @@ class CakeDetailComponent extends CBitrixComponent
 			LocalRedirect('/recipe/create/?error_create=Y');
 		}
 
-		$imageArray = array_merge($newRecipe['RECIPE_IMAGES_MAIN'], $newRecipe['RECIPE_INSTRUCTION_IMAGES']);
+		$this->imageValidate($newRecipe['RECIPE_IMAGES_MAIN']);
+		$this->imageValidate($newRecipe['RECIPE_INSTRUCTION_IMAGES']);
+
+		foreach ($newRecipe['RECIPE_INGREDIENT']['NAME'] as $i => $name)
+		{
+			$newRecipe['RECIPE_INGREDIENT']['NAME'][$i] = mb_strtolower(trim($name));
+		}
+
+		$recipeId = \Up\Cake\Service\RecipeService::addRecipe($newRecipe);
+
+		LocalRedirect("/detail/{$recipeId}/?create_success=Y");
+	}
+
+	private function imageValidate(array $imageArray): void
+	{
 		for ($i = 0, $iMax = count($imageArray['name']); $i < $iMax; $i++)
 		{
 			$arrImage = [];
@@ -92,14 +106,5 @@ class CakeDetailComponent extends CBitrixComponent
 				LocalRedirect('/recipe/create/?image_error=Y');
 			}
 		}
-
-		foreach ($newRecipe['RECIPE_INGREDIENT']['NAME'] as $i => $name)
-		{
-			$newRecipe['RECIPE_INGREDIENT']['NAME'][$i] = mb_strtolower(trim($name));
-		}
-
-		$recipeId = \Up\Cake\Service\RecipeService::addRecipe($newRecipe);
-
-		LocalRedirect("/detail/{$recipeId}/?create_success=Y");
 	}
 }
