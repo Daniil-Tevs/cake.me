@@ -4,6 +4,7 @@
  * @var array $tags
  * @global CUser $USER
  */
+$categories = \Up\Cake\Service\TagService::getWithCategory();
 ?>
 <!doctype html>
 <html lang="<?= LANGUAGE_ID; ?>">
@@ -43,27 +44,31 @@ $APPLICATION->ShowPanel(); ?>
 		</div>
 
 		<div class="header-two">
-			<!--  recent!-->
-			<?php if ($USER->IsAuthorized()): ?>
-			<a onclick="displayRecentRecipes()">
-			<div class="logo-add recent-recipe-icon">
-				<figure class="image is-32x32">
-					<img class="profile-image" aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/recentRecipe.png">
-				</figure>
-			</div>
-			</a>
-			<div class="box box-recent-recipe-header recent-recipe-none " id="recent-recipe">
-				<?php $APPLICATION->IncludeComponent('up:cake.recentRecipes', '', []); ?>
-			</div>
-			<? endif; ?>
+
 			<!--  adding!-->
 			<a href="/recipe/create/" class="logo-add">
 				<figure class="image is-32x32">
 					<img class="profile-image" aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/adding.png">
 				</figure>
 			</a>
+			<!--  recent!-->
+			<div class="recently">
+				<?php if ($USER->IsAuthorized()): ?>
+					<a onclick="displayRecentRecipes()">
+						<div class="logo-add recent-recipe-icon">
+							<figure class="image is-32x32">
+								<img class="profile-image" aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/recentRecipe.png">
+							</figure>
+						</div>
+					</a>
+					<div class="box box-recent-recipe-header recent-recipe-none " id="recent-recipe">
+						<?php $APPLICATION->IncludeComponent('up:cake.recentRecipes', '', []); ?>
+					</div>
+				<? endif; ?>
+			</div>
+
 			<!--  filter!-->
-			<div class="dropdown is-right profile-icon" id="category">
+			<div class="dropdown is-right profile-icon filter" id="category">
 				<div class="dropdown-trigger" >
 					<figure class="image is-32x32">
 						<img class="profile-image " onclick="displayCategory()" aria-controls="dropdown-menu5" src="/local/modules/up.cake/install/templates/cake/images/categories.png">
@@ -73,8 +78,8 @@ $APPLICATION->ShowPanel(); ?>
 					<div class="dropdown-content">
 						<form>
 							<div class="columns">
-								<?php foreach(\Up\Cake\Service\TagService::getWithCategory() as $category => $tags):?>
-									<div class="column">
+								<?php foreach($categories as $category => $tags):?>
+									<div class="column" <?= (array_key_last($categories)!==$category)?'style="border-right: 3px solid white;"': ''?>>
 										<div class="dropdown-item">
 											<div class="category-title">
 												<h2><?=htmlspecialcharsbx($category)?>:</h2>
@@ -111,23 +116,23 @@ $APPLICATION->ShowPanel(); ?>
 					<div class="dropdown-content">
 						<?php if ($USER->IsAuthorized()): ?>
 							<a href="/profile/" class="dropdown-item">
-								профиль
+								Профиль
 							</a>
 							<hr class="dropdown-divider">
 							<a href="/search/users/" class="dropdown-item">
-								найти пользователя
+								Найти пользователя
 							</a>
 							<hr class="dropdown-divider">
 							<a href="/logout/" class="dropdown-item">
-								выйти
+								Выйти
 							</a>
 						<?php else: ?>
 						<a href="/auth/" class="dropdown-item">
-							войти
+							Войти
 						</a>
 						<hr class="dropdown-divider">
 						<a href="/register/" class="dropdown-item">
-							регистрация
+							Регистрация
 						</a>
 						<?php endif; ?>
 					</div>
@@ -160,15 +165,4 @@ $APPLICATION->ShowPanel(); ?>
 </script>
 
 <section class="section">
-	<div class="container">
-		<div class="layout mt-3">
-			<div class="container filters p-1">
-				<div class="collection-filter">
-					<input class="category-check" type="checkbox" id="popular" name="popular">
-					<label class="label-filter" for="popular"><strong>Популярное</strong></label>
-					<input class="category-check" type="checkbox" id="new-recipes" name="new-recipes">
-					<label class="label-filter" for="new-recipes"><strong>Новинки</strong></label>
-					<input class="category-check" type="checkbox" id="follow" name="follow">
-					<label class="label-filter" for="follow"><strong>Подписки</strong></label>
-			</div>
-		</div>
+	<div class="container" style="max-width: 92%;">
