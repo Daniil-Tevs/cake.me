@@ -5,6 +5,7 @@ require_once __DIR__ . '/bitrix/routing_index.php';
 
 /**
  * TODO:
+
  * 7) добавить чистку bfile, buser, папки uploads при удалении модуляя
 
  * 8) безопасность и локализация

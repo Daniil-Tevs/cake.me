@@ -33,15 +33,9 @@ class ReactionTable extends DataManager
 	{
 		return [
 			new IntegerField(
-				'ID',
-				[
-					'primary' => true,
-					'autocomplete' => true,
-				]
-			),
-			new IntegerField(
 				'USER_ID',
 				[
+					'primary' => true,
 					'unique' => true,
 					'required' => true,
 				]
@@ -49,6 +43,7 @@ class ReactionTable extends DataManager
 			new IntegerField(
 				'RECIPE_ID',
 				[
+					'primary' => true,
 					'unique' => true,
 					'required' => true,
 				]

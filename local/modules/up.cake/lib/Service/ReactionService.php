@@ -20,11 +20,10 @@ class ReactionService
 			'USER_ID' => mySqlHelper()->convertToDbInteger($userId),
 			'RECIPE_ID' => $recipeId,])->isSuccess();
 	}
-	public static function removeLike(int $userId, int $recipeId): void
+	public static function removeLike(int $userId, int $recipeId): bool
 	{
 		$userId = (int)mySqlHelper()->convertToDbInteger($userId);
 		$recipeId = (int)mySqlHelper()->convertToDbInteger($recipeId);
-
-		db()->query("DELETE FROM up_cake_reaction WHERE USER_ID={$userId} AND RECIPE_ID={$recipeId}");
+		return ReactionTable::delete(['USER_ID'=>$userId,'RECIPE_ID'=>$recipeId])->isSuccess();
 	}
 }
