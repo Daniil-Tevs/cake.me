@@ -29,6 +29,7 @@ Loc::loadMessages(__FILE__);
 		<p>Здесь пока пусто</p>
 	 <?php else: ?>
 	<?php foreach ($recipes as $recipe): ?>
+		<?php if ($recipe): ?>
 	<div class="box box-user-search">
 		<article class="media">
 			<div class="media-left">
@@ -49,6 +50,7 @@ Loc::loadMessages(__FILE__);
 			</div>
 		</article>
 	</div>
+		<?php endif; ?>
 	<?php endforeach; ?>
 	<?endif; ?>
 </div>

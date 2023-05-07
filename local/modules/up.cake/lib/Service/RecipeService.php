@@ -100,6 +100,12 @@ class RecipeService
 		return $recipes;
 	}
 
+	public static function checkRecentRecipes(int $recipeId)
+	{
+		$result = RecipeTable::getById($recipeId)->fetch();
+		return $result;
+	}
+
 	public static function getRecipeDetailById(int $id)
 	{
 		$recipe = \UP\Cake\Model\RecipeTable::query()->setSelect(

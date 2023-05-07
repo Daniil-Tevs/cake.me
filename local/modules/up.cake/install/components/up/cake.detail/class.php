@@ -64,7 +64,7 @@ class CakeDetailComponent extends CBitrixComponent
 			}
 		}
 
-		if ($session->get('recent_recipe') === null)
+		if ($session->get('recent_recipe') === null || empty($session->get('recent_recipe')))
 		{
 			$session->set('recent_recipe', [['userId' => $USER->GetID(), 'recipeId' => $this->arParams['ID']]]);
 
