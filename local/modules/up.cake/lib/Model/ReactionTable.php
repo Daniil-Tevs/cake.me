@@ -42,12 +42,14 @@ class ReactionTable extends DataManager
 			new IntegerField(
 				'USER_ID',
 				[
+					'unique' => true,
 					'required' => true,
 				]
 			),
 			new IntegerField(
 				'RECIPE_ID',
 				[
+					'unique' => true,
 					'required' => true,
 				]
 			),
