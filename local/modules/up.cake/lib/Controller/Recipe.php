@@ -9,7 +9,7 @@ use Up\Cake\Service\UserService;
 
 class Recipe extends \Bitrix\Main\Engine\Controller
 {
-	protected const COUNT_RECIPE_ON_PAGE = 4;
+	protected const COUNT_RECIPE_ON_PAGE = 6;
 
 	public function getListAction(int $step = 1,string $type = null, int $userId = null, int $anotherUserId = null,string $title = '', array $filters = []): array
 	{
@@ -31,6 +31,11 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 				return \CUtil::JSEscape($data);
 			}, $recipe);
 		},$recipes);
+
+		$recipeList = array_map(function($recipe) {
+			$recipe['DESCRIPTION'] =  str_replace('\n','<br>',htmlspecialchars_decode($recipe['DESCRIPTION']));
+			return $recipe;
+			},$recipeList);
 
 		$imageList = [];
 		$recipeId = null;
