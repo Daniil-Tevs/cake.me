@@ -114,6 +114,12 @@ class CakeProfile extends CBitrixComponent
 	{
 		$userId = ($this->arParams['ID']);
 
-		$this->arResult['USER'] = CUser::GetByID($userId)->Fetch();
+		$user = CUser::GetByID($userId)->Fetch();
+		if (!$user)
+		{
+			LocalRedirect('/');
+		}
+
+		$this->arResult['USER'] = $user;
 	}
 }
