@@ -86,9 +86,9 @@ class UserService
 		return $userList;
 	}
 
-	public static function getUserSubsList(int $userId): array
+	public static function getUserSubsList(int $userId, int $limit = null): array
 	{
-		$subsList = UserSubsTable::query()->setSelect(['SUB_ID'])->where('USER_ID', $userId)->fetchAll();
+		$subsList = UserSubsTable::query()->setSelect(['SUB_ID'])->where('USER_ID', $userId)->setLimit($limit)->fetchAll();
 
 		$subsId = [];
 		foreach ($subsList as $item)
@@ -96,9 +96,34 @@ class UserService
 			$subsId[] = (int)$item['SUB_ID'];
 		}
 
+		if (empty($subsId))
+		{
+			return [];
+		}
 		$userList = UserTable::query()
 			->setSelect(['ID', 'LOGIN', 'NAME', 'LOGIN', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHOTO', 'PERSONAL_NOTES'])
-			->whereIn('ID', $subsId)->setLimit(50)->fetchAll();
+			->whereIn('ID', $subsId)->fetchAll();
+
+		return $userList;
+	}
+
+	public static function getUserSignList(int $userId, int $limit = null): array
+	{
+		$subsList = UserSubsTable::query()->setSelect(['USER_ID'])->where('SUB_ID', $userId)->setLimit($limit)->fetchAll();
+
+		$subsId = [];
+		foreach ($subsList as $item)
+		{
+			$subsId[] = (int)$item['USER_ID'];
+		}
+
+		if (empty($subsId))
+		{
+			return [];
+		}
+		$userList = UserTable::query()
+							 ->setSelect(['ID', 'LOGIN', 'NAME', 'LOGIN', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHOTO', 'PERSONAL_NOTES'])
+							 ->whereIn('ID', $subsId)->fetchAll();
 
 		return $userList;
 	}
