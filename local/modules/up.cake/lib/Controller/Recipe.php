@@ -37,7 +37,7 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 		},$recipes);
 
 		$recipeList = array_map(function($recipe) {
-			$recipe['DESCRIPTION'] =  htmlspecialcharsbx(str_replace('\n','<br>',htmlspecialchars_decode($recipe['DESCRIPTION'])));
+			$recipe['DESCRIPTION'] =  str_replace('\n','<br>',htmlspecialcharsbx($recipe['DESCRIPTION']));
 			return $recipe;
 			},$recipeList);
 
