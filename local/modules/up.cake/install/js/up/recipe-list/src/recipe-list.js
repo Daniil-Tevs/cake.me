@@ -39,7 +39,6 @@ export class RecipeList
 		else {
 			this.type = (this.userId===null || this.userId<=0)?'unregister':null;
 		}
-		console.log(this.type);
 
 		this.filters['tags'] = [];
 
@@ -82,7 +81,6 @@ export class RecipeList
 
 	loadList(step = 1)
 	{
-		console.log(this);
 		return new Promise((resolve, reject) => {
 			BX.ajax.runAction('up:cake.recipe.getList', {
 					data: {
