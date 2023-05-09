@@ -35,4 +35,7 @@ return function (RoutingConfigurator $routes) {
 	$routes->get('/users/{id}/', new PublicPageController('/local/modules/up.cake/views/cake-users.php'));
 	$routes->get('/search/users/', new PublicPageController('/local/modules/up.cake/views/cake-search-users.php'));
 
+	//Избранное
+	$routes->get('/favorites/', new PublicPageController('/local/modules/up.cake/views/cake-favorites.php'));
+
 };
