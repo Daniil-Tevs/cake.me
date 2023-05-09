@@ -51,18 +51,20 @@ Loc::loadMessages(__FILE__); ?>
 <?php endif; ?>
 
 <div class="content">
-	<form class="box" name="form_update_recipe" id="update-form" method="post" target="_top" action="/recipe/edit/<?=$recipe->getId()?>/" enctype="multipart/form-data">
+	<form class="box" name="form_update_recipe" id="update-form" method="post" target="_top"
+		  action="/recipe/edit/<?= (int)$recipe->getId()?>/" enctype="multipart/form-data">
 
 		<div class="create-page-main-label create-header">Редактирование рецепта</div>
 		<div class="block is-flex add-form-recipe-name">
-			<input class="input is-large add-form-recipe-name-input" id="recipe-name" name="RECIPE_NAME" type="text" value="<?= htmlspecialcharsbx($recipe->getName()) ?>" placeholder="Название рецепта">
+			<input class="input is-large add-form-recipe-name-input" id="recipe-name" name="RECIPE_NAME" type="text"
+				   value="<?= htmlspecialcharsbx($recipe->getName()) ?>" placeholder="Название рецепта">
 		</div>
 		<hr>
 		<div class="block is-flex add-form-recipe-main-image">
 			<?php $imageCount = 1;
 			foreach ($mainImages as $image): ?>
 				<div class="field update-image-delete-<?= $imageCount ?>">
-			<?= CFile::ShowImage($image['IMAGE_ID'], 100, 50, "border=0", "", true); ?>
+			<?= CFile::ShowImage((int)$image['IMAGE_ID'], 100, 50, "border=0", "", true); ?>
 			<label id="recipe-main-image-label" class="label create-page-main-label-image">Изображение <?= $imageCount ?>:</label>
 			<input type="file" id="recipe-main-image-<?= $imageCount ?>" name="RECIPE_IMAGES_MAIN[]"
 				   onchange="return fileValidation('recipe-main-image-<?= $imageCount ?>')"/>
@@ -83,7 +85,8 @@ Loc::loadMessages(__FILE__); ?>
 			<div class="field add-recipe-desc">
 				<div class="field">
 					<div class="control">
-						<textarea class="textarea" maxlength="2000" id="recipe-desc" name="RECIPE_DESC" placeholder="Описание"><?= htmlspecialcharsbx($recipe->getDescription()) ?></textarea>
+						<textarea class="textarea" maxlength="2000" id="recipe-desc" name="RECIPE_DESC"
+								  placeholder="Описание"><?= htmlspecialcharsbx($recipe->getDescription()) ?></textarea>
 					</div>
 				</div>
 			</div>
@@ -94,7 +97,7 @@ Loc::loadMessages(__FILE__); ?>
 				<label class="label">Количество порций:</label>
 				<div class="control">
 					<input class="input add-recipe-info-block-input" id="recipe-portion" name="RECIPE_PORTION" type="number"
-						   value="<?= htmlspecialcharsbx($recipe->getPortionCount()) ?>" min="1" max="100" placeholder="">
+						   value="<?= (int)$recipe->getPortionCount() ?>" min="1" max="100" placeholder="">
 				</div>
 			</div>
 
@@ -102,7 +105,7 @@ Loc::loadMessages(__FILE__); ?>
 				<label id="recipe-time" class="label">Время приготовления (мин):</label>
 				<div class="control">
 					<input class="input add-recipe-info-block-time" id="recipe-time" name="RECIPE_TIME"
-						   value="<?= htmlspecialcharsbx($recipe->getTime()) ?>" type="number" min="1" max="1000" placeholder="">
+						   value="<?= (int)$recipe->getTime() ?>" type="number" min="1" max="1000" placeholder="">
 				</div>
 			</div>
 
@@ -110,7 +113,7 @@ Loc::loadMessages(__FILE__); ?>
 				<label class="label">Калории:</label>
 				<div class="control">
 					<input class="input add-recipe-info-block-input" id="recipe-calories" name="RECIPE_CALORIES" type="number"
-						   value="<?= htmlspecialcharsbx($recipe->getCalories()) ?>" min="0" max="10000" placeholder="">
+						   value="<?= (int)$recipe->getCalories() ?>" min="0" max="10000" placeholder="">
 				</div>
 			</div>
 		</div>
@@ -164,16 +167,16 @@ Loc::loadMessages(__FILE__); ?>
 							<td><input class="input" id="recipe-ingredient-name-<?= $countIngredient ?>" name="RECIPE_INGREDIENT[NAME][]"
 									   value="<?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?>" type="text"></td>
 							<td><input class="input" id="recipe-ingredient-value-<?= $countIngredient ?>" name="RECIPE_INGREDIENT[VALUE][]"
-									   value="<?= htmlspecialcharsbx($ingredient->getCount()) ?>" type="number" step="0.1" min="0.1" max="10000"></td>
+									   value="<?= (float)$ingredient->getCount() ?>" type="number" step="0.1" min="0.1" max="10000"></td>
 							<td>
 								<div class="select add-recipe-tags-select" id="recipe-ingredient-type-<?= $countIngredient ?>">
 									<select name="RECIPE_INGREDIENT[TYPE][]">
 										<?php foreach ($types as $type): ?>
 
 										<?php if ( htmlspecialcharsbx($ingredient->getTypeId()) === htmlspecialcharsbx($type->getId())): ?>
-											<option selected="selected"><?= $type->getId() ?></option>
+											<option selected="selected"><?= htmlspecialcharsbx($type->getId()) ?></option>
 										<?php else: ?>
-										<option><?= $type->getId() ?></option>
+										<option><?= htmlspecialcharsbx($type->getId()) ?></option>
 										<?php endif; ?>
 
 										<?php endforeach; ?>
@@ -203,15 +206,17 @@ Loc::loadMessages(__FILE__); ?>
 					foreach ($recipe->getInstructions() as $instruction): ?>
 					<div class="field instruct update-instruction-delete-<?= $instructionCount ?>">
 						<div class="step-head">
-							<label class="label">Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?>:</label>
-							<?= CFile::ShowImage($instructionImages[$instructionCount - 1]['IMAGE_ID'], 100, 100, "border=0", "", true); ?>
+							<label class="label">Шаг <?= (int)$instruction->getStep() ?>:</label>
+							<?= CFile::ShowImage((int)$instructionImages[$instructionCount - 1]['IMAGE_ID'], 100, 100, "border=0", "", true); ?>
 							<input type="file" id="recipe-instruction-image-<?= $instructionCount ?>" name="RECIPE_INSTRUCTION_IMAGES[]"
 								   onchange="return fileValidation('recipe-instruction-image-<?= $instructionCount ?>')"/>
 						</div>
 					<div class="field is-flex  add-recipe-instruction-textarea">
 						<div class="field">
 							<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" id="recipe-instruction-<?= $instructionCount ?>" maxlength="1000" name="RECIPE_INSTRUCTION[]"><?= htmlspecialcharsbx($instruction->getDescription()) ?></textarea>
+								<textarea class="textarea add-recipe-textarea-input" id="recipe-instruction-<?= $instructionCount ?>"
+										  maxlength="1000" name="RECIPE_INSTRUCTION[]"><?= htmlspecialcharsbx($instruction->getDescription()) ?>
+								</textarea>
 							</div>
 						</div>
 					</div>
