@@ -79,12 +79,17 @@ BX.ready(
 
 			for (let i = 0; i < recipeIngredientName.length; i++) {
 
-				if (recipeIngredientName[i].value.trim() === '')
+				if (recipeIngredientName[i].value.trim() === '' || document.availableIngredients.indexOf(recipeIngredientName[i].value.trim()) === -1)
 				{
-
 					let recipeInstructionClass = document.querySelector('#recipe-ingredient-name-' + (i+1));
 					recipeInstructionClass.classList.add('is-danger', 'is-focused');
 					error = true;
+				}
+				if (error)
+				{
+					alert('Такого игрединта нет в базе данных!')
+					document.querySelector('#recipe-ingredient-name-' + (i+1)).scrollIntoView();
+					return false;
 				}
 				if (recipeIngredientValue[i].value.trim() === '')
 				{
