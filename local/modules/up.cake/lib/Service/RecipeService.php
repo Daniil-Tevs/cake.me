@@ -161,11 +161,16 @@ class RecipeService
 		return RecipeTable::getById($recipeId)->fetch();
 	}
 
-	public static function getRecipeDetailById(int $id)
+	public static function getRecipeDetailById(int $id): array
 	{
 		$recipe = \UP\Cake\Model\RecipeTable::query()->setSelect(
 				['*', 'USER', 'INSTRUCTIONS', 'TAGS', 'RECIPE_INGREDIENT.RECIPE_ID']
 			)->where('ID', $id)->fetchObject();
+
+		if ($recipe === null)
+		{
+			return [];
+		}
 
 		$recipeId = [];
 		foreach ($recipe->getRecipeIngredient() as $item)
