@@ -240,7 +240,7 @@ class RecipeService
 			}
 			//TODO: дописать проверку на тип ингредиента
 			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientId)
-				->setCount((float)['RECIPE_INGREDIENT']['VALUE'][$i])->setTypeId(mySqlHelper()->forSql($newRecipe['RECIPE_INGREDIENT']['TYPE'][$i]))->save();
+				->setCount((float)$newRecipe['RECIPE_INGREDIENT']['VALUE'][$i])->setTypeId(mySqlHelper()->forSql($newRecipe['RECIPE_INGREDIENT']['TYPE'][$i]))->save();
 		}
 
 		foreach ($newRecipe['RECIPE_INSTRUCTION'] as $iStep => $instruction)
