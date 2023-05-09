@@ -4,23 +4,13 @@ namespace UP\Cake\Model;
 use Bitrix\Main\Localization\Loc,
 	Bitrix\Main\ORM\Data\DataManager,
 	Bitrix\Main\ORM\Fields\IntegerField;
+use Bitrix\Main\ORM\Fields\DatetimeField;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Bitrix\Main\ORM\Query\Join;
+use Bitrix\Main\Type\DateTime;
 
 Loc::loadMessages(__FILE__);
 
-/**
- * Class LikeTable
- *
- * Fields:
- * <ul>
- * <li> ID int mandatory
- * <li> USER_ID int mandatory
- * <li> RECIPE_ID int mandatory
- * </ul>
- *
- * @package Bitrix\Cake
- **/
 
 class ReactionTable extends DataManager
 {
@@ -48,6 +38,14 @@ class ReactionTable extends DataManager
 					'required' => true,
 				]
 			),
+			new DatetimeField(
+				'DATE_ADDED',
+				[
+					'required' => true,
+					'default_value' => function() {
+						return new DateTime();
+					}
+				]),
 			'USER' => (new Reference(
 				'USER', \Bitrix\Main\UserTable::class, Join::on('this.USER_ID', 'ref.ID')
 			))->configureJoinType('inner'),
