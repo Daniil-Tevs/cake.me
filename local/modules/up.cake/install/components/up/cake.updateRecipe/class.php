@@ -159,7 +159,8 @@ class CakeDetailComponent extends CBitrixComponent
 
 		if ($updateRecipe["RECIPE_NAME"] === '' || $updateRecipe["RECIPE_PORTION"] <= 0 || $updateRecipe["RECIPE_TIME"] <= 0 ||
 			$updateRecipe["RECIPE_CALORIES"] < 0 || empty($updateRecipe["RECIPE_TAGS"]) || empty($updateRecipe["RECIPE_INGREDIENT"]) ||
-			empty($updateRecipe["RECIPE_INSTRUCTION"]) || empty($updateRecipe["RECIPE_IMAGES_MAIN"]))
+			empty($updateRecipe["RECIPE_INSTRUCTION"]) || empty($updateRecipe["RECIPE_IMAGES_MAIN"])  ||
+			strlen($updateRecipe["RECIPE_NAME"]) >= 255 || strlen($updateRecipe["RECIPE_DESC"]) >= 510)
 		{
 			LocalRedirect("/recipe/edit/{$this->arParams['ID']}/?error_update=Y");
 		}
