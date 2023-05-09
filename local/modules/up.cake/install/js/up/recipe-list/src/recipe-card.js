@@ -76,7 +76,7 @@ export class RecipeCard
 							</div>
 						</div>
 						<footer class="card-footer">
-							<div class="card-footer-item">Likes: ${recipeData.REACTION}</div> 	
+							<div class="card-footer-item">❤ Likes: ${recipeData.REACTION}</div> 	
 							<a href="/recipe/edit/${recipeData.ID}/" class="card-footer-item button profile-button-edit">Edit</a>
     						<button class="card-footer-item button profile-button-delete" value="${recipeData.ID}" onclick=" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);">Delete</button>
 						</footer>
