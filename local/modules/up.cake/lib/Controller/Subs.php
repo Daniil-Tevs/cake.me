@@ -28,7 +28,7 @@ class Subs extends \Bitrix\Main\Engine\Controller
 		$userList = array_map(function($user) {
 			$title = str_replace('\n','<br>',htmlspecialchars_decode($user['PERSONAL_NOTES']));
 			$user = array_map(function($data) {
-				return \CUtil::JSEscape($data);
+				return htmlspecialcharsbx(\CUtil::JSEscape($data));
 			}, $user);
 			$user['PERSONAL_NOTES'] = $title;
 			return $user;

@@ -27,6 +27,7 @@ BX.ready(
 			let recipePortion = this.RECIPE_PORTION.value.trim();
 			let recipeTime = this.RECIPE_TIME.value.trim();
 			let recipeCalories = this.RECIPE_CALORIES.value.trim();
+			let recipeDescription = this.RECIPE_DESC.value.trim();
 			let recipeTags = document.getElementsByName('RECIPE_TAGS[]');
 			let recipeInstruction = document.getElementsByName('RECIPE_INSTRUCTION[]');
 			let recipeIngredientName = document.getElementsByName('RECIPE_INGREDIENT[NAME][]');
@@ -46,27 +47,7 @@ BX.ready(
 				el.classList.remove('is-danger-image-recipe-form');
 			});
 
-			if (recipeName === '')
-			{
-				let recipeNameClass = document.querySelector('#recipe-name');
-				recipeNameClass.classList.add('is-danger', 'is-focused');
-				error = true;
-			}
-
-			if (recipePortion === '')
-			{
-				let recipePortionClass = document.querySelector('#recipe-portion');
-				recipePortionClass.classList.add('is-danger', 'is-focused');
-				error = true;
-			}
-
-			if (recipeTime === '')
-			{
-				let recipeTimeClass = document.querySelector('#recipe-time');
-				recipeTimeClass.classList.add('is-danger', 'is-focused');
-
-				error = true;
-			}
+			let recipeScroll = '';
 
 			for (let i = 0; i < recipeInstruction.length; i++) {
 				if (recipeInstruction[i].value.trim() === '')
@@ -74,18 +55,20 @@ BX.ready(
 					let recipeInstructionClass = document.querySelector('#recipe-instruction-' + (i+1));
 					recipeInstructionClass.classList.add('is-danger', 'is-focused');
 					error = true;
+					recipeScroll = 'ingredient-delete-button';
 				}
 			}
 
+			let ingredientError = false;
 			for (let i = 0; i < recipeIngredientName.length; i++) {
 
 				if (recipeIngredientName[i].value.trim() === '' || document.availableIngredients.indexOf(recipeIngredientName[i].value.trim()) === -1)
 				{
 					let recipeInstructionClass = document.querySelector('#recipe-ingredient-name-' + (i+1));
 					recipeInstructionClass.classList.add('is-danger', 'is-focused');
-					error = true;
+					ingredientError = true;
 				}
-				if (error)
+				if (ingredientError)
 				{
 					alert('Такого игрединта нет в базе данных!')
 					document.querySelector('#recipe-ingredient-name-' + (i+1)).scrollIntoView();
@@ -96,40 +79,45 @@ BX.ready(
 					let recipeInstructionClass = document.querySelector('#recipe-ingredient-value-' + (i+1));
 					recipeInstructionClass.classList.add('is-danger', 'is-focused');
 					error = true;
+					recipeScroll = 'tag-button';
 				}
 				if (recipeIngredientType[i].value.trim() === '')
 				{
 					let recipeInstructionClass = document.querySelector('#recipe-ingredient-type-' + (i+1));
 					recipeInstructionClass.classList.add('is-danger', 'is-focused');
 					error = true;
+					recipeScroll = 'tag-button';
 				}
 			}
 
-			// let isImage = false;
-			// for (let i = 0; i < recipeMainImage.length; i++)
-			// {
-			// 	if (recipeMainImage[i].value !== '')
-			// 	{
-			// 		isImage = true;
-			// 		break;
-			// 	}
-			// }
-			//
-			// console.log(isImage);
-			// if (isImage === false)
-			// {
-			// 	let recipeMainImageClass = document.querySelector('#recipe-main-image');
-			// 	let recipeMainImageLabelClass = document.querySelector('#recipe-main-image-label');
-			// 	recipeMainImageClass.classList.add('is-danger-image-recipe-form');
-			// 	recipeMainImageLabelClass.classList.add('is-danger-image-recipe-form');
-			//
-			// 	error = true;
-			// }
+			if (recipePortion === '')
+			{
+				let recipePortionClass = document.querySelector('#recipe-portion');
+				recipePortionClass.classList.add('is-danger', 'is-focused');
+				error = true;
+				recipeScroll = 'image-delete-button-main';
+			}
+
+			if (recipeTime === '')
+			{
+				let recipeTimeClass = document.querySelector('#recipe-time');
+				recipeTimeClass.classList.add('is-danger', 'is-focused');
+				error = true;
+				recipeScroll = 'image-delete-button-main';
+			}
+
+			if (recipeName === '')
+			{
+				let recipeNameClass = document.querySelector('#recipe-name');
+				recipeNameClass.classList.add('is-danger', 'is-focused');
+				error = true;
+				recipeScroll = 'update-form';
+			}
 
 			if (error)
 			{
 				alert('Заполните обязательные поля рецепта!')
-				document.querySelector('#update-form').scrollIntoView();
+				document.querySelector(`[id=${CSS.escape(recipeScroll)}]`).scrollIntoView();
 				return false;
 			}
 
@@ -185,9 +173,41 @@ BX.ready(
 				return false;
 			}
 
+			if (recipeName.length >= 255)
+			{
+				let recipeNameClass = document.querySelector('#recipe-name');
+				recipeNameClass.classList.add('is-danger', 'is-focused');
+				alert('Название слишком большое!')
+				document.querySelector('#update-form').scrollIntoView();
+				return false;
+			}
+
+			if (recipeDescription.length >= 1000)
+			{
+				let recipeDescriptionClass = document.querySelector('#recipe-desc');
+				recipeDescriptionClass.classList.add('is-danger', 'is-focused');
+				alert('Описание рецепта слишком большое!')
+				document.querySelector('#recipe-main-image-label').scrollIntoView();
+				return false;
+			}
+
+			error = false;
+			for (let i = 0; i < recipeInstruction.length; i++) {
+				if (recipeInstruction[i].value.trim().length >= 1000)
+				{
+					let recipeInstructionClass = document.querySelector('#recipe-instruction-' + (i+1));
+					recipeInstructionClass.classList.add('is-danger', 'is-focused');
+					error = true;
+				}
+			}
+			if (error)
+			{
+				alert('Описание шагов приготовления слишком большое!');
+				document.querySelector('#ingredient-delete-button').scrollIntoView();
+				return false;
+			}
+
 			return true;
 		};
-
 	}
-
 );
