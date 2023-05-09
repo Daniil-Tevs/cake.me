@@ -39,7 +39,7 @@ Loc::loadMessages(__FILE__);
 <div class="content">
 
 
-	<div class="box box-search-user">
+	<div id="box-search-user" class="box box-search-user">
 		<h1>Поиск пользователей</h1>
 		<p>(Введите имя, фамилию или логин пользователя. Если хотите найти пользователя только по нику, перед поиском укажите @)</p>
 		<hr>
@@ -65,7 +65,7 @@ Loc::loadMessages(__FILE__);
 
 		<?php else: ?>
 		<?php foreach ($userList as $user): ?>
-		<div class="box box-user-search">
+		<div id="box-user-search-list" class="box box-user-search">
 		<article class="media">
 			<div class="media-left">
 				<a href="/users/<?= (int)$user['ID'] ?>/">
@@ -89,11 +89,14 @@ Loc::loadMessages(__FILE__);
 			<div class="media-content">
 				<div class="content">
 					<p>
-						<a href="/users/<?= (int)$user['ID'] ?>/">
-						<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?> (<?= htmlspecialcharsbx($user['LOGIN']) ?>)</strong>
-						</a>
-						<br>
-						<?= htmlspecialcharsbx($user['PERSONAL_NOTES']) ?>
+						<div>
+							<a href="/users/<?= (int)$user['ID'] ?>/">
+							<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?> (<?= htmlspecialcharsbx($user['LOGIN']) ?>)</strong>
+							</a>
+						</div>
+						<div>
+							<?= htmlspecialcharsbx($user['PERSONAL_NOTES']) ?>
+						</div>
 					</p>
 				</div>
 			</div>

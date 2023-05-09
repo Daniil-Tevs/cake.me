@@ -804,6 +804,10 @@ input[type=number]::-webkit-outer-spin-button {
 	margin-top: 20px;
 }
 
+#box-search-user {
+	padding: 25px;
+}
+
 .input-search-user {
 	width: 450px;
 	margin-right: 10px;
@@ -820,6 +824,9 @@ input[type=number]::-webkit-outer-spin-button {
 
 .box-user-search {
 	width: 80%;
+}
+#box-user-search-list {
+	padding: 10px;
 }
 
 .like{
