@@ -21,6 +21,10 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 		{
 			$recipes = RecipeService::getRecipeByUserId($userId,0,$step * self::COUNT_RECIPE_ON_PAGE);
 		}
+		elseif ($type === 'reaction' && $userId !== null)
+		{
+			$recipes = RecipeService::getRecipeByUserLikes(0,$step * self::COUNT_RECIPE_ON_PAGE,$userId,$title,$filters);
+		}
 		else
 		{
 			$recipes = RecipeService::get(0,$step * self::COUNT_RECIPE_ON_PAGE,$title,$filters);
@@ -33,7 +37,7 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 		},$recipes);
 
 		$recipeList = array_map(function($recipe) {
-			$recipe['DESCRIPTION'] =  str_replace('\n','<br>',htmlspecialchars_decode($recipe['DESCRIPTION']));
+			$recipe['DESCRIPTION'] =  htmlspecialcharsbx(str_replace('\n','<br>',htmlspecialchars_decode($recipe['DESCRIPTION'])));
 			return $recipe;
 			},$recipeList);
 
