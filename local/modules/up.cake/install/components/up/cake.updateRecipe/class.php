@@ -149,6 +149,10 @@ class CakeDetailComponent extends CBitrixComponent
 				{
 					$errorParams .= '&emptyInstruction=Y';
 				}
+				if (strlen(trim($item)) >= 510)
+				{
+					LocalRedirect("/recipe/edit/{$this->arParams['ID']}/?error_update=Y");
+				}
 			}
 		}
 

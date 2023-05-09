@@ -69,6 +69,14 @@ class CakeDetailComponent extends CBitrixComponent
 			LocalRedirect('/recipe/create/?error_create=Y');
 		}
 
+		foreach ($newRecipe['RECIPE_INSTRUCTION'] as $item)
+		{
+			if (strlen(trim($item)) >= 510)
+			{
+				LocalRedirect('/recipe/create/?error_create=Y');
+			}
+		}
+
 		$this->imageValidate($newRecipe['RECIPE_IMAGES_MAIN']);
 		$this->imageValidate($newRecipe['RECIPE_INSTRUCTION_IMAGES']);
 
