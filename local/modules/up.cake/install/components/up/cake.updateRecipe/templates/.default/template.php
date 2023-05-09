@@ -75,7 +75,7 @@ Loc::loadMessages(__FILE__); ?>
 
 		<div class="field is-flex add-form-recipe-image-buttons">
 		<a class="image-button button is-primary is-light">добавить изображение</a>
-			<a class="image-delete-button button is-warning is-light">Удалить изображение</a>
+			<a id="image-delete-button-main" class="image-delete-button button is-warning is-light">Удалить изображение</a>
 		</div>
 
 		<hr>
@@ -102,7 +102,7 @@ Loc::loadMessages(__FILE__); ?>
 			</div>
 
 			<div class="field">
-				<label id="recipe-time" class="label">Время приготовления (мин):</label>
+				<label id="recipe-time-label" class="label">Время приготовления (мин):</label>
 				<div class="control">
 					<input class="input add-recipe-info-block-time" id="recipe-time" name="RECIPE_TIME"
 						   value="<?= (int)$recipe->getTime() ?>" type="number" min="1" max="1000" placeholder="">
@@ -192,7 +192,7 @@ Loc::loadMessages(__FILE__); ?>
 
 				<div class="field">
 				<a class="table-button button is-primary is-light">Добавить ингредиент</a>
-				<a class="ingredient-delete-button button is-warning is-light">Удалить ингредиент</a>
+				<a id="ingredient-delete-button" class="ingredient-delete-button button is-warning is-light">Удалить ингредиент</a>
 				</div>
 			</div>
 				<hr>
