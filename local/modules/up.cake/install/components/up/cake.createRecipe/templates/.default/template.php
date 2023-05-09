@@ -230,13 +230,14 @@ endif; ?>
 	{
 
 		const modalInstruction = $(`
-			<div class="field update-instruction-delete-${$countInstruction}">
-				<label class="label">Шаг ${$countInstruction}:</label>
-
-					<div class="field is-flex  add-recipe-instruction-textarea">
+			<div class="field instruct update-instruction-delete-${$countInstruction}">
+				<div class="step-head">
+					<label class="label">Шаг ${$countInstruction}:</label>
 						<input type="file" id="recipe-instruction-image-${$countInstruction}" name="RECIPE_INSTRUCTION_IMAGES[]"
 						onchange="return fileValidation('recipe-instruction-image-${$countInstruction}')"/>
+				</div>
 
+					<div class="field is-flex  add-recipe-instruction-textarea">
 						<div class="field">
 							<div class="control">
 								<textarea class="textarea add-recipe-textarea-input" maxlength="1000"
