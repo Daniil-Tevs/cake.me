@@ -14,7 +14,7 @@ export class RecipeComments
 		}
 		else
 		{
-			throw new Error('RecipeList: options.rootNodeId required');
+			throw new Error('CommentList: options.rootNodeId required');
 		}
 
 		if (Type.isInteger(options.recipeId))
