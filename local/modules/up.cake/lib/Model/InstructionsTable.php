@@ -67,7 +67,7 @@ class InstructionsTable extends DataManager
 	public static function validateDescription()
 	{
 		return [
-			new LengthValidator(null, 510),
+			new LengthValidator(null, 1000),
 		];
 	}
 }
