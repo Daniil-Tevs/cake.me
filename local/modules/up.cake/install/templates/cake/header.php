@@ -44,7 +44,6 @@ $APPLICATION->ShowPanel(); ?>
 		</div>
 
 		<div class="header-two">
-
 			<!--  adding!-->
 			<a href="/recipe/create/" class="logo-add">
 				<figure class="image is-32x32">
@@ -96,14 +95,31 @@ $APPLICATION->ShowPanel(); ?>
 										</div>
 									</div>
 								<?php endforeach;?>
-
 							</div>
 						</form>
 					</div>
-
-
 				</div>
 			</div>
+			<!--  notification!-->
+				<?php if ($USER->IsAuthorized()): ?>
+					<div class="dropdown is-right profile-icon user-notification" id="all-notification">
+						<div class="dropdown-trigger" >
+							<div id="notif-img" title='Уведомления' class="image is-32x32 notification-image<?=(session()->get('IS_USER_NOTIFICATION'))?'-active':''?>" onclick="displayNotification()" aria-controls="dropdown-menu6">
+							</div>
+						</div>
+						<div class="dropdown-menu profile notification-header" id="dropdown-menu6" role="menu">
+							<div id="notification-list" class="dropdown-content notification-list">
+								<?php if(empty(session()->get('USER_NOTIFICATION'))||session()->get('USER_NOTIFICATION' === null)):?>
+									<div class='notification-data'>Здесь пока ничего нет</div>
+								<?php endif;?>
+								<?php foreach (session()->get('USER_NOTIFICATION') as $notification):?>
+									<?=\Up\Cake\Service\NotificationService::render($notification)?>
+								<?php endforeach;?>
+							</div>
+							<button onclick="getNotification()">Обновить</button>
+						</div>
+					</div>
+				<? endif; ?>
 			<!-- logo-profile !-->
 			<div class="dropdown is-hoverable is-right profile-icon">
 				<div class="dropdown-trigger">
@@ -112,11 +128,14 @@ $APPLICATION->ShowPanel(); ?>
 					</figure>
 				</div>
 				<div class="dropdown-menu profile" id="dropdown-menu4" role="menu">
-
 					<div class="dropdown-content">
 						<?php if ($USER->IsAuthorized()): ?>
 							<a href="/profile/" class="dropdown-item">
 								Профиль
+							</a>
+							<hr class="dropdown-divider">
+							<a href="/favorites/" class="dropdown-item">
+								Понравившиеся
 							</a>
 							<hr class="dropdown-divider">
 							<a href="/profile/subs/" class="dropdown-item">
@@ -166,6 +185,35 @@ $APPLICATION->ShowPanel(); ?>
 		}
 	}
 
+	document.notificationActive = false;
+	document.notificationChecked = false;
+
+	async function displayNotification()
+	{
+		if(!document.notificationActive)
+		{
+			document.getElementById('all-notification').classList.add('is-active');
+			document.notificationActive = true;
+			if(!document.notificationChecked)
+			{
+				BX.ajax.runAction('up:cake.notification.setUncheck', {});
+				document.getElementById('notif-img').classList.replace('notification-image-active','notification-image');
+			}
+		}
+		else{
+			document.getElementById('all-notification').classList.remove('is-active');
+			document.notificationActive = false;
+		}
+	}
+	function getNotification()
+	{
+		if(<?= $USER->IsAuthorized()?>)
+		{
+			BX.ajax.runAction('up:cake.notification.getListAfterAuth');
+			document.location.reload();
+		}
+	}
+	setInterval(getNotification, 600000);
 </script>
 
 <section class="section">
