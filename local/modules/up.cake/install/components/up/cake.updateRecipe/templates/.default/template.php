@@ -164,7 +164,7 @@ Loc::loadMessages(__FILE__); ?>
 					foreach ($ingredients as $ingredient): ?>
 						<tr class="update-ingredient-delete-<?= $countIngredient ?>">
 							<th><?= $countIngredient ?></th>
-							<td><input class="input" id="recipe-ingredient-name-<?= $countIngredient ?>" name="RECIPE_INGREDIENT[NAME][]"
+							<td><input class="input ingredient-auto" id="recipe-ingredient-name-<?= $countIngredient ?>" name="RECIPE_INGREDIENT[NAME][]"
 									   value="<?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?>" type="text"></td>
 							<td><input class="input" id="recipe-ingredient-value-<?= $countIngredient ?>" name="RECIPE_INGREDIENT[VALUE][]"
 									   value="<?= (float)$ingredient->getCount() ?>" type="number" step="0.1" min="0.1" max="10000"></td>
@@ -330,7 +330,7 @@ Loc::loadMessages(__FILE__); ?>
 			const modalTable = $(`
 				<tr class="update-ingredient-delete-${$countTable}">
 							<th>${$countTable}</th>
-							<td><input class="input" id="recipe-ingredient-name-${$countTable}" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
+							<td><input class="input ingredient-auto" id="recipe-ingredient-name-${$countTable}" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
 							<td><input class="input" id="recipe-ingredient-value-${$countTable}" name="RECIPE_INGREDIENT[VALUE][]"
 							step="0.1" min="0.1" max="10000" type="number"></td>
 							<td>
@@ -344,9 +344,14 @@ Loc::loadMessages(__FILE__); ?>
 							</td>
 						</tr>
 	`);
+
+			let id = `#recipe-ingredient-name-${$countTable}`;
+
 			$countTable++;
 			$('.table-add-recipe-ingredient').append(modalTable);
-
+			$( id).autocomplete({
+				source: document.availableIngredients
+			});
 		}
 
 		$('.table-button').on('click', () => {
@@ -428,6 +433,18 @@ Loc::loadMessages(__FILE__); ?>
 				$countInstruction = $countInstruction - 1;
 			}
 		});
-
-
 	</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+	document.availableIngredients = [];
+	BX.ajax.runAction('up:cake.ingredient.getList')
+		.then((response) => {
+			document.availableIngredients = response.data;
+			$( ".ingredient-auto" ).autocomplete({
+				source: document.availableIngredients
+			});
+		})
+
+</script>

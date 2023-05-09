@@ -4,7 +4,7 @@
  * @var array $arResult
  * @var array $arParams
  */
-CJSCore::Init(["jquery"]);
+CJSCore::Init(["jquery","ajax"]);
 
 use Bitrix\Main\Localization\Loc;
 
@@ -127,7 +127,7 @@ endif; ?>
 					<tbody class="table-add-recipe-ingredient">
 						<tr class="update-ingredient-delete-1">
 							<th>1</th>
-							<td><input class="input" id="recipe-ingredient-name-1" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
+							<td><input class="input ingredient-auto" id="recipe-ingredient-name-1" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
 							<td><input class="input" id="recipe-ingredient-value-1"  name="RECIPE_INGREDIENT[VALUE][]" step="0.1" min="0.1" max="10000" type="number"></td>
 							<td>
 								<div class="select add-recipe-tags-select">
@@ -272,7 +272,7 @@ endif; ?>
 		const modalTable = $(`
 				<tr class="update-ingredient-delete-${$countTable} " id="recipe-ingredient-${$countTable}">
 							<th>${$countTable}</th>
-							<td><input class="input" id="recipe-ingredient-name-${$countTable}" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
+							<td><input class="input ingredient-auto" id="recipe-ingredient-name-${$countTable}" name="RECIPE_INGREDIENT[NAME][]" type="text"></td>
 							<td><input class="input" id="recipe-ingredient-value-${$countTable}" name="RECIPE_INGREDIENT[VALUE][]"
 							step="0.1" min="0.1" max="10000" type="number"></td>
 							<td>
@@ -286,8 +286,13 @@ endif; ?>
 							</td>
 						</tr>
 	`);
+		let id = `#recipe-ingredient-name-${$countTable}`;
+
 		$countTable++;
 		$('.table-add-recipe-ingredient').append(modalTable);
+		$( id).autocomplete({
+			source: document.availableIngredients
+		});
 
 	}
 
@@ -366,4 +371,17 @@ endif; ?>
 			$countInstruction = $countInstruction - 1;
 		}
 	});
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+	document.availableIngredients = [];
+	BX.ajax.runAction('up:cake.ingredient.getList')
+		.then((response) => {
+			document.availableIngredients = response.data;
+			$( ".ingredient-auto" ).autocomplete({
+				source: document.availableIngredients
+			});
+		})
 </script>
