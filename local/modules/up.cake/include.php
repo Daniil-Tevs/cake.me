@@ -9,6 +9,11 @@ function request(): Request
 	return Application::getInstance()->getContext()->getRequest();
 }
 
+function session(): \Bitrix\Main\Session\SessionInterface
+{
+	return \Bitrix\Main\Application::getInstance()->getSession();
+}
+
 function db(): Connection
 {
 	return Application::getConnection();
