@@ -14,7 +14,7 @@ this.BX.Up = this.BX.Up || {};
 	    if (main_core.Type.isStringFilled(options.rootNodeId)) {
 	      this.rootNodeId = options.rootNodeId;
 	    } else {
-	      throw new Error('RecipeList: options.rootNodeId required');
+	      throw new Error('CommentList: options.rootNodeId required');
 	    }
 	    if (main_core.Type.isInteger(options.recipeId)) {
 	      this.recipeId = options.recipeId;

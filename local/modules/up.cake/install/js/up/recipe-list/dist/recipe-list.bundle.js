@@ -33,7 +33,7 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "profileCard",
 	    value: function profileCard(recipeData, image) {
-	      return main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "'>\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">Likes: ", "</div> \t\n\t\t\t\t\t\t\t<a href=\"/recipe/edit/", "/\" class=\"card-footer-item button profile-button-edit\">Edit</a>\n    \t\t\t\t\t\t<button class=\"card-footer-item button profile-button-delete\" value=\"", "\" onclick=\" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);\">Delete</button>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : '', recipeData.ID, recipeData.NAME, this.getDescription(recipeData.DESCRIPTION), recipeData.REACTION, recipeData.ID, recipeData.ID);
+	      return main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"column mt-5\">\n\t\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "'>\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\u2764 Likes: ", "</div> \t\n\t\t\t\t\t\t\t<a href=\"/recipe/edit/", "/\" class=\"card-footer-item button profile-button-edit\">Edit</a>\n    \t\t\t\t\t\t<button class=\"card-footer-item button profile-button-delete\" value=\"", "\" onclick=\" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);\">Delete</button>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>\n\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : '', recipeData.ID, recipeData.NAME, this.getDescription(recipeData.DESCRIPTION), recipeData.REACTION, recipeData.ID, recipeData.ID);
 	    }
 	  }]);
 	  return RecipeCard;
@@ -193,7 +193,6 @@ this.BX.Up = this.BX.Up || {};
 	    } else {
 	      this.type = this.userId === null || this.userId <= 0 ? 'unregister' : null;
 	    }
-	    console.log(this.type);
 	    this.filters['tags'] = [];
 	    this.title = window.location.search.replace('?', '').split('&').reduce(function (p, e) {
 	      var a = e.split('=');
@@ -228,7 +227,6 @@ this.BX.Up = this.BX.Up || {};
 	    value: function loadList() {
 	      var _this2 = this;
 	      var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-	      console.log(this);
 	      return new Promise(function (resolve, reject) {
 	        var _this2$title;
 	        BX.ajax.runAction('up:cake.recipe.getList', {
