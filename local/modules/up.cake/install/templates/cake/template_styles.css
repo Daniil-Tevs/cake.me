@@ -925,3 +925,47 @@ input[type=number]::-webkit-outer-spin-button {
 	padding-top: 12px;
 	padding-bottom:12px;
 }
+
+.notification-header button{
+	width: 100%;
+	border: 1px solid gray;
+	color: darkorchid;
+	font-weight: 700;
+	background: #ffdcac;
+}
+
+.notification-image{
+	background-size: 32px 32px;
+	background-image: url(/local/modules/up.cake/install/templates/cake/images/notification.png);
+}
+
+.notification-image-active{
+	background-size: 32px 32px;
+	background-image: url(/local/modules/up.cake/install/templates/cake/images/notification-active.png);
+}
+
+.user-notification{
+	margin-right: 0;
+	margin-left: 3px;
+}
+
+.notification-list{
+	display: flex;
+	flex-direction: column;
+	width: 334px;
+	font-size: 14px;
+	padding: 8px;
+	background: #65a0ffad;
+	border-top: 4px solid #7a19c8;
+	border-radius: 7px 7px 0px 0px;
+	max-height: 212px;
+	overflow-y: auto;
+}
+
+.notification-data{
+	background: white;
+	padding: 5px;
+	border-radius: 12px;
+	color: brown;
+	margin-bottom:7px;
+}
