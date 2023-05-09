@@ -7,6 +7,7 @@
 
 use Bitrix\Main\Localization\Loc;
 
+CJSCore::Init(["jquery"]);
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 {
 	die();
@@ -20,52 +21,134 @@ Loc::loadMessages(__FILE__);
 ?>
 
 <style> .tags {display: none;}</style>
-
-<div class="content">
-
-
-	<div class="box box-search-user">
-		<h1>Ваши подписки:</h1>
-		<hr>
-		<br>
-
-		<?php if (empty($userList)): ?>
-		<div class="field is-flex search-users-find-label">Вы не подписаны на других пользователей!</div>
-
-		<?php else: ?>
-		<?php foreach ($userList as $user): ?>
-		<div class="box box-user-search">
-		<article class="media">
-			<div class="media-left">
-				<a href="/users/<?= (int)$user['ID'] ?>/">
-				<figure class="image is-64x64">
-					<?php if ((int)$user['PERSONAL_PHOTO'] === 0): ?>
-						<?php if ($user['PERSONAL_GENDER'] === 'M'): ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
-						<?php elseif ($user['PERSONAL_GENDER'] === 'F'): ?>
-						<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
-						<?php endif; ?>
-					<?php else: ?>
-						<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 400, 400, "border=1", ""); ?>
-					<?php endif; ?>
-				</figure>
-				</a>
-			</div>
-			<div class="media-content">
-				<div class="content">
-					<p>
-						<a href="/users/<?= (int)$user['ID'] ?>/">
-						<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?></strong>
-						</a>
-						<br>
-						<?= htmlspecialcharsbx($user['PERSONAL_NOTES']) ?>
-					</p>
-				</div>
-			</div>
-		</article>
-		</div>
-		<?php endforeach; ?>
-		<?php endif; ?>
-
-	</div>
+<br>
+<br>
+<div class="field">
+	<a class="button is-link is-light" id="sub1" onclick="buttonSubs1()">Подписки</a>
+	<a class="button is-link is-light" id="sub2" onclick="buttonSubs2()">Подписчики</a>
 </div>
+<br>
+<div class="content content-subs-list">
+
+</div>
+
+
+<script>
+	buttonSubs1();
+
+	function buttonSubs1()
+	{
+		window.stepSubs = 1
+		window.CakeSubscribeList = '';
+		let field1 = document.querySelector('.field-subs1-list');
+		let field2 = document.querySelector('.field-subs2-list');
+
+		if (field2)
+		{
+			field2.remove();
+			let button2 = document.getElementById('sub2');
+			if (!button2.classList.contains('is-light'))
+			{
+				button2.classList.add('is-light');
+			}
+		}
+
+		let $element = `
+				<div class="field field-subs1-list">
+					<h2>Ваши подписки:</h2>
+					<hr>
+					<div id="subs-list"></div>
+				</div>
+		`;
+
+		if (!field1)
+		{
+			// let contentField = document.querySelector('.content-subs-list');
+			$('.content-subs-list').append($element);
+			let button1 = document.getElementById('sub1');
+			button1.classList.remove('is-light');
+
+			window.CakeSubscribeList = new BX.Up.Cake.SubscribeList({
+				rootNodeId: 'subs-list',
+				userId: <?= (int)($USER->GetID()) ?>,
+				subs2: 0,
+			})
+		}
+
+	}
+
+	function buttonSubs2()
+	{
+		window.stepSubs = 1
+		window.CakeSubscribeList = '';
+		let field1 = document.querySelector('.field-subs1-list');
+		let field2 = document.querySelector('.field-subs2-list');
+
+		if (field1)
+		{
+			field1.remove();
+			let button1 = document.getElementById('sub1');
+			if (!button1.classList.contains('is-light'))
+			{
+				button1.classList.add('is-light');
+			}
+		}
+
+		let $element = `
+				<div class="field field-subs2-list">
+					<h2>Ваши подписчики:</h2>
+					<hr>
+					<div id="subs-list"></div>
+				</div>
+		`;
+
+		if (!field2)
+		{
+			let contentField = document.getElementsByClassName('content-subs-list');
+			$('.content-subs-list').append($element);
+			let button2 = document.getElementById('sub2');
+			button2.classList.remove('is-light');
+
+			window.CakeSubscribeList = new BX.Up.Cake.SubscribeList({
+				rootNodeId: 'subs-list',
+				userId: <?= (int)($USER->GetID()) ?>,
+				subs2: 1,
+			})
+		}
+
+	}
+
+
+	function throttle(callee, timeout) {
+		let timer = null
+
+		return function perform(...args) {
+			if (timer) return
+
+			timer = setTimeout(() => {
+				callee(...args)
+
+				clearTimeout(timer)
+				timer = null
+			}, timeout)
+		}
+	}
+
+	async  function checkPosition() {
+		const height = document.body.offsetHeight
+		const screenHeight = window.innerHeight
+		const scrolled = window.scrollY
+
+		const threshold = height - screenHeight / 8
+		const position = scrolled + screenHeight
+
+		if (position >= threshold && !window.CakeSubscribeList.END_PAGE) {
+			// console.log(window.stepSubs);
+			window.stepSubs++;
+			window.scrollBy(0,-100);
+			await window.CakeSubscribeList.reload(window.stepSubs);
+		}
+	}
+
+	window.addEventListener('scroll', throttle(checkPosition))
+</script>
