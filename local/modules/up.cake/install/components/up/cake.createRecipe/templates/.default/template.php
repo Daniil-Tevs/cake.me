@@ -41,7 +41,7 @@ endif; ?>
 		<div class="create-page-main-label create-header">Новый рецепт</div>
 
 		<div class="block is-flex add-form-recipe-name">
-			<input class="input is-large add-form-recipe-name-input" id="recipe-name" name="RECIPE_NAME" type="text" placeholder="Название рецепта">
+			<input class="input is-large add-form-recipe-name-input" id="recipe-name" name="RECIPE_NAME" type="text" maxlength="255" placeholder="Название рецепта">
 		</div>
 		<hr>
 		<div class="block is-flex add-form-recipe-main-image">
@@ -54,7 +54,7 @@ endif; ?>
 
 		<div class="field is-flex add-form-recipe-image-buttons">
 			<a class="image-button button is-primary is-light">добавить</a>
-			<a class="image-delete-button button is-warning is-light">Удалить</a>
+			<a id="image-delete-button-main" class="image-delete-button button is-warning is-light">Удалить</a>
 		</div>
 
 		<hr>
@@ -64,7 +64,7 @@ endif; ?>
 			<div class="field add-recipe-desc">
 				<div class="field">
 					<div class="control">
-						<textarea class="textarea" maxlength="2000" id="recipe-desc" name="RECIPE_DESC" placeholder="Описание"></textarea>
+						<textarea class="textarea" maxlength="1000" id="recipe-desc" name="RECIPE_DESC" placeholder="Описание"></textarea>
 					</div>
 				</div>
 			</div>
@@ -146,7 +146,7 @@ endif; ?>
 
 				<div class="field">
 					<a class="table-button button is-primary is-light">Добавить ингредиент</a>
-					<a class="ingredient-delete-button button is-warning is-light">Удалить ингредиент</a>
+					<a id="ingredient-delete-button" class="ingredient-delete-button button is-warning is-light">Удалить ингредиент</a>
 				</div>
 			</div>
 
