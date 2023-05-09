@@ -108,6 +108,10 @@ body {
 	height: fit-content;
 }
 
+.card-list .content{
+	word-wrap: break-word;
+}
+
 .card-list .card-content {
 	padding-top: 12px;
 }
@@ -118,6 +122,10 @@ body {
 	display: block;
 	height: 1px;
 	margin: 10px 0;
+}
+
+.detail-card{
+	word-wrap: break-word;
 }
 
 .detail-card .card-content{
@@ -147,7 +155,7 @@ body {
 }
 
 .detail-card .card-content .content{
-	width: fit-content;
+	max-width: 739px;
 	padding: 25px;
 	margin-bottom: 0px;
 }
@@ -748,12 +756,18 @@ input[type=number]::-webkit-outer-spin-button {
 	margin-bottom: 15px;
 }
 
+.comments .card{
+	max-width: 1248px;
+}
+
 .comment-title{
+	word-wrap: break-word;
+	width: 80%;
 	flex:1;
 }
 
 .comments .media {
-	width: 145px;
+	min-width: 145px;
 }
 .error-edit-recipe {
 	margin-top: 10px;
