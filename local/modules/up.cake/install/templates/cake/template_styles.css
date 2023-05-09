@@ -505,10 +505,21 @@ a.dropdown-item {
 	align-self: center;
 }
 
+.is-detail-instruction-block {
+	align-items: center;
+	justify-content: space-around;
+}
+
 .detail-instruction-box {
 	margin-left: 40px;
-	width: 1000px;
+	width: 900px;
 }
+
+#detail-instruction-box {
+	margin-top: 0;
+	padding: 10px;
+}
+
 .instructions{
 	padding-top: 40px;
 	padding-bottom: 40px;
@@ -807,6 +818,10 @@ input[type=number]::-webkit-outer-spin-button {
 	margin-top: 20px;
 }
 
+#box-search-user {
+	padding: 25px;
+}
+
 .input-search-user {
 	width: 450px;
 	margin-right: 10px;
@@ -823,6 +838,15 @@ input[type=number]::-webkit-outer-spin-button {
 
 .box-user-search {
 	width: 80%;
+}
+#box-user-search-list {
+	padding: 10px;
+	margin-top: 5px;
+}
+
+#box-subs-list {
+	padding: 10px;
+	margin-top: 5px;
 }
 
 .like{

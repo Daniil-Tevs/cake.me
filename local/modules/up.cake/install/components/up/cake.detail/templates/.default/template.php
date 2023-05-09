@@ -47,7 +47,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 					<div class="field is-flex detail-main-name-block">
 						<div class="title mb-2"><?= htmlspecialcharsbx($recipe->getName()) ?> </div>
 						<?php if ($isAuthor): ?>
-							<a href="/recipe/edit/<?= $recipe->getId() ?>/" class="button is-info detail-edit-href">Редактировать</a>
+							<a href="/recipe/edit/<?= (int)$recipe->getId() ?>/" class="button is-info detail-edit-href">Редактировать</a>
 						<?php endif; ?>
 					</div>
 					<button class="like ${recipeData.USER_REACTION ? 'like-active' : ''}" id="like-btn-${recipeData.ID}" value="${recipeData.ID}" onclick="window.CakeRecipeList.reaction.changeLike(this.value)"></button>
@@ -64,7 +64,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 				<p><?= htmlspecialcharsbx($recipe->getDescription()) ?></p>
 				<div class="media">
 					<div class="media-left">
-						<a href="/users/<?= $recipe->getUser()->getId() ?>/">
+						<a href="/users/<?= (int)$recipe->getUser()->getId() ?>/">
 
 							<?php if ($UserGender === 'M'): ?>
 								<figure class="image is-48x48">
@@ -80,7 +80,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 					</div>
 					</a>
 					<div class="media-content media-content-detail-page">
-						<p class="title is-5"><a href="/users/<?= $recipe->getUser()->getId() ?>/"> <?= htmlspecialcharsbx(
+						<p class="title is-5"><a href="/users/<?= (int)$recipe->getUser()->getId() ?>/"> <?= htmlspecialcharsbx(
 									$recipe->getUser()->getName() . ' ' . $recipe->getUser()->getLastName()
 								) ?> (<?= htmlspecialcharsbx($recipe->getUser()->getLogin()) ?>)</a></p>
 					</div>
@@ -104,14 +104,10 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		</div>
 
 		<footer class="card-footer">
-			<div class="card-footer-item is-size-6">🕔 Время приготовления: <?= htmlspecialcharsbx(
-					$recipe->getTime()
-				) ?> минут
+			<div class="card-footer-item is-size-6">🕔 Время приготовления: <?= (int)$recipe->getTime()?> минут
 			</div>
-			<div class="card-footer-item is-size-6">🔥 Калории: <?= htmlspecialcharsbx($recipe->getCalories()) ?></div>
-			<div class="card-footer-item is-size-6">🍽️ Количество порций: <?= htmlspecialcharsbx(
-					$recipe->getPortionCount()
-				) ?></div>
+			<div class="card-footer-item is-size-6">🔥 Калории: <?= (int)$recipe->getCalories() ?></div>
+			<div class="card-footer-item is-size-6">🍽️ Количество порций: <?= (int)$recipe->getPortionCount() ?></div>
 		</footer>
 		<p class="title is-4 detail-ingredient" style="margin:0">Ингредиенты:</p>
 			<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="margin:0">
@@ -129,7 +125,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 					<tr>
 						<th><?= $countIngredient + 1 ?></th>
 						<td><?= htmlspecialcharsbx($ingredient->getIngredient()->getName()) ?></td>
-						<td><?= htmlspecialcharsbx($ingredient->getCount()) ?> <?= htmlspecialcharsbx(
+						<td><?= (float)$ingredient->getCount() ?> <?= htmlspecialcharsbx(
 								$ingredient->getTypeId()
 							) ?></td>
 					</tr>
@@ -141,22 +137,29 @@ $isAuthor = $arResult['USER_AUTHOR'];
 			<?php
 			$instructionCount = 0;
 			foreach ($recipe->getInstructions() as $instruction): ?>
-				<div class="field is-flex">
+				<div class="field is-flex is-detail-instruction-block">
 					<div class="detail-instruction-image">
+						<?php if ((int)$instructionImages[$instructionCount]['IMAGE_ID'] !== 0): ?>
 						<?= CFile::ShowImage(
-							$instructionImages[$instructionCount]['IMAGE_ID'],
+							(int)$instructionImages[$instructionCount]['IMAGE_ID'],
 							200,
 							200,
 							"border=0",
 							"",
 							true
 						); ?>
+						<?php else: ?>
+							<img src="/local/modules/up.cake/install/templates/cake/images/emptyImage3.png" height="150" width="200" alt="/" class="'is-rounded">
+						<?php endif; ?>
 					</div>
-					<div class="box is-size-6 detail-instruction-box">
+					<div id="detail-instruction-box" class="box detail-instruction-box">
 						<div class="content ml-2">
-							<h2>Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?> </h2>
+							<h2>Шаг <?= (int)$instruction->getStep() ?> </h2>
 						</div>
-						<?= htmlspecialcharsbx($instruction->getDescription()) ?>
+						<div class="content ml-2">
+							<?= htmlspecialcharsbx($instruction->getDescription()) ?>
+						</div>
+
 					</div>
 				</div>
 				<?php
@@ -212,7 +215,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 	BX.ready(function() {
 		window.CakeCommentList = new BX.Up.Cake.RecipeComments({
 			rootNodeId: 'comment-list',
-			recipeId: <?= htmlspecialcharsbx($recipe->getId()) ?>,
+			recipeId: <?= (int)$recipe->getId() ?>,
 		})
 	})
 

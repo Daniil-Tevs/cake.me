@@ -47,7 +47,7 @@ $APPLICATION->ShowPanel(); ?>
 			<!--  adding!-->
 			<a href="/recipe/create/" class="logo-add">
 				<figure class="image is-32x32">
-					<img class="profile-image" aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/adding.png">
+					<img class="profile-image" title="Добавить рецепт" aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/adding.png">
 				</figure>
 			</a>
 			<!--  recent!-->
@@ -56,7 +56,7 @@ $APPLICATION->ShowPanel(); ?>
 					<a onclick="displayRecentRecipes()">
 						<div class="logo-add recent-recipe-icon">
 							<figure class="image is-32x32">
-								<img class="profile-image" aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/recentRecipe.png">
+								<img class="profile-image" title="Недавние рецепты" aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/recentRecipe.png">
 							</figure>
 						</div>
 					</a>

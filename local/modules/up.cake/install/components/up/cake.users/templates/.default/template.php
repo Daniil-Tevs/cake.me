@@ -58,12 +58,14 @@ Loc::loadMessages(__FILE__);
 					<img src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" height="500" width="500" alt="/">
 					<?php endif; ?>
 					<?php endif; ?>
-					<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 500, 500, "border=0", "", true); ?>
+					<?= CFile::ShowImage((int)$user['PERSONAL_PHOTO'], 500, 500, "border=0", "", true); ?>
 		</div>
 		<div class="column">
 			<div class="card-content">
 				<div class="profile-header">
-					<p class="title is-3 mb-0"><?= htmlspecialcharsbx("{$user['NAME']} {$user['LAST_NAME']}")?> (<?= $user['LOGIN'] ?>)</p>
+					<p class="title is-3 mb-0">
+						<?= htmlspecialcharsbx("{$user['NAME']} {$user['LAST_NAME']}")?> (<?= htmlspecialcharsbx($user['LOGIN']) ?>)
+					</p>
 
 					<?php if ($subCheck === true): ?>
 					<div class="field is-flex">
@@ -73,12 +75,12 @@ Loc::loadMessages(__FILE__);
 							</figure>
 							<div class="users-subs-text-check">Вы подписаны</div>
 
-							<a class="button is-danger" href="/users/<?= $user['ID'] ?>/?subsDel=Y">Отписаться</a>
+							<a class="button is-danger" href="/users/<?= (int)$user['ID'] ?>/?subsDel=Y">Отписаться</a>
 						</div>
 
 					</div>
 					<?php else: ?>
-						<a href="/users/<?= $user['ID'] ?>/?subs=Y">
+						<a href="/users/<?= (int)$user['ID'] ?>/?subs=Y">
 						<div class="field is-flex users-subs-icon">
 							<figure class="image is-32x32 is-pulled-right">
 								<img src="/local/modules/up.cake/install/templates/cake/images/subscribe.png" >
@@ -93,9 +95,15 @@ Loc::loadMessages(__FILE__);
 				<hr class="hr-profile">
 				<div class="content profile-details">
 
-					<div class="profile-detail-info"><p>Пол:</p><?= htmlspecialcharsbx(($user['PERSONAL_GENDER']==='M')?'Мужской':'Женский' ?? 'Не указан')?></div>
-					<div class="profile-detail-info"><p>Город проживания:</p><?= htmlspecialcharsbx($user['PERSONAL_CITY'] ?? 'Не указан')?></div>
-					<div class="profile-detail-info"><p>Описание:</p><?= htmlspecialcharsbx($user['PERSONAL_NOTES'] ?? 'Не указан')?></div>
+					<div class="profile-detail-info"><p>Пол:</p>
+						<?= htmlspecialcharsbx(($user['PERSONAL_GENDER']==='M')?'Мужской':'Женский' ?? 'Не указан')?>
+					</div>
+					<div class="profile-detail-info"><p>Город проживания:</p>
+						<?= htmlspecialcharsbx($user['PERSONAL_CITY'] ?? 'Не указан')?>
+					</div>
+					<div class="profile-detail-info"><p>Описание:</p>
+						<?= htmlspecialcharsbx($user['PERSONAL_NOTES'] ?? 'Не указан')?>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -116,8 +124,8 @@ Loc::loadMessages(__FILE__);
 		window.CakeRecipeList = new BX.Up.Cake.RecipeList({
 			rootNodeId: 'recipe-list',
 			type: 'anotherProfile',
-			userId: <?= $arParams['USER']?>,
-			anotherUserId: <?=$user['ID']?>
+			userId: <?= (int)$arParams['USER']?>,
+			anotherUserId: <?= (int)$user['ID']?>
 		});
 	});
 

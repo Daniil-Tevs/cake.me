@@ -150,6 +150,7 @@ class RecipeService
 		$recipes = [];
 		foreach ($recipeIds as $id)
 		{
+			$id = (int)$id;
 			$recipes[] = RecipeTable::query()->setSelect(['ID', 'NAME'])->where('ID', $id)->fetch();
 		}
 		return $recipes;
@@ -160,11 +161,16 @@ class RecipeService
 		return RecipeTable::getById($recipeId)->fetch();
 	}
 
-	public static function getRecipeDetailById(int $id)
+	public static function getRecipeDetailById(int $id): array
 	{
 		$recipe = \UP\Cake\Model\RecipeTable::query()->setSelect(
 				['*', 'USER', 'INSTRUCTIONS', 'TAGS', 'RECIPE_INGREDIENT.RECIPE_ID']
 			)->where('ID', $id)->fetchObject();
+
+		if ($recipe === null)
+		{
+			return [];
+		}
 
 		$recipeId = [];
 		foreach ($recipe->getRecipeIngredient() as $item)
@@ -182,15 +188,15 @@ class RecipeService
 	public static function addRecipe(array $newRecipe): int
 	{
 		$recipe = \UP\Cake\Model\RecipeTable::createObject();
-		$recipe->setName($newRecipe['RECIPE_NAME'])->setDescription($newRecipe['RECIPE_DESC'])
-			->setTime($newRecipe['RECIPE_TIME'])->setCalories($newRecipe['RECIPE_CALORIES'])
-			->setPortionCount($newRecipe['RECIPE_PORTION'])->setUserId($newRecipe["RECIPE_USER"]);
+		$recipe->setName(mySqlHelper()->forSql($newRecipe['RECIPE_NAME']))->setDescription(mySqlHelper()->forSql($newRecipe['RECIPE_DESC']))
+			->setTime((int)$newRecipe['RECIPE_TIME'])->setCalories((int)$newRecipe['RECIPE_CALORIES'])
+			->setPortionCount((int)$newRecipe['RECIPE_PORTION'])->setUserId((int)$newRecipe["RECIPE_USER"]);
 		$result = $recipe->save();
 		$recipeId = $result->getId();
 
 		for ($i = 0, $iMax = count($newRecipe['RECIPE_IMAGES_MAIN']['error']); $i < $iMax; $i++)
 		{
-			if ($newRecipe['RECIPE_IMAGES_MAIN']['error'][$i] === 0)
+			if ((int)$newRecipe['RECIPE_IMAGES_MAIN']['error'][$i] === 0)
 			{
 				$filePath = $newRecipe['RECIPE_IMAGES_MAIN']['tmp_name'][$i];
 				$arFile = CFile::MakeFileArray($filePath);
@@ -204,7 +210,7 @@ class RecipeService
 		foreach ($newRecipe['RECIPE_TAGS'] as $iTag => $tag)
 		{
 			$recipeTag = \UP\Cake\Model\RecipeTagTable::createObject();
-			$tagQuery = \UP\Cake\Model\TagTable::query()->setSelect(['ID'])->whereLike('NAME', $tag)
+			$tagQuery = \UP\Cake\Model\TagTable::query()->setSelect(['ID'])->whereLike('NAME', mySqlHelper()->forSql($tag))
 				->fetchObject();
 			if (empty($tagQuery))
 			{
@@ -219,21 +225,22 @@ class RecipeService
 			$IngredientId = null;
 			$recipeIngredient = \UP\Cake\Model\RecipeIngredientTable::createObject();
 			$IngredientQuery = \UP\Cake\Model\IngredientTable::query()->setSelect(['ID'])
-				->whereLike('NAME', $newRecipe['RECIPE_INGREDIENT']['NAME'][$i])
+				->whereLike('NAME', mySqlHelper()->forSql($newRecipe['RECIPE_INGREDIENT']['NAME'][$i]))
 				->fetchObject();
 
 			if (empty($IngredientQuery))
 			{
 				$newRecipeIngredient = \UP\Cake\Model\IngredientTable::createObject();
-				$newRecipeIngredient->setName($newRecipe['RECIPE_INGREDIENT']['NAME'][$i])->save();
+				$newRecipeIngredient->setName(mySqlHelper()->forSql($newRecipe['RECIPE_INGREDIENT']['NAME'][$i]))->save();
 				$IngredientId = $newRecipeIngredient->getId();
 			}
 			else
 			{
 				$IngredientId = $IngredientQuery->getId();
 			}
+			//TODO: дописать проверку на тип ингредиента
 			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientId)
-				->setCount($newRecipe['RECIPE_INGREDIENT']['VALUE'][$i])->setTypeId($newRecipe['RECIPE_INGREDIENT']['TYPE'][$i])->save();
+				->setCount((float)['RECIPE_INGREDIENT']['VALUE'][$i])->setTypeId(mySqlHelper()->forSql($newRecipe['RECIPE_INGREDIENT']['TYPE'][$i]))->save();
 		}
 
 		foreach ($newRecipe['RECIPE_INSTRUCTION'] as $iStep => $instruction)
@@ -252,7 +259,7 @@ class RecipeService
 
 			}
 
-			$instructionQuery->setDescription($instruction)->setStep($iStep+1)->setRecipeId($recipeId)->save();
+			$instructionQuery->setDescription(mySqlHelper()->forSql($instruction))->setStep($iStep+1)->setRecipeId($recipeId)->save();
 		}
 		return (int)$recipeId;
 	}
@@ -261,9 +268,9 @@ class RecipeService
 	{
 		//Изменение основной информации о рецепте
 		$result = RecipeTable::getById($recipeId)->fetchObject()
-			->setName($updateRecipe['RECIPE_NAME'])->setDescription('')
-			->setDescription($updateRecipe['RECIPE_DESC'])->setTime($updateRecipe['RECIPE_TIME'])
-			->setCalories($updateRecipe['RECIPE_CALORIES'])->setPortionCount($updateRecipe['RECIPE_PORTION'])->save();
+			->setName(mySqlHelper()->forSql($updateRecipe['RECIPE_NAME']))->setDescription('')
+			->setDescription(mySqlHelper()->forSql($updateRecipe['RECIPE_DESC']))->setTime((int)$updateRecipe['RECIPE_TIME'])
+			->setCalories((int)$updateRecipe['RECIPE_CALORIES'])->setPortionCount((int)$updateRecipe['RECIPE_PORTION'])->save();
 
 
 		//Изменение тегов
@@ -277,7 +284,7 @@ class RecipeService
 		{
 
 			$recipeTag = \UP\Cake\Model\RecipeTagTable::createObject();
-			$tagQuery = \UP\Cake\Model\TagTable::query()->setSelect(['ID'])->whereLike('NAME', $tag)
+			$tagQuery = \UP\Cake\Model\TagTable::query()->setSelect(['ID'])->whereLike('NAME', mySqlHelper()->forSql($tag))
 											   ->fetchObject();
 			if (empty($tagQuery))
 			{
@@ -300,22 +307,22 @@ class RecipeService
 			$IngredientId = null;
 			$recipeIngredient = \UP\Cake\Model\RecipeIngredientTable::createObject();
 			$IngredientQuery = \UP\Cake\Model\IngredientTable::query()->setSelect(['ID'])
-				->whereLike('NAME', $updateRecipe['RECIPE_INGREDIENT']['NAME'][$i])->fetchObject();
+				->whereLike('NAME', mySqlHelper()->forSql($updateRecipe['RECIPE_INGREDIENT']['NAME'][$i]))->fetchObject();
 
 			if (empty($IngredientQuery))
 			{
 				$newRecipeIngredient = \UP\Cake\Model\IngredientTable::createObject();
-				$newRecipeIngredient->setName($updateRecipe['RECIPE_INGREDIENT']['NAME'][$i])->save();
+				$newRecipeIngredient->setName(mySqlHelper()->forSql($updateRecipe['RECIPE_INGREDIENT']['NAME'][$i]))->save();
 				$IngredientId = $newRecipeIngredient->getId();
 			}
 			else
 			{
-				$IngredientId = $IngredientQuery->getId();
+				$IngredientId = (int)$IngredientQuery->getId();
 			}
 
 			$recipeIngredient->setRecipeId($recipeId)->setIngredientId($IngredientId)
-				->setCount($updateRecipe['RECIPE_INGREDIENT']['VALUE'][$i])
-				->setTypeId($updateRecipe['RECIPE_INGREDIENT']['TYPE'][$i])->save();
+				->setCount((float)$updateRecipe['RECIPE_INGREDIENT']['VALUE'][$i])
+				->setTypeId(mySqlHelper()->forSql($updateRecipe['RECIPE_INGREDIENT']['TYPE'][$i]))->save();
 		}
 
 		//Изменение шагов
@@ -331,7 +338,7 @@ class RecipeService
 				continue;
 			}
 
-			CFile::Delete($imageInstructIds[$i]['IMAGE_ID']);
+			CFile::Delete((int)$imageInstructIds[$i]['IMAGE_ID']);
 		}
 
 		$ingredientDelete = InstructionsTable::query()->setSelect(['ID'])
@@ -357,7 +364,7 @@ class RecipeService
 				$imageQuery->setRecipeId($recipeId)->setImageId($imageId)->setIsMain(0)->setNumber($iStep+1)->save();
 			}
 
-			$instructionQuery->setDescription($instruction)->setStep($iStep+1)->setRecipeId($recipeId)->save();
+			$instructionQuery->setDescription(mySqlHelper()->forSql($instruction))->setStep($iStep+1)->setRecipeId($recipeId)->save();
 		}
 
 		//изменение главных изображений
@@ -378,7 +385,7 @@ class RecipeService
 		for ($i = 0, $iMax = count($updateRecipe['RECIPE_IMAGES_MAIN']['error']); $i < $iMax; $i++)
 		{
 
-			if ($updateRecipe['RECIPE_IMAGES_MAIN']['error'][$i] === 0)
+			if ((int)$updateRecipe['RECIPE_IMAGES_MAIN']['error'][$i] === 0)
 			{
 				$filePath = $updateRecipe['RECIPE_IMAGES_MAIN']['tmp_name'][$i];
 				$arFile = CFile::MakeFileArray($filePath);

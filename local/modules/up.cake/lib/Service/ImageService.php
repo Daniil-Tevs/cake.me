@@ -29,6 +29,11 @@ class ImageService
 
 	public static function getByIdIn(array $ids): array
 	{
+		foreach ($ids as $i => $id)
+		{
+			$ids[$i] = (int)$id;
+		}
+
 		return RecipeImageTable::query()->setSelect(['IMAGE_ID','RECIPE_ID' ])->where('IS_MAIN', 1)->whereIn('RECIPE_ID', $ids)
 							  ->fetchAll();
 	}
@@ -51,6 +56,7 @@ class ImageService
 		$Images = [];
 		foreach ($recipeIds as $id)
 		{
+			$id = (int)$id;
 			$Images[$id] = RecipeImageTable::query()->setSelect(['RECIPE_ID', 'IMAGE_ID', 'NUMBER'])->where('RECIPE_ID', $id)->where('IS_MAIN', 1)->addOrder('NUMBER', 'ASC')->fetch();
 		}
 
