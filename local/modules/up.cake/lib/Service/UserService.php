@@ -39,7 +39,7 @@ class UserService
 		return $result->isSuccess();
 	}
 
-	public static function createSubs($userId, $subId): bool
+	public static function createSubs(int $userId, int $subId): bool
 	{
 		$query = UserSubsTable::query()->setSelect(['*'])->where('USER_ID', $userId)
 			->where('SUB_ID', $subId)->fetchObject();
@@ -50,6 +50,7 @@ class UserService
 
 	public static function getUserList(string $search): array
 	{
+		$search = mySqlHelper()->forSql($search);
 		$userList = UserTable::query()
 			->setSelect(['ID', 'LOGIN', 'NAME', 'LOGIN', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHOTO', 'PERSONAL_NOTES']);
 
