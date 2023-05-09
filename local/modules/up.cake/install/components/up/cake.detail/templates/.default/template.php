@@ -141,8 +141,9 @@ $isAuthor = $arResult['USER_AUTHOR'];
 			<?php
 			$instructionCount = 0;
 			foreach ($recipe->getInstructions() as $instruction): ?>
-				<div class="field is-flex">
+				<div class="field is-flex is-detail-instruction-block">
 					<div class="detail-instruction-image">
+						<?php if ((int)$instructionImages[$instructionCount]['IMAGE_ID'] !== 0): ?>
 						<?= CFile::ShowImage(
 							$instructionImages[$instructionCount]['IMAGE_ID'],
 							200,
@@ -151,12 +152,18 @@ $isAuthor = $arResult['USER_AUTHOR'];
 							"",
 							true
 						); ?>
+						<?php else: ?>
+							<img src="/local/modules/up.cake/install/templates/cake/images/emptyImage3.png" height="150" width="200" alt="/" class="'is-rounded">
+						<?php endif; ?>
 					</div>
-					<div class="box is-size-6 detail-instruction-box">
+					<div id="detail-instruction-box" class="box detail-instruction-box">
 						<div class="content ml-2">
 							<h2>Шаг <?= htmlspecialcharsbx($instruction->getStep()) ?> </h2>
 						</div>
-						<?= htmlspecialcharsbx($instruction->getDescription()) ?>
+						<div class="content ml-2">
+							<?= htmlspecialcharsbx($instruction->getDescription()) ?>
+						</div>
+
 					</div>
 				</div>
 				<?php

@@ -497,10 +497,21 @@ a.dropdown-item {
 	align-self: center;
 }
 
+.is-detail-instruction-block {
+	align-items: center;
+	justify-content: space-around;
+}
+
 .detail-instruction-box {
 	margin-left: 40px;
-	width: 1000px;
+	width: 900px;
 }
+
+#detail-instruction-box {
+	margin-top: 0;
+	padding: 10px;
+}
+
 .instructions{
 	padding-top: 40px;
 	padding-bottom: 40px;
