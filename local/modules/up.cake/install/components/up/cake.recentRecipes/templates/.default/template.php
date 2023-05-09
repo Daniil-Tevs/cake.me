@@ -41,7 +41,7 @@ Loc::loadMessages(__FILE__);
 				<div class="content">
 					<p>
 						<a href="/detail/<?= (int)$recipe['ID'] ?>/">
-							<strong><?= $recipe['NAME'] ?></strong>
+							<strong><?= htmlspecialcharsbx($recipe['NAME']) ?></strong>
 						</a>
 						<br>
 						...

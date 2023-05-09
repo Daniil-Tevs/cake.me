@@ -101,7 +101,7 @@ endif; ?>
 					<select id="tag-1" name="RECIPE_TAGS[]">
 
 						<?php foreach ($tags as $tag): ?>
-						<option><?= $tag->getName() ?></option>
+						<option><?= htmlspecialcharsbx($tag->getName()) ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
@@ -133,7 +133,7 @@ endif; ?>
 								<div class="select add-recipe-tags-select">
 									<select name="RECIPE_INGREDIENT[TYPE][]" id="recipe-ingredient-type-1">
 										<?php foreach ($types as $type): ?>
-											<option ><?= $type->getId() ?></option>
+											<option ><?= htmlspecialcharsbx($type->getId())  ?></option>
 										<?php endforeach; ?>
 									</select>
 								</div>

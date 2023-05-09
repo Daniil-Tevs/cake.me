@@ -71,7 +71,7 @@ Loc::loadMessages(__FILE__);
 				<a href="/users/<?= (int)$user['ID'] ?>/">
 
 					<?php if ((int)$user['PERSONAL_PHOTO'] === 0): ?>
-						<?php if ($user['PERSONAL_GENDER'] === 'M'): ?>
+						<?php if ( $user['PERSONAL_GENDER'] === 'M'): ?>
 						<figure class="image is-96x96">
 							<img src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
 						</figure>
@@ -81,7 +81,7 @@ Loc::loadMessages(__FILE__);
 						</figure>
 						<?php endif; ?>
 					<?php else: ?>
-						<?= CFile::ShowImage($user['PERSONAL_PHOTO'], 96, 96, "border=1", ""); ?>
+						<?= CFile::ShowImage((int)$user['PERSONAL_PHOTO'], 96, 96, "border=1", ""); ?>
 					<?php endif; ?>
 
 				</a>
