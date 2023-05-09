@@ -11,6 +11,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
  * @var CBitrixComponent $component
  */
 
+CJSCore::Init(array('ajax', 'window'));
 
 if ($arParams["SUCCESS_REG"] === true): ?>
 	<div class="notification is-primary is-light reg-success-message">
@@ -43,7 +44,7 @@ if($arResult['ERROR_MESSAGE'] <> ''):
 		<div class="image image-auth-form">
 			<img src="/local/modules/up.cake/install/templates/.default/components/bitrix/system.auth.authorize/flat/images/login.png" alt="/">
 		</div>
-	<form class="box box-reg" name="form_auth" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
+	<form id="auth-user" class="box box-reg" name="form_auth" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
 		<label class="label label-reg-name is-size-3"><?=GetMessage("AUTH_CAKE_TITLE")?></label>
 
 		<input type="hidden" name="AUTH_FORM" value="Y" />
@@ -97,10 +98,21 @@ if($arResult['ERROR_MESSAGE'] <> ''):
 				<p><?=GetMessage("AUTH_FIRST_ONE")?> <a href="<?=$arResult["AUTH_REGISTER_URL"]?>"><?=GetMessage("AUTH_REGISTER")?></a></p>
 			</div>
 		<?endif?>
-
-
 	</form>
 	</div>
 </div>
 
+<script>
+	let form = document.getElementById('auth-user');
+	form.addEventListener('submit', getNotification);
+	const formData = new FormData(form);
 
+	function getNotification(event)
+	{
+		BX.ajax.runAction('up:cake.notification.getList', {
+				data: {
+					userLogin: formData.get('USER_LOGIN'),
+				},
+			})
+	}
+</script>
