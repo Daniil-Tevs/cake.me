@@ -104,7 +104,7 @@ Loc::loadMessages(__FILE__);
 		<div class="your-recipe">
 			<p>Рецепты</p>
 		</div>
-		<div id="recipe-list"></div>
+		<div id="recipe-list" class="card-lists"></div>
 	</div>
 
 </div>
@@ -152,11 +152,10 @@ Loc::loadMessages(__FILE__);
 		if (position >= threshold && !window.CakeRecipeList.END_PAGE)
 		{
 			step++;
-			window.scrollBy(0, -100);
 			await window.CakeRecipeList.reload(step);
 		}
 	}
 
-	window.addEventListener('scroll', throttle(checkPosition));
+	window.addEventListener('scroll', throttle(checkPosition,2000));
 
 </script>

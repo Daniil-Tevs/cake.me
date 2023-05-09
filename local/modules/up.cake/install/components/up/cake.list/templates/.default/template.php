@@ -79,12 +79,11 @@ Loc::loadMessages(__FILE__);
 		if (position >= threshold && !window.CakeRecipeList.END_PAGE) {
 			console.log(window.step);
 			window.step++;
-			window.scrollBy(0,-100);
 			await window.CakeRecipeList.reload(window.step);
 		}
 	}
 
-	window.addEventListener('scroll', throttle(checkPosition))
+	window.addEventListener('scroll', throttle(checkPosition,3000))
 
 	document.categoryActive = false;
 	async function displayCategory()
