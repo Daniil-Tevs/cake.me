@@ -72,6 +72,64 @@ class RecipeService
 		return (RecipeTable::delete($id))->isSuccess();
 	}
 
+	public static function getRecipeByUserLikes(int $offset = 0, int $limit = 0, int $userId = 0, string $title = null, array $filter = null)
+	{
+		$recipeIds = array_map(fn($item)=>(int)$item['RECIPE_ID'],\UP\Cake\Model\ReactionTable::query()->setSelect(['RECIPE_ID'])->where('USER_ID',$userId)->fetchAll());
+		$recipes = \UP\Cake\Model\RecipeTable::query()->setSelect(
+			[
+				'ID','NAME',
+				'DESCRIPTION',
+				'TIME','REACTION',
+				'CALORIES','PORTION_COUNT',
+				'USER_ID',
+				'DATE_ADDED','DATE_UPDATED',
+				'USER',
+			]
+		)->whereIn('ID',$recipeIds);
+
+		if ($title && strlen(trim($title)) > 3)
+		{
+			$searchTitle = '';
+			foreach (explode(' ',$title) as $word)
+			{
+				if($word === '') continue;
+				$searchTitle .= mySqlHelper()->forSql($word) . '%';
+			}
+			$recipes->whereLike('NAME', '%'.$searchTitle.'%');
+		}
+
+		if (!empty($filter))
+		{
+			$filter = array_map(fn($tag) => (int)mySqlHelper()->forSql($tag),$filter);
+			$query = 'SELECT t1.RECIPE_ID FROM up_cake_recipe_tag t1 ';
+			$conditional = ' WHERE ';
+			$i=1;
+			foreach ($filter as $tag)
+			{
+				if($i>1)
+				{
+					$query .= " INNER JOIN up_cake_recipe_tag t{$i} ";
+					$conditional .= sprintf(' t%d.RECIPE_ID = t%d.RECIPE_ID AND ',$i-1,$i);
+				}
+
+				$conditional .= "t{$i}.TAG_ID = $tag";
+				$conditional .= ($tag !== $filter[count($filter)-1])?" AND ":'';
+				$i++;
+			}
+			$recipeIds = db() -> query($query . $conditional);
+
+			$recipeIds = array_map(fn($tag)=>(int)$tag['RECIPE_ID'],$recipeIds->fetchAll());
+			if(empty($recipeIds))
+			{
+				return [];
+			}
+			$recipes->whereIn('ID', $recipeIds);
+		}
+
+		return $recipes->setOffset($offset)->setLimit($limit)->fetchAll();
+	}
+
+
 	public static function getRecipeByUserId(int $id,int $offset = 0, int $limit = 0)
 	{
 		return \UP\Cake\Model\RecipeTable::query()->setSelect(
@@ -89,21 +147,17 @@ class RecipeService
 
 	public static function getRecentRecipes(array $recipeIds): array
 	{
-		// TODO: сделать выборку одним запросом
 		$recipes = [];
 		foreach ($recipeIds as $id)
 		{
 			$recipes[] = RecipeTable::query()->setSelect(['ID', 'NAME'])->where('ID', $id)->fetch();
 		}
-		// $recipes = RecipeTable::query()->setSelect(['ID', 'NAME'])->whereIn('ID', $recipeIds)->fetchAll();
-
 		return $recipes;
 	}
 
 	public static function checkRecentRecipes(int $recipeId)
 	{
-		$result = RecipeTable::getById($recipeId)->fetch();
-		return $result;
+		return RecipeTable::getById($recipeId)->fetch();
 	}
 
 	public static function getRecipeDetailById(int $id)
