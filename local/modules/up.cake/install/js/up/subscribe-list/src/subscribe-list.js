@@ -100,7 +100,7 @@ export class SubscribeList
 					}
 				}
 
-				const commentNode = Tag.render`<div class="box box-user-search">
+				const commentNode = Tag.render`<div id="box-subs-list" class="box box-user-search">
 				<article class="media">
 					<div class="media-left">
 						<a href="/users/${commentData.ID}/">
@@ -116,7 +116,7 @@ export class SubscribeList
 							<a href="/users/${commentData.ID}/">
 								<strong>${commentData.NAME + ' ' + commentData.LAST_NAME + ' (' + commentData.LOGIN + ')'}</strong>
 							</a>
-							<br>
+							<br> <br>
 								${commentData.PERSONAL_NOTES.substring(0,this.LENGTH_COMMENT)}
 							</p>
 						</div>
