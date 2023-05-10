@@ -117,7 +117,7 @@ class RecipeTable extends DataManager
 	public static function validateDescription()
 	{
 		return [
-			new LengthValidator(null, 1000),
+			new LengthValidator(null, 2000),
 		];
 	}
 }

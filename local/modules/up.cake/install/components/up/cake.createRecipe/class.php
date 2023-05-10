@@ -64,14 +64,14 @@ class CakeCreateComponent extends CBitrixComponent
 		if ($newRecipe["RECIPE_NAME"] === '' || $newRecipe["RECIPE_PORTION"] <= 0 || $newRecipe["RECIPE_TIME"] <= 0 ||
 			$newRecipe["RECIPE_CALORIES"] < 0 || empty($newRecipe["RECIPE_TAGS"]) || empty($newRecipe["RECIPE_INGREDIENT"]) ||
 			empty($newRecipe["RECIPE_INSTRUCTION"]) || empty($newRecipe["RECIPE_IMAGES_MAIN"]) ||
-			strlen($newRecipe["RECIPE_NAME"]) >= 255 || strlen($newRecipe["RECIPE_DESC"]) >= 1000)
+			strlen($newRecipe["RECIPE_NAME"]) >= 255 || strlen($newRecipe["RECIPE_DESC"]) >= 2000)
 		{
 			LocalRedirect('/recipe/create/?error_create=Y');
 		}
 
 		foreach ($newRecipe['RECIPE_INSTRUCTION'] as $item)
 		{
-			if (strlen(trim($item)) >= 1000)
+			if (strlen(trim($item)) >= 2000)
 			{
 				LocalRedirect('/recipe/create/?error_create=Y');
 			}
