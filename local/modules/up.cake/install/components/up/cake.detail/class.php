@@ -6,6 +6,7 @@ class CakeDetailComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
+		$this->checkId();
 		$this->fetchRecipeDetail();
 		$this->fetchUser();
 		$this->addSession();
@@ -13,14 +14,14 @@ class CakeDetailComponent extends CBitrixComponent
 		$this->includeComponentTemplate();
 	}
 
-	public function onPrepareComponentParams($arParams)
+	public function checkId()
 	{
-		$arParams['ID'] = (int)$arParams['ID'];
-		if ($arParams['ID'] <= 0)
+		$this->arParams['ID'] = (int)$this->arParams['ID'];
+		if ($this->arParams['ID'] <= 0)
 		{
-			throw new Exception('Invalid recipe ID');
+			LocalRedirect('/');
 		}
-		return $arParams;
+		return $this->arParams;
 	}
 
 	protected function getMessage(): void

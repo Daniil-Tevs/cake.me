@@ -169,32 +169,7 @@ class CakeDetailComponent extends CBitrixComponent
 			LocalRedirect("/recipe/edit/{$this->arParams['ID']}/?error_update=Y");
 		}
 
-		echo '<pre>';
-
 		$this->imageValidate($updateRecipe['RECIPE_IMAGES_MAIN']);
-		// for ($i = 0, $iMax = count($imageArray['name']); $i < $iMax; $i++)
-		// {
-		// 	$arrImage = [];
-		// 	if ($imageArray['error'][$i] === 4 || $imageArray['error'][$i] === 100)
-		// 	{
-		// 		continue;
-		// 	}
-		//
-		// 	$arrImage = [
-		// 		'name' => $imageArray['name'][$i],
-		// 		'size' => $imageArray['size'][$i],
-		// 		'tmp_name' => $imageArray['tmp_name'][$i],
-		// 		'type' => $imageArray['type'][$i],
-		// 		"del" => "",
-		// 		"MODULE_ID" => ""
-		// 	];
-		//
-		// 	$res = CFile::CheckImageFile($arrImage, 10);
-		// 	if ($res !== '')
-		// 	{
-		// 		LocalRedirect("/recipe/edit/{$this->arParams['ID']}/?image_error=Y");
-		// 	}
-		// }
 		$this->imageValidate($updateRecipe['RECIPE_INSTRUCTION_IMAGES']);
 
 		\Up\Cake\Service\RecipeService::updateRecipe($updateRecipe, $this->arParams['ID']);
