@@ -25,6 +25,12 @@ if ($arParams["SUCCESS_REG"] === true): ?>
 	</div>
 <?php endif; ?>
 
+<?php if ($arParams["ERROR_CHECK_USERS_AUTH"] === true): ?>
+	<div class="notification is-danger is-light error-edit-recipe">
+		<p>Чтобы посмотреть профиль пользователя, вы должны авторизоваться!</p>
+	</div>
+<?php endif; ?>
+
 <?php if(!empty($arParams["~AUTH_RESULT"])):
 	$text = str_replace(array("<br>", "<br />"), "\n", $arParams["~AUTH_RESULT"]["MESSAGE"]);
 ?>

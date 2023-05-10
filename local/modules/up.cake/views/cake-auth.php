@@ -23,6 +23,7 @@ $AuthResult = $APPLICATION->arAuthResult;
 
 $successReg = false;
 $addRecipeAuth = false;
+$checkUsersAuth = false;
 
 $request = Context::getCurrent()->getRequest();
 
@@ -36,6 +37,11 @@ if ($request->get("auth_user") === "N")
 	$addRecipeAuth = true;
 }
 
+if ($request->get("check_users") === "N")
+{
+	$checkUsersAuth = true;
+}
+
 $APPLICATION->IncludeComponent('bitrix:system.auth.authorize', 'flat',[
 	'AUTH_RESULT' => $AuthResult,
 	"REGISTER_URL" => "/register/",
@@ -44,6 +50,7 @@ $APPLICATION->IncludeComponent('bitrix:system.auth.authorize', 'flat',[
 	"SHOW_ERRORS" => "Y",
 	"SUCCESS_REG" => $successReg,
 	"ERROR_AUTH_USER_ADD_RECIPE" => $addRecipeAuth,
+	"ERROR_CHECK_USERS_AUTH" => $checkUsersAuth
 ]);
 
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php");
