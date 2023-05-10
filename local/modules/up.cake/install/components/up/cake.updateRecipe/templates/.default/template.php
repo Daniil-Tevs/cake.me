@@ -86,7 +86,7 @@ Loc::loadMessages(__FILE__); ?>
 				<div class="field">
 					<div class="control">
 						<textarea class="textarea" maxlength="2000" id="recipe-desc" name="RECIPE_DESC"
-								  placeholder="Описание"><?= htmlspecialcharsbx($recipe->getDescription()) ?></textarea>
+								  placeholder="Описание"><?= str_replace(['\r\n', '\&quot;', '\\\''], ['&#10', '"', '\''], htmlspecialcharsbx($recipe->getDescription())) ?></textarea>
 					</div>
 				</div>
 			</div>
@@ -215,7 +215,7 @@ Loc::loadMessages(__FILE__); ?>
 						<div class="field">
 							<div class="control">
 								<textarea class="textarea add-recipe-textarea-input" id="recipe-instruction-<?= $instructionCount ?>"
-										  maxlength="2000" name="RECIPE_INSTRUCTION[]"><?= htmlspecialcharsbx($instruction->getDescription()) ?>
+										  maxlength="2000" name="RECIPE_INSTRUCTION[]"><?= str_replace(['\r\n', '\&quot;', '\\\''], ['&#10', '"', '\''], htmlspecialcharsbx($instruction->getDescription())) ?>
 								</textarea>
 							</div>
 						</div>

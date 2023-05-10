@@ -61,7 +61,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 					<?php
 					endforeach; ?>
 				</div>
-				<p><?= htmlspecialcharsbx($recipe->getDescription()) ?></p>
+				<p><?= str_replace(['\r\n', '\&quot;', '\\\''],['<br>', '"', '\''],htmlspecialcharsbx($recipe->getDescription())) ?></p>
 				<div class="media">
 					<div class="media-left">
 						<a href="/users/<?= (int)$recipe->getUser()->getId() ?>/">
@@ -157,7 +157,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 							<h2>Шаг <?= (int)$instruction->getStep() ?> </h2>
 						</div>
 						<div class="content ml-2">
-							<?= htmlspecialcharsbx($instruction->getDescription()) ?>
+							<?= str_replace(['\r\n', '\&quot;', '\\\''],['<br>', '"', '\''], htmlspecialcharsbx($instruction->getDescription())) ?>
 						</div>
 
 					</div>
