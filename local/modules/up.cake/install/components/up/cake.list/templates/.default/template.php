@@ -17,12 +17,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 Loc::loadMessages(__FILE__);
 ?>
 
-<?php if ($arResult["ERROR_AUTH_USER"] === true): ?>
-	<div class="notification is-danger is-light error-edit-recipe">
-		<p>Чтобы добавить рецепт, вы должны авторизоваться!</p>
-	</div>
-<?php endif; ?>
-
 <?php if ($arResult["SUCCESS_AUTH_MESSAGE"] === true): ?>
 	<div class="notification is-primary is-light error-edit-recipe">
 		<p>Авторизация успешна!</p>
@@ -32,6 +26,12 @@ Loc::loadMessages(__FILE__);
 <?php if ($arResult["CREATE_SUCCESS"] === true): ?>
 	<div class="notification is-primary is-light error-edit-recipe">
 		<p>Рецепт создан!</p>
+	</div>
+<?php endif; ?>
+
+<?php if ($arResult["SESSION_ERROR"] === true): ?>
+	<div class="notification is-danger is-light error-edit-recipe">
+		<p>Что-то пошло не так!</p>
 	</div>
 <?php endif; ?>
 

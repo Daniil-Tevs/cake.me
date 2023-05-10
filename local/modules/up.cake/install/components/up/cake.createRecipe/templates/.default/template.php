@@ -38,6 +38,7 @@ endif; ?>
 
 <div class="content">
 	<form class="box" name="form_add_recipe" method="post" id="recipe-form" target="_top" action="/recipe/create/" enctype="multipart/form-data">
+		<?= bitrix_sessid_post()?>
 		<div class="create-page-main-label create-header">Новый рецепт</div>
 
 		<div class="block is-flex add-form-recipe-name">
@@ -64,7 +65,7 @@ endif; ?>
 			<div class="field add-recipe-desc">
 				<div class="field">
 					<div class="control">
-						<textarea class="textarea" maxlength="1000" id="recipe-desc" name="RECIPE_DESC" placeholder="Описание"></textarea>
+						<textarea class="textarea" maxlength="2000" id="recipe-desc" name="RECIPE_DESC" placeholder="Описание"></textarea>
 					</div>
 				</div>
 			</div>
@@ -166,7 +167,7 @@ endif; ?>
 						<div class="field is-flex  add-recipe-instruction-textarea">
 							<div class="field">
 								<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000"
+								<textarea class="textarea add-recipe-textarea-input" maxlength="2000"
 										  id="recipe-instruction-1" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
 								</div>
 							</div>
@@ -240,7 +241,7 @@ endif; ?>
 					<div class="field is-flex  add-recipe-instruction-textarea">
 						<div class="field">
 							<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000"
+								<textarea class="textarea add-recipe-textarea-input" maxlength="2000"
 									id="recipe-instruction-${$countInstruction}" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
 							</div>
 						</div>

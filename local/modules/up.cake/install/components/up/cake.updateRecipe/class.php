@@ -14,6 +14,10 @@ class CakeUpdateComponent extends CBitrixComponent
 
 		if ($request->isPost())
 		{
+			if (!check_bitrix_sessid())
+			{
+				LocalRedirect('/?session_error=Y');
+			}
 			$this->updateRecipe($request);
 		}
 

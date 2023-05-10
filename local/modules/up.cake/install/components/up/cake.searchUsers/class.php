@@ -27,9 +27,7 @@ class CakeSearchUsersComponent extends CBitrixComponent
 	{
 		global $USER;
 
-		// $search = str_replace(' ', '', $search);
-
-		$userList = \Up\Cake\Service\UserService::getUserList($search);
+		$userList = \Up\Cake\Service\UserService::getUserList($search, (int)$USER->GetID());
 
 		// убираем из выборки текущего авторизованного пользователя
 		if (!empty($userList))

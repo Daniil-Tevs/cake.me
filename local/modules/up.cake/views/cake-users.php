@@ -14,7 +14,7 @@ $AuthResult = $APPLICATION->arAuthResult;
 
 if (!$USER->IsAuthorized())
 {
-	LocalRedirect("/");
+	LocalRedirect("/auth/?check_users=N");
 }
 
 if ((int)$USER->GetID() === (int)$_REQUEST['id'])

@@ -48,7 +48,7 @@ class UserService
 		return $result->isSuccess();
 	}
 
-	public static function getUserList(string $search): array
+	public static function getUserList(string $search, $userId): array
 	{
 		$search = mySqlHelper()->forSql($search);
 		$userList = UserTable::query()
@@ -77,12 +77,24 @@ class UserService
 			$queryArray[] = ['LAST_NAME', 'like', "%$item%"];
 			$queryArray[] = ['LOGIN', 'like', "%$item%"];
 		}
-		// echo '<pre>';
-		// print_r($queryArray); die();
 
 		$userList = $userList->where(Query::filter()->logic('or')->where($queryArray));
 
 		$userList = $userList->setLimit(21)->fetchAll();
+
+		foreach ($userList as $i => $user)
+		{
+			$subs = UserSubsTable::query()->setSelect(['USER_ID', 'SUB_ID'])->where('USER_ID', $userId)->where('SUB_ID', $user['ID'])->fetch();
+
+			if (!empty($subs))
+			{
+				$userList[$i]['CHECK_SUBS'] = 1;
+			}
+			else
+			{
+				$userList[$i]['CHECK_SUBS'] = 0;
+			}
+		}
 
 		return $userList;
 	}

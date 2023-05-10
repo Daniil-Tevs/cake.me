@@ -110,6 +110,20 @@ body {
 	margin-top: 95px;
 }
 
+.image-header-profile {
+	max-height: 36px;
+	max-width: 36px;
+	border-radius: 50%;
+	margin-left: 10px;
+}
+
+.image-header-profile-default {
+	max-height: 40px;
+	max-width: 40px;
+	border-radius: 50%;
+	margin-top: 5px;
+	margin-left: 10px;
+}
 
 .card-list {
 	margin-top: 22px;
@@ -866,6 +880,16 @@ input[type=number]::-webkit-outer-spin-button {
 .box-user-search {
 	width: 80%;
 }
+
+.search-users-info-block {
+	display: flex;
+	justify-content: space-between;
+}
+
+.search-users-info-block-subs {
+	display: flex;
+}
+
 #box-user-search-list {
 	padding: 10px;
 	margin-top: 5px;

@@ -8,7 +8,7 @@ $APPLICATION->SetTitle("Создать рецепт");
 
 if (!$USER->IsAuthorized())
 {
-	LocalRedirect("/?authUser=N");
+	LocalRedirect("/auth/?auth_user=N");
 }
 
 $APPLICATION->IncludeComponent('up:cake.createRecipe', '', [
