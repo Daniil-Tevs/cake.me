@@ -45,8 +45,8 @@ Loc::loadMessages(__FILE__);
 		<hr>
 		<div class="field">
 			<form name="form_user_search" action="/search/users/" method="get">
+				<?=bitrix_sessid_post() ?>
 			<div class="field has-addons">
-
 				<div class="control">
 					<input class="input input-search-user" type="text" id="search-input" name="search" placeholder="поиск по имени">
 				</div>

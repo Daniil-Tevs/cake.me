@@ -17,6 +17,10 @@ class CakeSearchUsersComponent extends CBitrixComponent
 		{
 			$search = trim($request->get("search"));
 
+			if (!check_bitrix_sessid())
+			{
+				LocalRedirect('/?session_error=Y');
+			}
 			$this->getUserList($search);
 		}
 
