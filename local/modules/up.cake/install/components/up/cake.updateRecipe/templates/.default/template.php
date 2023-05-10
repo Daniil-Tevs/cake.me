@@ -54,6 +54,8 @@ Loc::loadMessages(__FILE__); ?>
 	<form class="box" name="form_update_recipe" id="update-form" method="post" target="_top"
 		  action="/recipe/edit/<?= (int)$recipe->getId()?>/" enctype="multipart/form-data">
 
+		<?= bitrix_sessid_post()?>
+
 		<div class="create-page-main-label create-header">Редактирование рецепта</div>
 		<div class="block is-flex add-form-recipe-name">
 			<input class="input is-large add-form-recipe-name-input" id="recipe-name" name="RECIPE_NAME" type="text"

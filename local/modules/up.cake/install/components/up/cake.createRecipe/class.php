@@ -15,16 +15,12 @@ class CakeCreateComponent extends CBitrixComponent
 
 		if ($request->isPost())
 		{
-			if (check_bitrix_sessid())
-			{
-				$this->createRecipe($request);
-			}
-			else
+			if (!check_bitrix_sessid())
 			{
 				LocalRedirect('/?session_error=Y');
 			}
 
-
+			$this->createRecipe($request);
 		}
 
 		$this->includeComponentTemplate();
