@@ -64,7 +64,7 @@ endif; ?>
 			<div class="field add-recipe-desc">
 				<div class="field">
 					<div class="control">
-						<textarea class="textarea" maxlength="1000" id="recipe-desc" name="RECIPE_DESC" placeholder="Описание"></textarea>
+						<textarea class="textarea" maxlength="2000" id="recipe-desc" name="RECIPE_DESC" placeholder="Описание"></textarea>
 					</div>
 				</div>
 			</div>
@@ -166,7 +166,7 @@ endif; ?>
 						<div class="field is-flex  add-recipe-instruction-textarea">
 							<div class="field">
 								<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000"
+								<textarea class="textarea add-recipe-textarea-input" maxlength="2000"
 										  id="recipe-instruction-1" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
 								</div>
 							</div>
@@ -240,7 +240,7 @@ endif; ?>
 					<div class="field is-flex  add-recipe-instruction-textarea">
 						<div class="field">
 							<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000"
+								<textarea class="textarea add-recipe-textarea-input" maxlength="2000"
 									id="recipe-instruction-${$countInstruction}" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
 							</div>
 						</div>

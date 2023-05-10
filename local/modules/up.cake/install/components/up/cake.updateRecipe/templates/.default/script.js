@@ -182,7 +182,7 @@ BX.ready(
 				return false;
 			}
 
-			if (recipeDescription.length >= 1000)
+			if (recipeDescription.length >= 2000)
 			{
 				let recipeDescriptionClass = document.querySelector('#recipe-desc');
 				recipeDescriptionClass.classList.add('is-danger', 'is-focused');
@@ -193,7 +193,7 @@ BX.ready(
 
 			error = false;
 			for (let i = 0; i < recipeInstruction.length; i++) {
-				if (recipeInstruction[i].value.trim().length >= 1000)
+				if (recipeInstruction[i].value.trim().length >= 2000)
 				{
 					let recipeInstructionClass = document.querySelector('#recipe-instruction-' + (i+1));
 					recipeInstructionClass.classList.add('is-danger', 'is-focused');

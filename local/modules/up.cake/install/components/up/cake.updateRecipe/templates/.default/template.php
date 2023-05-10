@@ -215,7 +215,7 @@ Loc::loadMessages(__FILE__); ?>
 						<div class="field">
 							<div class="control">
 								<textarea class="textarea add-recipe-textarea-input" id="recipe-instruction-<?= $instructionCount ?>"
-										  maxlength="1000" name="RECIPE_INSTRUCTION[]"><?= htmlspecialcharsbx($instruction->getDescription()) ?>
+										  maxlength="2000" name="RECIPE_INSTRUCTION[]"><?= htmlspecialcharsbx($instruction->getDescription()) ?>
 								</textarea>
 							</div>
 						</div>
@@ -294,7 +294,7 @@ Loc::loadMessages(__FILE__); ?>
 					<div class="field is-flex  add-recipe-instruction-textarea">
 						<div class="field">
 							<div class="control">
-								<textarea class="textarea add-recipe-textarea-input" maxlength="1000"
+								<textarea class="textarea add-recipe-textarea-input" maxlength="2000"
 									id="recipe-instruction-${$countInstruction}" name="RECIPE_INSTRUCTION[]" placeholder="Описание"></textarea>
 							</div>
 						</div>
