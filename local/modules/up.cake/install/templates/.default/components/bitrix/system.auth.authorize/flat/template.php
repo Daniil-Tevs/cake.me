@@ -42,10 +42,10 @@ if($arResult['ERROR_MESSAGE'] <> ''):
 
 	<div class="field is-grouped is-grouped-centered">
 		<div class="image image-auth-form">
-			<img src="/local/modules/up.cake/install/templates/.default/components/bitrix/system.auth.authorize/flat/images/login.png" alt="/">
+			<img class="auth-img" src="/local/modules/up.cake/install/templates/cake/images/login.png" alt="/">
 		</div>
-	<form id="auth-user" class="box box-reg" name="form_auth" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
-		<label class="label label-reg-name is-size-3"><?=GetMessage("AUTH_CAKE_TITLE")?></label>
+	<form id="auth-user" class="box box-reg box-auth" name="form_auth" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
+		<label class="label label-reg-name label-auth is-size-3"><?=GetMessage("AUTH_CAKE_TITLE")?></label>
 
 		<input type="hidden" name="AUTH_FORM" value="Y" />
 		<input type="hidden" name="TYPE" value="AUTH" />

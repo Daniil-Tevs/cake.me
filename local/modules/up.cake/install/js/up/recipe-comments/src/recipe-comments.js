@@ -72,11 +72,12 @@ export class RecipeComments
 		this.rootNode.innerHTML = '';
 		console.log(this.commentList);
 		this.commentList.forEach(commentData => {
+			console.log(commentData)
 			const commentNode = Tag.render`<div class="card"><div class="card-content comment-card pl-2 ">
 					<div class="media">
 						<div class="media-left mr-2">
 							<figure class="image is-32x32">
-								<img class="is-rounded" src="${commentData.UP_CAKE_MODEL_COMMENT_USER_PERSONAL_PHOTO}" alt="Placeholder image">
+								<img class="is-rounded" src="${(commentData.UP_CAKE_MODEL_COMMENT_USER_PERSONAL_PHOTO !== '')? commentData.UP_CAKE_MODEL_COMMENT_USER_PERSONAL_PHOTO:((commentData.UP_CAKE_MODEL_COMMENT_USER_PERSONAL_GENDER === 'M')?'/local/modules/up.cake/install/templates/cake/images/profileMale.png':'/local/modules/up.cake/install/templates/cake/images/profileFemale.png')}" alt="">
 							</figure>
 						</div>
 						<div class="media-content">
