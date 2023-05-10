@@ -6,7 +6,7 @@ use Bitrix\Main\Context;
  * @global CUser $USER
  */
 
-class RecentRecipes extends CBitrixComponent
+class RecentRecipesComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{

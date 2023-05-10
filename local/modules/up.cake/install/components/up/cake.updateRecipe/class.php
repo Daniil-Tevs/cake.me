@@ -2,7 +2,7 @@
 
 use Bitrix\Main\Context;
 
-class CakeDetailComponent extends CBitrixComponent
+class CakeUpdateComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{

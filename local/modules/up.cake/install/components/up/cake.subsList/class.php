@@ -6,7 +6,7 @@ use Bitrix\Main\Context;
  * @global CUser $USER
  */
 
-class SubscribeList extends CBitrixComponent
+class SubscribeListComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{

@@ -6,7 +6,7 @@ use Bitrix\Main\Context;
  * @global CUser $USER
  */
 
-class CakeProfile extends CBitrixComponent
+class CakeProfileComponent extends CBitrixComponent
 {
 	public function executeComponent()
 	{
