@@ -75,12 +75,12 @@ Loc::loadMessages(__FILE__);
 							</figure>
 							<div class="users-subs-text-check">Вы подписаны</div>
 
-							<a class="button is-danger" href="/users/<?= (int)$user['ID'] ?>/?subsDel=Y">Отписаться</a>
+							<a class="button is-danger" href="/users/<?= (int)$user['ID'] ?>/?subsDel=Y&<?=bitrix_sessid_get()?>">Отписаться</a>
 						</div>
 
 					</div>
 					<?php else: ?>
-						<a href="/users/<?= (int)$user['ID'] ?>/?subs=Y">
+						<a href="/users/<?= (int)$user['ID'] ?>/?subs=Y&<?=bitrix_sessid_get()?>">
 						<div class="field is-flex users-subs-icon">
 							<figure class="image is-32x32 is-pulled-right">
 								<img src="/local/modules/up.cake/install/templates/cake/images/subscribe.png" >
