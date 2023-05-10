@@ -101,6 +101,21 @@ body {
 	margin-top: 95px;
 }
 
+.image-header-profile {
+	max-height: 36px;
+	max-width: 36px;
+	border-radius: 50%;
+	margin-top: 7px;
+	margin-left: 10px;
+}
+
+.image-header-profile-default {
+	max-height: 40px;
+	max-width: 40px;
+	border-radius: 50%;
+	margin-top: 5px;
+	margin-left: 10px;
+}
 
 .card-list {
 	margin-top: 22px;

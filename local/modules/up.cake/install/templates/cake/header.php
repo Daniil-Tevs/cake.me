@@ -123,9 +123,21 @@ $APPLICATION->ShowPanel(); ?>
 			<!-- logo-profile !-->
 			<div class="dropdown is-hoverable is-right profile-icon">
 				<div class="dropdown-trigger">
+					<?php if ($USER->IsAuthorized()): ?>
+						<?php if ((int)$USER->GetParam('PERSONAL_PHOTO')): ?>
+<!--							<figure class="image is-48x48">-->
+								<img class="image-header-profile" src="<?= CFile::GetPath((int)$USER->GetParam('PERSONAL_PHOTO')) ?>" height="48" width="48" alt="/">
+<!--							</figure>-->
+						<?php elseif ($USER->GetParam('PERSONAL_GENDER') === 'M'): ?>
+								<img class="image-header-profile-default" src="/local/modules/up.cake/install/templates/cake/images/profileMale.png" alt="/">
+						<?php else: ?>
+								<img class="image-header-profile-default" src="/local/modules/up.cake/install/templates/cake/images/profileFemale.png" alt="/">
+						<?php endif; ?>
+					<?php else: ?>
 					<figure class="image is-48x48">
 						<img class="profile-image " aria-controls="dropdown-menu4" src="/local/modules/up.cake/install/templates/cake/images/profile.png">
 					</figure>
+					<?php endif; ?>
 				</div>
 				<div class="dropdown-menu profile" id="dropdown-menu4" role="menu">
 					<div class="dropdown-content">
