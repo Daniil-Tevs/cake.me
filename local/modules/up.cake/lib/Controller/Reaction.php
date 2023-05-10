@@ -30,6 +30,24 @@ class Reaction extends \Bitrix\Main\Engine\Controller
 		}
 	}
 
+	public function addLikeThisUserAction(int $recipeId = 0)
+	{
+		global $USER;
+		if($USER->IsAuthorized())
+		{
+			$this->addLikeAction($USER->GetID(), $recipeId);
+		}
+	}
+
+	public function removeLikeThisUserAction(int $recipeId = 0): void
+	{
+		global $USER;
+		if($USER->IsAuthorized())
+		{
+			$this->removeLikeAction($USER->GetID(), $recipeId);
+		}
+	}
+
 	protected function getDefaultPreFilters()
 	{
 		return [
