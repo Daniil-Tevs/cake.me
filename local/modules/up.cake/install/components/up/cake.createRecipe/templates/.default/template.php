@@ -38,6 +38,7 @@ endif; ?>
 
 <div class="content">
 	<form class="box" name="form_add_recipe" method="post" id="recipe-form" target="_top" action="/recipe/create/" enctype="multipart/form-data">
+		<?= bitrix_sessid_post()?>
 		<div class="create-page-main-label create-header">Новый рецепт</div>
 
 		<div class="block is-flex add-form-recipe-name">

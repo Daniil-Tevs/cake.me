@@ -35,5 +35,10 @@ class CakeListComponent extends CBitrixComponent
 		}
 
 		$this->arResult['ERROR_AUTH_USER'] = $errorAuthUser;
+
+		if ($request->get("session_error") === "Y")
+		{
+			$this->arResult['SESSION_ERROR'] = true;
+		}
 	}
 }

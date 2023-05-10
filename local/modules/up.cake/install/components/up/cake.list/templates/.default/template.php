@@ -29,6 +29,12 @@ Loc::loadMessages(__FILE__);
 	</div>
 <?php endif; ?>
 
+<?php if ($arResult["SESSION_ERROR"] === true): ?>
+	<div class="notification is-danger is-light error-edit-recipe">
+		<p>Что-то пошло не так!</p>
+	</div>
+<?php endif; ?>
+
 <?php if ($arResult["UPDATE_SUCCESS"] === true): ?>
 	<div class="notification is-primary is-light error-edit-recipe">
 		<p>Рецепт обновлен!</p>
