@@ -29,6 +29,6 @@ export class RecipeMessage
 	profileMessage()
 	{
 		document.getElementsByClassName('your-recipe').item(0).innerHTML =`<p>У вас пока нет рецептов</p>`;
-		return Tag.render``;
+		return Tag.render`<div class="profile-mes"><a href="/recipe/create/"><img src="/local/modules/up.cake/install/templates/cake/images/dishes.png" alt=""><p>Добавьте ваш первый рецепт!</p></a></div>`;
 	}
 }
