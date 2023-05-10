@@ -89,10 +89,15 @@ Loc::loadMessages(__FILE__);
 			<div class="media-content">
 				<div class="content">
 					<p>
-						<div>
+						<div class="search-users-info-block">
 							<a href="/users/<?= (int)$user['ID'] ?>/">
-							<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?> (<?= htmlspecialcharsbx($user['LOGIN']) ?>)</strong>
+								<strong><?= htmlspecialcharsbx($user['NAME']) ?> <?= htmlspecialcharsbx($user['LAST_NAME']) ?> (<?= htmlspecialcharsbx($user['LOGIN']) ?>)</strong>
 							</a>
+						<?php if ((int)$user['CHECK_SUBS'] === 1): ?>
+							<div class="search-users-info-block-subs"><img src="/local/modules/up.cake/install/templates/cake/images/subscribeSuccess.png" height="25" width="25" alt="/">
+								<p>Вы подписаны</p>
+							</div>
+						<?php endif; ?>
 						</div>
 						<div>
 							<?= htmlspecialcharsbx($user['PERSONAL_NOTES']) ?>

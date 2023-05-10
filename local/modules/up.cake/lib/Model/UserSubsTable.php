@@ -45,7 +45,7 @@ class UserSubsTable extends DataManager
 			'USER' => (new Reference(
 				'USER',
 				UserTable::class,
-				Join::on('this.RECIPE_ID','ref.ID')
+				Join::on('this.USER_ID','ref.ID')
 			))->configureJoinType('inner')
 		];
 	}
