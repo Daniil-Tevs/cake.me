@@ -112,11 +112,10 @@ Loc::loadMessages(__FILE__);
 		if (position >= threshold && !window.CakeRecipeList.END_PAGE)
 		{
 			step++;
-			window.scrollBy(0, -100);
 			await window.CakeRecipeList.reload(step);
 		}
 	}
 
-	window.addEventListener('scroll', throttle(checkPosition,2000));
+	window.addEventListener('scroll', throttle(checkPosition,1000));
 
 </script>

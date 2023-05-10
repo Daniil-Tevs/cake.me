@@ -77,13 +77,12 @@ Loc::loadMessages(__FILE__);
 		const position = scrolled + screenHeight
 
 		if (position >= threshold && !window.CakeRecipeList.END_PAGE) {
-			console.log(window.step);
 			window.step++;
 			await window.CakeRecipeList.reload(window.step);
 		}
 	}
 
-	window.addEventListener('scroll', throttle(checkPosition,3000))
+	window.addEventListener('scroll', throttle(checkPosition,1000))
 
 	document.categoryActive = false;
 	async function displayCategory()
