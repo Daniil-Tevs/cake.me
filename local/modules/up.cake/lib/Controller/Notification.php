@@ -8,11 +8,26 @@ class Notification extends \Bitrix\Main\Engine\Controller
 {
 	public function getListAction(string $userLogin): void
 	{
+		$isNew = false;
 		$result = NotificationService::get($userLogin);
 		$session = \Bitrix\Main\Application::getInstance()->getSession();
 		$storedNotification = $session->get('USER_NOTIFICATION')??[];
+		$result = array_map(function($notification) use ($storedNotification) {
+			$not1 =array_merge($notification,[false]);
+			$not2 =array_merge($notification,[true]);
+			$notification[] = !((in_array($not1, $storedNotification, false)) || (in_array($not2, $storedNotification, false)));
+			return $notification;
+			},$result);
+		foreach ($result as $notify)
+		{
+			if ($notify[count($notify)-1])
+			{
+				$isNew = true;
+				break;
+			}
+		}
 		$session->set('USER_NOTIFICATION', $result);
-		$session->set('IS_USER_NOTIFICATION', !(count($storedNotification) === count($result)));
+		$session->set('IS_USER_NOTIFICATION', $isNew);
 	}
 
 	public function getListAfterAuthAction(): void

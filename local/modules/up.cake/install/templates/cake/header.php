@@ -37,7 +37,7 @@ $APPLICATION->ShowPanel(); ?>
 		</div>
 
 		<div class="search-container">
-			<form action="/" class="search-form" method="get">
+			<form id="search-form" action="/" class="search-form" method="get">
 				<input type="text" name="search-string" class="search-input" placeholder="Search" oninput="window.CakeRecipeList.changeTitle(this.value);window.step=1;">
 				<input type="image" class="search-form-image" name="search-string"  src="/local/modules/up.cake/install/templates/cake/images/search.png" alt="Submit Form" />
 			</form>
@@ -87,7 +87,7 @@ $APPLICATION->ShowPanel(); ?>
 											<div class="tags">
 												<?php foreach ($tags as $tag):?>
 													<div class="tag">
-														<input type="radio" name="<?=htmlspecialcharsbx($category)?>" class="mr-2" oninput="window.CakeRecipeList.changeFilters(this.name,this.value);window.step=1;"   value="<?=htmlspecialcharsbx($tag->getId())?>"><?=htmlspecialcharsbx($tag->getName())?>
+														<input id="tag-<?=htmlspecialcharsbx($tag->getId())?>" type="radio" name="<?=htmlspecialcharsbx($category)?>" class="mr-2" oninput="window.CakeRecipeList.changeFilters(this.name,this.value);window.step=1;"   value="<?=htmlspecialcharsbx($tag->getId())?>"><label for="tag-<?=htmlspecialcharsbx($tag->getId())?>"><?=htmlspecialcharsbx($tag->getName())?></label>
 													</div>
 												<?php endforeach;?>
 												<div class="tag"><input type="radio" name="<?=htmlspecialcharsbx($category)?>" class="mr-2" oninput="window.CakeRecipeList.changeFilters(this.name);window.step=1;" checked="true">Всё</div>
@@ -116,7 +116,6 @@ $APPLICATION->ShowPanel(); ?>
 									<?=\Up\Cake\Service\NotificationService::render($notification)?>
 								<?php endforeach;?>
 							</div>
-							<button onclick="getNotification()">Обновить</button>
 						</div>
 					</div>
 				<? endif; ?>
@@ -180,6 +179,15 @@ $APPLICATION->ShowPanel(); ?>
 
 
 <script>
+
+	function getNotification()
+	{
+		if(<?= $USER->IsAuthorized()?>)
+		{
+			BX.ajax.runAction('up:cake.notification.getListAfterAuth');
+		}
+	}
+	getNotification();
 	function displayRecentRecipes()
 	{
 		let recentRecipe = document.getElementById('recent-recipe');
@@ -217,15 +225,14 @@ $APPLICATION->ShowPanel(); ?>
 			document.notificationActive = false;
 		}
 	}
-	function getNotification()
+
+	document.getElementById('search-form').addEventListener('submit', stopSend);
+
+	function stopSend(event)
 	{
-		if(<?= $USER->IsAuthorized()?>)
-		{
-			BX.ajax.runAction('up:cake.notification.getListAfterAuth');
-			document.location.reload();
-		}
+		event.preventDefault();
 	}
-	setInterval(getNotification, 600000);
+
 </script>
 
 <section class="section">

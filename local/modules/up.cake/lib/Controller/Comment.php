@@ -17,7 +17,7 @@ class Comment extends \Bitrix\Main\Engine\Controller
 		$comments = CommentService::getByRecipeId($recipeId,$step * self::COUNT_COMMENTS);
 
 		$commentList = array_map(function($comment) {
-			$title = htmlspecialcharsbx(str_replace('\n','<br>',htmlspecialchars_decode($comment['TITLE'])));
+			$title = str_replace(['\n','\&quot;'],[' ','"'],htmlspecialcharsbx(($comment['TITLE'])));
 			$comment = array_map(function($data) {
 				return \CUtil::JSEscape($data);
 			}, $comment);

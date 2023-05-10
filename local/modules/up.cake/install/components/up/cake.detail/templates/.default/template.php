@@ -15,7 +15,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 Loc::loadMessages(__FILE__);
 
 \Bitrix\Main\UI\Extension::load('up.recipe-comments');
-
 [$recipe, $ingredients] = $arResult['RECIPE'];
 $images = $arResult['IMAGES'];
 $mainImages = $arResult['RECIPE_MAIN_IMAGES'];
@@ -50,7 +49,7 @@ $isAuthor = $arResult['USER_AUTHOR'];
 							<a href="/recipe/edit/<?= (int)$recipe->getId() ?>/" class="button is-info detail-edit-href">Редактировать</a>
 						<?php endif; ?>
 					</div>
-					<button class="like ${recipeData.USER_REACTION ? 'like-active' : ''}" id="like-btn-${recipeData.ID}" value="${recipeData.ID}" onclick="window.CakeRecipeList.reaction.changeLike(this.value)"></button>
+					<button class="like <?= ($arResult['USER_REACTION'])?'like-active': ''?>" id="like-btn" value="<?=(int)$recipe->getId();?>" onclick="changeLike(this.value)"></button>
 				</div>
 
 				<hr>
@@ -219,7 +218,6 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		})
 	})
 
-
 	function throttle(callee, timeout) {
 		let timer = null
 
@@ -247,11 +245,12 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		if (position >= threshold && !window.CakeCommentList.END_PAGE) {
 			window.stepComment++;
 			await window.CakeCommentList.reload(window.stepComment);
-			setTimeout(checkPosition,2000);
 		}
 	}
 
 	comments.addEventListener('scroll', throttle(checkPosition,2000))
+
+	let userReaction = <?= ($arResult['USER_REACTION'])?1:0?>
 
 	let form = document.getElementById('comment-form');
 	form.addEventListener('submit', addComment);
@@ -263,6 +262,45 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		document.getElementById('comment-textarea').value = '';
 		window.CakeCommentList.addComment(title);
 		comments.scrollTop = 0;
+	}
+
+	async function changeLike(recipeId)
+	{
+		recipeId = Number(recipeId);
+
+		(!userReaction) ? await addLike(recipeId) : await removeLike(recipeId);
+	}
+
+	async function addLike(recipeId)
+	{
+		BX.ajax.runAction('up:cake.reaction.addLikeThisUser', {
+				data: {
+					recipeId: recipeId,
+				},
+			})
+			.then(() => {
+				userReaction = true;
+				document.getElementById(`like-btn`).classList.add('like-active');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
+	async function removeLike(recipeId)
+	{
+		BX.ajax.runAction('up:cake.reaction.removeLikeThisUser', {
+				data: {
+					recipeId: recipeId,
+				},
+			})
+			.then(() => {
+				userReaction = false;
+				document.getElementById(`like-btn`).classList.remove('like-active');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 </script>

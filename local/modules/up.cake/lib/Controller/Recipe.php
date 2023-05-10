@@ -32,15 +32,9 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 
 		$recipeList = array_map(function($recipe) {
 			return array_map(function($data) {
-				return \CUtil::JSEscape($data);
+				return str_replace(['\n','\&quot;'],[' ','"'],htmlspecialcharsbx(\CUtil::JSEscape($data)));
 			}, $recipe);
 		},$recipes);
-
-		$recipeList = array_map(function($recipe) {
-			$recipe['DESCRIPTION'] =  str_replace('\n','<br>',htmlspecialcharsbx($recipe['DESCRIPTION']));
-			return $recipe;
-			},$recipeList);
-
 		$imageList = [];
 		$recipeId = null;
 		foreach (ImageService::getByIdIn(array_map(fn($recipe) => $recipe['ID'], $recipeList)) as $img)

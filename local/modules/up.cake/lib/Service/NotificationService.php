@@ -6,7 +6,6 @@ use Bitrix\Main\Type\Date;
 use UP\Cake\Model\CommentTable;
 use UP\Cake\Model\ReactionTable;
 use UP\Cake\Model\UserSubsTable;
-use function UP\Cake\Controller\getRecipeName;
 
 class NotificationService
 {
@@ -27,6 +26,7 @@ class NotificationService
 		$dateLogin = new Date( $user['LAST_LOGIN']);
 		$userRecipes = RecipeService::getRecipeByUserId($userId);
 		$userRecipesIds = array_map(fn($recipe)=>$recipe['ID'],$userRecipes);
+		$userRecipesIds = (!empty($userRecipesIds))?$userRecipesIds:[0];
 
 		$likes = array_map(fn($item)=>['like',$item['USER_ID'],$item['RECIPE_ID'],self::getRecipeName($item['RECIPE_ID'],$userRecipes),$item['DATE_ADDED']],ReactionTable::query()->setSelect(['RECIPE_ID','USER_ID','DATE_ADDED'])->whereIn('RECIPE_ID',$userRecipesIds)->where('USER_ID','!=',$userId)->where('DATE_ADDED','>=',$dateLogin)->setOrder(['DATE_ADDED'=>'DESC'])->fetchAll());
 		$comments = array_map(fn($item)=>['comment',$item['USER_ID'],$item['RECIPE_ID'],self::getRecipeName($item['RECIPE_ID'],$userRecipes),$item['DATE_ADDED']],CommentTable::query()->setSelect(['RECIPE_ID','USER_ID','DATE_ADDED'])->whereIn('RECIPE_ID',$userRecipesIds)->where('USER_ID','!=',$userId)->where('DATE_ADDED','>=',$dateLogin)->setOrder(['DATE_ADDED'=>'DESC'])->fetchAll());
@@ -55,6 +55,7 @@ class NotificationService
 		{
 			return '';
 		}
+		$className = 'notification-data';
 		$type = $notification[0];
 		$userSub = \CUser::GetByID((int)$notification[1])->Fetch();
 		$userId = (int)$userSub['ID'];
@@ -64,12 +65,14 @@ class NotificationService
 			$recipeId = (int)$notification[2];
 			$recipeName = htmlspecialcharsbx($notification[3]);
 			$action = ($type === 'like')? 'оценил ваш рецепт': 'оставил комментарий насчёт вашего рецепта';
-			return "<div class='notification-data'>Пользователь <a href='/users/{$userId}/'>{$userName}</a> {$action} \"<a href='/detail/{$recipeId}/'>{$recipeName}</a>\"</div>";
+			$className .= ($notification[5])?'-active':'';
+			return "<div class={$className}>Пользователь <a href='/users/{$userId}/'>{$userName}</a> {$action} \"<a href='/detail/{$recipeId}/'>{$recipeName}</a>\"</div>";
 		}
 		elseif ($type === 'subs')
 		{
 			$userName = htmlspecialcharsbx($userSub['NAME'] . ' ' . $userSub['LAST_NAME']);
-			return "<div class='notification-data'>Пользователь <a href='/users/{$userId}/'>{$userName}</a> подписался на вас.</div>";
+			$className .= ($notification[3])?'-active':'';
+			return "<div class={$className}>Пользователь <a href='/users/{$userId}/'>{$userName}</a> подписался на вас.</div>";
 		}
 		return "";
 	}

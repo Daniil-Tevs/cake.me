@@ -145,8 +145,7 @@ Loc::loadMessages(__FILE__);
 		if (position >= threshold && !window.CakeSubscribeList.END_PAGE) {
 			// console.log(window.stepSubs);
 			window.stepSubs++;
-			window.scrollBy(0,-100);
-			await window.CakeSubscribeList.reload(window.stepSubs);
+			await window.CakeSubscribeList.reload(window.stepSubs,1000);
 		}
 	}
 
