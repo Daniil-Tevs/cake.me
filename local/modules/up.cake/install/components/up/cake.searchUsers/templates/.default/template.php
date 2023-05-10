@@ -58,9 +58,7 @@ Loc::loadMessages(__FILE__);
 		<br>
 
 		<?php if ($userRequest === true && empty($userList)): ?>
-		<div class="field is-flex search-users-find-label">Найденные пользователи:</div>
-		<br>
-
+			<br>
 			<div class="field is-flex search-users-find-label"><h2>Пользователи не найдены</h2></div>
 
 		<?php else: ?>
