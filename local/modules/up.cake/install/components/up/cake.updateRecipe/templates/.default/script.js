@@ -191,7 +191,6 @@ BX.ready(
 				return false;
 			}
 
-			error = false;
 			for (let i = 0; i < recipeInstruction.length; i++) {
 				if (recipeInstruction[i].value.trim().length >= 2000)
 				{

@@ -215,8 +215,7 @@ Loc::loadMessages(__FILE__); ?>
 						<div class="field">
 							<div class="control">
 								<textarea class="textarea add-recipe-textarea-input" id="recipe-instruction-<?= $instructionCount ?>"
-										  maxlength="2000" name="RECIPE_INSTRUCTION[]"><?= str_replace(['\r\n', '\&quot;', '\\\''], ['&#10', '"', '\''], htmlspecialcharsbx($instruction->getDescription())) ?>
-								</textarea>
+										  maxlength="2000" name="RECIPE_INSTRUCTION[]"><?= str_replace(['\r\n', '\&quot;', '\\\''], ['&#10', '"', '\''], htmlspecialcharsbx($instruction->getDescription())) ?></textarea>
 							</div>
 						</div>
 					</div>

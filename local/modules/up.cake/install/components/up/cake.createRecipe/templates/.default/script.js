@@ -137,7 +137,6 @@ BX.ready(
 			if (error)
 			{
 				alert('Заполните обязательные поля рецепта!')
-				console.log(recipeScroll);
 				document.querySelector(`[id=${CSS.escape(recipeScroll)}]`).scrollIntoView();
 				return false;
 			}
@@ -194,7 +193,8 @@ BX.ready(
 				return false;
 			}
 
-			if (recipeName.length >= 255)
+
+			if (recipeName.trim().length >= 255)
 			{
 				let recipeNameClass = document.querySelector('#recipe-name');
 				recipeNameClass.classList.add('is-danger', 'is-focused');
@@ -203,7 +203,7 @@ BX.ready(
 				return false;
 			}
 
-			if (recipeDescription.length >= 2000)
+			if (recipeDescription.trim().length >= 2000)
 			{
 				let recipeDescriptionClass = document.querySelector('#recipe-desc');
 				recipeDescriptionClass.classList.add('is-danger', 'is-focused');
@@ -212,7 +212,6 @@ BX.ready(
 				return false;
 			}
 
-			error = false;
 			for (let i = 0; i < recipeInstruction.length; i++) {
 				if (recipeInstruction[i].value.trim().length >= 2000)
 				{

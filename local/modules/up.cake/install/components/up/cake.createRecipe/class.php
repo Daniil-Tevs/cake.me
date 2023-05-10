@@ -48,9 +48,9 @@ class CakeCreateComponent extends CBitrixComponent
 	{
 		global $USER;
 		$newRecipe = [
-			"RECIPE_NAME" => $request['RECIPE_NAME'],
+			"RECIPE_NAME" => trim($request['RECIPE_NAME']),
 			"RECIPE_IMAGES_MAIN" => $_FILES['RECIPE_IMAGES_MAIN'],
-			"RECIPE_DESC" => $request['RECIPE_DESC'],
+			"RECIPE_DESC" => trim($request['RECIPE_DESC']),
 			"RECIPE_PORTION" => (int)$request['RECIPE_PORTION'],
 			"RECIPE_TIME" => (int)$request['RECIPE_TIME'],
 			"RECIPE_CALORIES" => (int)$request['RECIPE_CALORIES'],
