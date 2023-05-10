@@ -61,6 +61,15 @@ body {
 	border-top: 1px solid grey;
 }
 
+.filter form{
+	margin-bottom: 0px;
+	cursor: auto;
+}
+
+.filter form label,input{
+	cursor: pointer;
+}
+
 .header-category{
 	margin-top: 8px;
 	height: max-content;
@@ -342,6 +351,11 @@ a.dropdown-item {
 	justify-content: center;
 	border-radius: 5px;
 	align-items: center;
+}
+
+.your-recipe a{
+	font-size: 21px;
+	padding-left: 6px;
 }
 
 .search-form {
@@ -1008,13 +1022,22 @@ input[type=number]::-webkit-outer-spin-button {
 	padding: 8px;
 	background: #65a0ffad;
 	border-top: 4px solid #7a19c8;
-	border-radius: 7px 7px 0px 0px;
-	max-height: 212px;
+	border-radius: 7px 7px 7px 7px;
+	max-height: 224px;
 	overflow-y: auto;
+	border-bottom: 6px solid #7a19c8;
 }
 
 .notification-data{
 	background: white;
+	padding: 5px;
+	border-radius: 12px;
+	color: brown;
+	margin-bottom:7px;
+}
+
+.notification-data-active{
+	background: #f8e18d;
 	padding: 5px;
 	border-radius: 12px;
 	color: brown;
@@ -1039,4 +1062,34 @@ input[type=number]::-webkit-outer-spin-button {
 
 .label-auth{
 	border-radius: 0px 10px 0px 0px;
+}
+
+.profile-mes{
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 59%;
+}
+
+.profile-mes a{
+	display: flex;
+	background: white;
+	flex-direction: column;
+	border-radius: 28px;
+	width: 67%;
+	padding: 11px;
+}
+
+.profile-mes img{
+	width: 40%;
+	height: 40%;
+	align-self: center;
+}
+
+.profile-mes p{
+	width: fit-content;
+	align-self: center;
+	font-size: 22px;
+	font-weight: 500;
 }
