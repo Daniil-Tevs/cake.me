@@ -174,12 +174,14 @@ $isAuthor = $arResult['USER_AUTHOR'];
 			<h2>Комментарии:</h2>
 			<hr>
 			<div id="comment-list" class="comments">Будьте первым!</div>
-			<div class="add-comment">
-				<form id = "comment-form" action="" class="comment-form">
-					<textarea id = "comment-textarea" class="textarea" placeholder="Добавить комментарий"></textarea>
-					<input type="image" class="comment-form-image"  src="/local/modules/up.cake/install/templates/cake/images/comment.png" alt="Submit Form" />
-				</form>
-			</div>
+			<?php if($arResult['IS_AUTH']):?>
+				<div class="add-comment">
+					<form id = "comment-form" action="" class="comment-form">
+						<textarea id = "comment-textarea" class="textarea" placeholder="Добавить комментарий"></textarea>
+						<input type="image" class="comment-form-image"  src="/local/modules/up.cake/install/templates/cake/images/comment.png" alt="Submit Form" />
+					</form>
+				</div>
+			<?php endif;?>
 		</div>
 
 </div>
