@@ -183,10 +183,45 @@ class CakeUpdateComponent extends CBitrixComponent
 	protected function fetchRecipeDetail(): void
 	{
 		$imagesArray = \Up\Cake\Service\ImageService::getImageDetail($this->arParams['ID']);
+		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById($this->arParams['ID']);
+
+		$images = $this->prepareInstructionImages($imagesArray['RECIPE_INSTRUCTIONS_IMAGES']);
 
 		$this->arResult['RECIPE_MAIN_IMAGES'] = $imagesArray ['RECIPE_MAIN_IMAGES'];
-		$this->arResult['RECIPE_INSTRUCTIONS_IMAGES'] = $imagesArray ['RECIPE_INSTRUCTIONS_IMAGES'];
-		$this->arResult['RECIPE'] = \Up\Cake\Service\RecipeService::getRecipeDetailById($this->arParams['ID']);
+		$this->arResult['RECIPE_INSTRUCTIONS_IMAGES'] = $images;
+
+	}
+
+	private function prepareInstructionImages(array $imageArray): array
+	{
+		$imageNumber = 0;
+		foreach ($imageArray as $item)
+		{
+			if ($item['NUMBER'] >= $imageNumber)
+			{
+				$imageNumber = $item['NUMBER'];
+			}
+		}
+
+		$images = [];
+		for ($i = 1; $i <= $imageNumber; $i++)
+		{
+			foreach ($imageArray as $image)
+			{
+
+				if ($i === (int)$image['NUMBER'])
+				{
+					$images[$i - 1] = ['IMAGE_ID' => $image['IMAGE_ID'], 'NUMBER' => $image['NUMBER']];
+					break;
+				}
+
+			}
+			if ($images[$i - 1] === null)
+			{
+				$images[$i - 1] = ['IMAGE_ID' => 0, 'NUMBER' => $i];
+			}
+		}
+		return $images;
 	}
 
 	private function imageValidate(array $imageArray): void

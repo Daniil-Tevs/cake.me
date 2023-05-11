@@ -326,19 +326,26 @@ class RecipeService
 		}
 
 		//Изменение шагов
-		$imageInstructIds = RecipeImageTable::query()->setSelect(['IMAGE_ID'])->where('RECIPE_ID', $recipeId)
-			->where('IS_MAIN', 0)->fetchAll();
+		$imageInstructIds = RecipeImageTable::query()->setSelect(['IMAGE_ID', 'NUMBER'])->where('RECIPE_ID', $recipeId)
+			->where('IS_MAIN', 0)->addOrder('NUMBER', 'ASC')->fetchAll();
 
-		for ($i = 0, $iMax = count($imageInstructIds); $i < $iMax; $i++)
+
+		$imageCount = $imageInstructIds[count($imageInstructIds)-1]['NUMBER'];
+		$images = [];
+		for ($i = 1; $i <= $imageCount; $i++)
 		{
-
-			if ($i <= count($updateRecipe['RECIPE_INSTRUCTION_IMAGES']['error']) &&
-				(int)$updateRecipe['RECIPE_INSTRUCTION_IMAGES']['error'][$i] === 100)
+			foreach ($imageInstructIds as $image)
 			{
-				continue;
+				if ($i === (int)$image['NUMBER'])
+				{
+					$images[$i - 1] = ['IMAGE_ID' => $image['IMAGE_ID'], 'NUMBER' => $image['NUMBER']];
+					break;
+				}
 			}
-
-			CFile::Delete((int)$imageInstructIds[$i]['IMAGE_ID']);
+			if ($images[$i - 1] === null)
+			{
+				$images[$i - 1] = ['IMAGE_ID' => 0, 'NUMBER' => $i];
+			}
 		}
 
 		$ingredientDelete = InstructionsTable::query()->setSelect(['ID'])
@@ -349,6 +356,16 @@ class RecipeService
 			$item->delete();
 		}
 
+		if (count($images) > count($updateRecipe['RECIPE_INSTRUCTION']))
+		{
+			foreach ($images as $i => $image)
+			{
+				if ($i > count($updateRecipe['RECIPE_INSTRUCTION']) - 1)
+				{
+					CFile::Delete((int)$image['IMAGE_ID']);
+				}
+			}
+		}
 
 		foreach ($updateRecipe['RECIPE_INSTRUCTION'] as $iStep => $instruction)
 		{
@@ -356,6 +373,11 @@ class RecipeService
 
 			if ($updateRecipe['RECIPE_INSTRUCTION_IMAGES']['error'][$iStep] === 0)
 			{
+				if ($images[$iStep]['IMAGE_ID'] !== 0)
+				{
+					CFile::Delete((int)$images[$iStep]['IMAGE_ID']);
+				}
+
 				$filePath = $updateRecipe['RECIPE_INSTRUCTION_IMAGES']['tmp_name'][$iStep];
 				$arFile = CFile::MakeFileArray($filePath);
 				$imageId = \CFile::SaveFile($arFile, "tmp/instruction-images");
