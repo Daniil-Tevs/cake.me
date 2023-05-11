@@ -24,11 +24,21 @@ class CakeUsersComponent extends CBitrixComponent
 
 		elseif ($request->get("subs") === "Y")
 		{
+			if (!check_bitrix_sessid())
+			{
+				LocalRedirect('/?session_error=Y');
+			}
+
 			$this->getMessages($request);
 		}
 
 		if ($checkSub === true && $request->get("subsDel") === "Y")
 		{
+			if (!check_bitrix_sessid())
+			{
+				LocalRedirect('/?session_error=Y');
+			}
+
 			$this->deleteSubs($userId, $subId);
 		}
 
