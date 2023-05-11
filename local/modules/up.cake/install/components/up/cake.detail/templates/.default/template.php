@@ -107,7 +107,8 @@ $isAuthor = $arResult['USER_AUTHOR'];
 		<footer class="card-footer">
 			<div class="card-footer-item is-size-6">🕔 Время приготовления: <?= (int)$recipe->getTime()?> минут
 			</div>
-			<div class="card-footer-item is-size-6">🔥 Калории: <?= (int)$recipe->getCalories() ?></div>
+			<div class="card-footer-item is-size-6">🔥 Калории:<?php if ((int)$recipe->getCalories() !== 0):
+				echo (int)$recipe->getCalories(); else: echo ' не указаны'; endif; ?></div>
 			<div class="card-footer-item is-size-6">🍽️ Количество порций: <?= (int)$recipe->getPortionCount() ?></div>
 		</footer>
 		<p class="title is-4 detail-ingredient" style="margin:0">Ингредиенты:</p>
