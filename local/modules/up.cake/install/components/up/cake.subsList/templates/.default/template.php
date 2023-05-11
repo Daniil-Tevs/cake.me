@@ -143,7 +143,6 @@ Loc::loadMessages(__FILE__);
 		const position = scrolled + screenHeight
 
 		if (position >= threshold && !window.CakeSubscribeList.END_PAGE) {
-			// console.log(window.stepSubs);
 			window.stepSubs++;
 			await window.CakeSubscribeList.reload(window.stepSubs,1000);
 		}

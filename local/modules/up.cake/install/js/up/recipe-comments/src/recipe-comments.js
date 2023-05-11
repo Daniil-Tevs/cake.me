@@ -70,9 +70,7 @@ export class RecipeComments
 	render()
 	{
 		this.rootNode.innerHTML = '';
-		console.log(this.commentList);
 		this.commentList.forEach(commentData => {
-			console.log(commentData)
 			const commentNode = Tag.render`<div class="card"><div class="card-content comment-card pl-2 ">
 					<div class="media">
 						<div class="media-left mr-2">
@@ -85,7 +83,7 @@ export class RecipeComments
 							
 						</div>
 					</div>
-				
+			
 					<div class="container comment-title ml-3">
 						<p>${commentData.TITLE.substring(0,this.LENGTH_COMMENT)}</p>
 					</div></div>`;

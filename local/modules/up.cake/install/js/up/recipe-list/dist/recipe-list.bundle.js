@@ -80,7 +80,6 @@ this.BX.Up = this.BX.Up || {};
 	    key: "addLike",
 	    value: function addLike(recipeId) {
 	      var _this2 = this;
-	      console.log(this.userReactions);
 	      if (!main_core.Type.isInteger(recipeId)) {
 	        throw new Error('Reaction: id should be int');
 	      }
@@ -100,7 +99,6 @@ this.BX.Up = this.BX.Up || {};
 	    key: "removeLike",
 	    value: function removeLike(recipeId) {
 	      var _this3 = this;
-	      console.log(this.userReactions);
 	      if (!main_core.Type.isInteger(recipeId)) {
 	        throw new Error('Reaction: id should be int');
 	      }
@@ -115,7 +113,6 @@ this.BX.Up = this.BX.Up || {};
 	      })["catch"](function (error) {
 	        console.log(error);
 	      });
-	      console.log(this.userReactions);
 	    }
 	  }, {
 	    key: "reload",
@@ -214,7 +211,6 @@ this.BX.Up = this.BX.Up || {};
 	      var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 	      this.loadList(step).then(function (data) {
 	        if (_this.recipeList === data[0]) _this.recipeList = [];else _this.recipeList = data[0];
-	        console.log(_this.recipeList);
 	        _this.imageList = data[1];
 	        _this.userReactions = data[2];
 	        if (_this.recipeList.length < _this.RECIPE_GET_NUMBER) {
