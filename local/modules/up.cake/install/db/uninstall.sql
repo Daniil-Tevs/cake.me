@@ -9,4 +9,5 @@ DROP TABLE IF EXISTS up_cake_instructions;
 DROP TABLE IF EXISTS up_cake_comment;
 DROP TABLE IF EXISTS up_cake_reaction;
 DROP TABLE IF EXISTS up_cake_category;
+DROP TABLE IF EXISTS up_cake_recipe_comment;
 DROP TABLE IF EXISTS up_cake_recipe;
