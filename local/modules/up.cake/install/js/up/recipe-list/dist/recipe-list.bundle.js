@@ -177,6 +177,7 @@ this.BX.Up = this.BX.Up || {};
 	    babelHelpers.defineProperty(this, "reaction", null);
 	    babelHelpers.defineProperty(this, "END_PAGE", false);
 	    babelHelpers.defineProperty(this, "MAX_COLOR", 3);
+	    babelHelpers.defineProperty(this, "RECIPE_GET_NUMBER", 6);
 	    if (main_core.Type.isStringFilled(options.rootNodeId)) {
 	      this.rootNodeId = options.rootNodeId;
 	    } else {
@@ -212,16 +213,14 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 	      this.loadList(step).then(function (data) {
-	        if (_this.recipeList === null || data[0].length !== _this.recipeList.length || data[0].length === 0) {
-	          var _ref;
-	          _this.recipeList = ((_ref = data[0].length !== 0) !== null && _ref !== void 0 ? _ref : _this.recipeList.length === 0) ? data[0] : null;
-	          console.log(_this.recipeList);
-	          _this.imageList = data[1];
-	          _this.userReactions = data[2];
-	          _this.render();
-	        } else {
+	        if (_this.recipeList === data[0]) _this.recipeList = [];else _this.recipeList = data[0];
+	        console.log(_this.recipeList);
+	        _this.imageList = data[1];
+	        _this.userReactions = data[2];
+	        if (_this.recipeList.length < _this.RECIPE_GET_NUMBER) {
 	          _this.END_PAGE = true;
 	        }
+	        _this.render();
 	      });
 	    }
 	  }, {
@@ -252,8 +251,7 @@ this.BX.Up = this.BX.Up || {};
 	    key: "render",
 	    value: function render() {
 	      var _this3 = this;
-	      if (this.recipeList === null) {
-	        this.END_PAGE = true;
+	      if (this.recipeList.length === 0 && this.rootNode.innerHTML === '' && this.END_PAGE) {
 	        this.rootNode.appendChild(new RecipeMessage(this.type).messageNode);
 	        return;
 	      }
@@ -276,6 +274,7 @@ this.BX.Up = this.BX.Up || {};
 	      for (var _i = 0; _i < cardContainers.length; _i++) {
 	        cardContainers[_i].classList.add("color-".concat(1 + _i % this.MAX_COLOR));
 	      }
+	      this.recipeList = [];
 	    }
 	  }, {
 	    key: "changeFilters",
@@ -316,8 +315,10 @@ this.BX.Up = this.BX.Up || {};
 	        this.recipeList = [];
 	        this.reload(1);
 	      } else if (this.title.length > 0) {
+	        this.END_PAGE = false;
 	        this.title = '';
 	        this.rootNode.innerHTML = '';
+	        this.recipeList = [];
 	        this.reload(1);
 	      }
 	    }

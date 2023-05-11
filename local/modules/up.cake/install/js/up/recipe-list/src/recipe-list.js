@@ -15,6 +15,7 @@ export class RecipeList
 	reaction = null;
 	END_PAGE = false;
 	MAX_COLOR = 3;
+	RECIPE_GET_NUMBER = 6;
 
 	constructor(options = {})
 	{
@@ -69,19 +70,18 @@ export class RecipeList
 	{
 		this.loadList(step)
 			.then((data) => {
-				if (this.recipeList === null || data[0].length !== this.recipeList.length || data[0].length === 0)
-				{
-
-					this.recipeList = (data[0].length !== 0 ?? this.recipeList.length === 0)?data[0]:null;
-					console.log(this.recipeList);
-					this.imageList = data[1];
-					this.userReactions = data[2];
-					this.render();
-				}
+				if(this.recipeList === data[0])
+					this.recipeList = [];
 				else
+					this.recipeList = data[0];
+				console.log(this.recipeList);
+				this.imageList = data[1];
+				this.userReactions = data[2];
+				if(this.recipeList.length<this.RECIPE_GET_NUMBER)
 				{
 					this.END_PAGE = true;
 				}
+				this.render();
 			});
 	}
 
@@ -111,10 +111,8 @@ export class RecipeList
 	render()
 	{
 		let index = 1;
-
-		if (this.recipeList === null)
+		if (this.recipeList.length === 0 &&  this.rootNode.innerHTML==='' && this.END_PAGE)
 		{
-			this.END_PAGE = true;
 			this.rootNode.appendChild((new RecipeMessage(this.type)).messageNode);
 			return;
 		}
@@ -145,6 +143,8 @@ export class RecipeList
 		{
 			cardContainers[i].classList.add(`color-${1 + i % this.MAX_COLOR}`);
 		}
+
+		this.recipeList = [];
 	}
 
 	changeFilters(type, id = 0)
@@ -196,8 +196,10 @@ export class RecipeList
 		}
 		else if(this.title.length>0)
 		{
+			this.END_PAGE = false;
 			this.title = '';
 			this.rootNode.innerHTML = '';
+			this.recipeList = [];
 			this.reload(1);
 		}
 
