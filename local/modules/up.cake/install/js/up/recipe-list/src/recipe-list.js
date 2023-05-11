@@ -74,7 +74,6 @@ export class RecipeList
 					this.recipeList = [];
 				else
 					this.recipeList = data[0];
-				console.log(this.recipeList);
 				this.imageList = data[1];
 				this.userReactions = data[2];
 				if(this.recipeList.length<this.RECIPE_GET_NUMBER)

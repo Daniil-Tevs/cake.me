@@ -64,7 +64,7 @@ class RecipeService
 			$recipes->whereIn('ID', $recipeIds);
 		}
 
-		return $recipes->setOffset($offset)->setLimit($limit)->fetchAll();
+		return $recipes->setOffset($offset)->setLimit($limit)->setOrder(['DATE_ADDED'=>'DESC'])->fetchAll();
 	}
 
 	public static function deleteById(int $id): bool
@@ -126,7 +126,7 @@ class RecipeService
 			$recipes->whereIn('ID', $recipeIds);
 		}
 
-		return $recipes->setOffset($offset)->setLimit($limit)->fetchAll();
+		return $recipes->setOffset($offset)->setLimit($limit)->setOrder(['DATE_ADDED'=>'DESC'])->fetchAll();
 	}
 
 

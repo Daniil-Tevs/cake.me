@@ -19,7 +19,7 @@ class Comment extends \Bitrix\Main\Engine\Controller
 		$commentList = array_map(function($comment) {
 			$title = str_replace(['\n','\&quot;'],[' ','"'],htmlspecialcharsbx(($comment['TITLE'])));
 			$comment = array_map(function($data) {
-				return \CUtil::JSEscape($data);
+				return htmlspecialcharsbx(\CUtil::JSEscape($data));
 			}, $comment);
 			$comment['TITLE'] = $title;
 			return $comment;

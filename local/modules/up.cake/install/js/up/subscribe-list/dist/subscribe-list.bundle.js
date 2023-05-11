@@ -68,7 +68,6 @@ this.BX.Up = this.BX.Up || {};
 	    value: function render() {
 	      var _this3 = this;
 	      this.rootNode.innerHTML = '';
-	      console.log(this.userList);
 	      if (this.userList.length === 0) {
 	        var commentNode = document.createElement('div'); // is a node
 	        commentNode.innerHTML = "\n\t\t\t\t<br>\n\t\t\t\t<h2>\u041D\u0435\u0442 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u0435\u0439!</h2>\n\t\t\t\t";

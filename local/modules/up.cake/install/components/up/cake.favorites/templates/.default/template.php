@@ -78,7 +78,6 @@ Loc::loadMessages(__FILE__);
 		const position = scrolled + screenHeight
 
 		if (position >= threshold && !window.CakeRecipeList.END_PAGE) {
-			console.log(window.step);
 			window.step++;
 			await window.CakeRecipeList.reload(window.step);
 		}

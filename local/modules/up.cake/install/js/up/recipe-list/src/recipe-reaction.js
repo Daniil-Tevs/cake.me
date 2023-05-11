@@ -44,7 +44,6 @@ export class Reaction
 
 	addLike(recipeId)
 	{
-		console.log(this.userReactions);
 		if (!Type.isInteger(recipeId))
 		{
 			throw new Error('Reaction: id should be int');
@@ -66,7 +65,6 @@ export class Reaction
 
 	removeLike(recipeId)
 	{
-		console.log(this.userReactions);
 		if (!Type.isInteger(recipeId))
 		{
 			throw new Error('Reaction: id should be int');
@@ -84,7 +82,6 @@ export class Reaction
 			.catch((error) => {
 				console.log(error);
 			});
-		console.log(this.userReactions);
 	}
 
 	reload()

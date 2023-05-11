@@ -76,7 +76,6 @@ export class SubscribeList
 	render()
 	{
 		this.rootNode.innerHTML = '';
-		console.log(this.userList);
 		if (this.userList.length === 0)
 		{
 			var commentNode = document.createElement('div'); // is a node

@@ -182,7 +182,7 @@ $APPLICATION->ShowPanel(); ?>
 
 	function getNotification()
 	{
-		if(<?= $USER->IsAuthorized()?>)
+		if(<?= ($USER->IsAuthorized())?1:0?>)
 		{
 			BX.ajax.runAction('up:cake.notification.getListAfterAuth');
 		}
