@@ -80,7 +80,7 @@ class up_cake extends CModule
 		);
 
 		CopyDirFiles(
-			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.cake/js',
+			$_SERVER['DOCUMENT_ROOT'] . '/local/modules/up.cake/install/js',
 			$_SERVER['DOCUMENT_ROOT'] . '/local/js/',
 			true,
 			true
