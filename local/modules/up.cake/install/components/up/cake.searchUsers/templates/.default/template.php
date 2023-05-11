@@ -79,7 +79,9 @@ Loc::loadMessages(__FILE__);
 						</figure>
 						<?php endif; ?>
 					<?php else: ?>
+					<figure class="image is-96x96">
 						<?= CFile::ShowImage((int)$user['PERSONAL_PHOTO'], 96, 96, "border=1", ""); ?>
+					</figure>
 					<?php endif; ?>
 
 				</a>
