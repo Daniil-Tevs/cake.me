@@ -133,7 +133,10 @@ class CakeDetailComponent extends CBitrixComponent
 		}
 
 		$this->arResult['PERSONAL_PHOTO'] = $user['PERSONAL_PHOTO'];
-
-		$this->arResult['USER_REACTION'] = \Up\Cake\Service\ReactionService::chekUserReactionByRecipeId($USER->GetID(),$this->arParams['ID']);
+		$this->arResult['IS_AUTH'] = $USER->IsAuthorized();
+		if($USER->IsAuthorized())
+		{
+			$this->arResult['USER_REACTION'] = \Up\Cake\Service\ReactionService::chekUserReactionByRecipeId($USER->GetID(),(int)$this->arParams['ID']);
+		}
 	}
 }

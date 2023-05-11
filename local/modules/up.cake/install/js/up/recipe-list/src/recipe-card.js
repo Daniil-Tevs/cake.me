@@ -32,7 +32,6 @@ export class RecipeCard
 
 	simpleCard(recipeData, image)
 	{
-		console.log(recipeData)
 		return Tag.render`
 				<div class="card card-list" id="${recipeData.ID}">
 						<div class="card-image">

@@ -18,26 +18,31 @@ export class RecipeList
 
 	constructor(options = {})
 	{
-		if (Type.isStringFilled(options.rootNodeId)) {
+		if (Type.isStringFilled(options.rootNodeId))
+		{
 			this.rootNodeId = options.rootNodeId;
 		}
-		else {
+		else
+		{
 			throw new Error('RecipeList: options.rootNodeId required');
 		}
 
-		if (Type.isInteger(options.userId)) {
+		if (Type.isInteger(options.userId))
+		{
 			this.userId = options.userId;
 		}
-		if (Type.isInteger(options.anotherUserId)) {
+		if (Type.isInteger(options.anotherUserId))
+		{
 			this.anotherUserId = options.anotherUserId;
 		}
 
-		if ( Type.isString(options.type))
+		if (Type.isString(options.type))
 		{
 			this.type = options.type;
 		}
-		else {
-			this.type = (this.userId===null || this.userId<=0)?'unregister':null;
+		else
+		{
+			this.type = (this.userId === null || this.userId <= 0) ? 'unregister' : null;
 		}
 
 		this.filters['tags'] = [];
@@ -64,10 +69,11 @@ export class RecipeList
 	{
 		this.loadList(step)
 			.then((data) => {
-				if (data[0].length !== this.recipeList.length || data[0].length === 0)
+				if (this.recipeList === null || data[0].length !== this.recipeList.length || data[0].length === 0)
 				{
 
-					this.recipeList = data[0];
+					this.recipeList = (data[0].length !== 0 ?? this.recipeList.length === 0)?data[0]:null;
+					console.log(this.recipeList);
 					this.imageList = data[1];
 					this.userReactions = data[2];
 					this.render();
@@ -104,26 +110,27 @@ export class RecipeList
 
 	render()
 	{
-		this.rootNode.innerHTML = '';
 		let index = 1;
 
-		this.recipeList.forEach(recipeData => {
-			recipeData['USER_REACTION'] = (this.userReactions.indexOf(Number(recipeData.ID)) !== -1)
-			const recipeNode = (new RecipeCard(recipeData, this.imageList[recipeData.ID], this.type,this.userId)).cardNode;
-			this.rootNode.appendChild(recipeNode)
-			index++;
-		});
-
-		if(this.recipeList.length === 0)
+		if (this.recipeList === null)
 		{
 			this.END_PAGE = true;
 			this.rootNode.appendChild((new RecipeMessage(this.type)).messageNode);
+			return;
 		}
 
-		if(this.userId === null || this.userId <= 0)
+		this.recipeList.forEach(recipeData => {
+			recipeData['USER_REACTION'] = (this.userReactions.indexOf(Number(recipeData.ID)) !== -1);
+			const recipeNode = (new RecipeCard(recipeData, this.imageList[recipeData.ID], this.type, this.userId)).cardNode;
+			this.rootNode.appendChild(recipeNode);
+			index++;
+		});
+
+		if (this.userId === null || this.userId <= 0)
 		{
 			let likes = this.rootNode.getElementsByClassName('like');
-			while(likes.length) {
+			while (likes.length)
+			{
 				likes[0].parentNode.removeChild(likes[0]);
 			}
 			let cardHeader = this.rootNode.getElementsByClassName('content-header');
@@ -136,7 +143,7 @@ export class RecipeList
 		let cardContainers = this.rootNode.getElementsByClassName('card-content');
 		for (let i = 0; i < cardContainers.length; i++)
 		{
-			cardContainers[i].classList.add(`color-${1+i%this.MAX_COLOR}`);
+			cardContainers[i].classList.add(`color-${1 + i % this.MAX_COLOR}`);
 		}
 	}
 
@@ -168,6 +175,7 @@ export class RecipeList
 		}
 		this.END_PAGE = false;
 		this.recipeList = [];
+		this.rootNode.innerHTML = '';
 		this.reload(1);
 	};
 
@@ -177,10 +185,22 @@ export class RecipeList
 		{
 			throw new Error('RecipeList: title should be string');
 		}
-		this.title = title.trim();
-		this.END_PAGE = false;
-		this.recipeList = [];
-		this.reload(1);
+
+		if(title.trim().length > 3)
+		{
+			this.title = title.trim();
+			this.END_PAGE = false;
+			this.rootNode.innerHTML = '';
+			this.recipeList = [];
+			this.reload(1);
+		}
+		else if(this.title.length>0)
+		{
+			this.title = '';
+			this.rootNode.innerHTML = '';
+			this.reload(1);
+		}
+
 	}
 
 	deleteRecipe(id)

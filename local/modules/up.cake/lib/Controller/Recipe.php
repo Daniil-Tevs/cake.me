@@ -15,19 +15,19 @@ class Recipe extends \Bitrix\Main\Engine\Controller
 	{
 		if($type === 'anotherProfile' && $anotherUserId !== null)
 		{
-			$recipes = RecipeService::getRecipeByUserId($anotherUserId,0,$step * self::COUNT_RECIPE_ON_PAGE);
+			$recipes = RecipeService::getRecipeByUserId($anotherUserId,($step-1) * self::COUNT_RECIPE_ON_PAGE,$step * self::COUNT_RECIPE_ON_PAGE);
 		}
 		elseif ($type === 'profile' && $userId !== null)
 		{
-			$recipes = RecipeService::getRecipeByUserId($userId,0,$step * self::COUNT_RECIPE_ON_PAGE);
+			$recipes = RecipeService::getRecipeByUserId($userId,($step-1) * self::COUNT_RECIPE_ON_PAGE,$step * self::COUNT_RECIPE_ON_PAGE);
 		}
 		elseif ($type === 'reaction' && $userId !== null)
 		{
-			$recipes = RecipeService::getRecipeByUserLikes(0,$step * self::COUNT_RECIPE_ON_PAGE,$userId,$title,$filters);
+			$recipes = RecipeService::getRecipeByUserLikes(($step-1) * self::COUNT_RECIPE_ON_PAGE,$step * self::COUNT_RECIPE_ON_PAGE,$userId,$title,$filters);
 		}
 		else
 		{
-			$recipes = RecipeService::get(0,$step * self::COUNT_RECIPE_ON_PAGE,$title,$filters);
+			$recipes = RecipeService::get(($step-1) * self::COUNT_RECIPE_ON_PAGE,$step * self::COUNT_RECIPE_ON_PAGE,$title,$filters);
 		}
 
 		$recipeList = array_map(function($recipe) {

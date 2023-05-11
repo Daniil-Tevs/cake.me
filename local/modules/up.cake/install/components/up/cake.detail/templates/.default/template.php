@@ -49,7 +49,9 @@ $isAuthor = $arResult['USER_AUTHOR'];
 							<a href="/recipe/edit/<?= (int)$recipe->getId() ?>/" class="button is-info detail-edit-href">Редактировать</a>
 						<?php endif; ?>
 					</div>
-					<button class="like <?= ($arResult['USER_REACTION'])?'like-active': ''?>" id="like-btn" value="<?=(int)$recipe->getId();?>" onclick="changeLike(this.value)"></button>
+					<?php if($arResult['IS_AUTH']):?>
+						<button class="like <?= ($arResult['USER_REACTION'])?'like-active': ''?>" id="like-btn" value="<?=(int)$recipe->getId();?>" onclick="changeLike(this.value)"></button>
+					<?php endif;?>
 				</div>
 
 				<hr>

@@ -28,7 +28,6 @@ this.BX.Up = this.BX.Up || {};
 	  }, {
 	    key: "simpleCard",
 	    value: function simpleCard(recipeData, image) {
-	      console.log(recipeData);
 	      return main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["\n\t\t\t\t<div class=\"card card-list\" id=\"", "\">\n\t\t\t\t\t\t<div class=\"card-image\">\n\t\t\t\t\t\t\t<figure class=\"image\">\n\t\t\t\t\t\t\t\t<img src='", "'>\n\t\t\t\t\t\t\t</figure>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"card-content\">\n\t\t\t\t\t\t\t<div class=\"content\">\n\t\t\t\t\t\t\t\t<div class=\"content-header\">\n\t\t\t\t\t\t\t\t\t<a class=\"title mb-2\" href=\"/detail/", "/\">", " </a>\n\t\t\t\t\t\t\t\t\t<button class=\"like ", "\" id=\"like-btn-", "\" value=\"", "\" onclick=\"window.CakeRecipeList.reaction.changeLike(this.value)\"></button>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t<hr>\n\t\t\t\t\t\t\t\t<p>", "</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<footer class=\"card-footer\">\n\t\t\t\t\t\t\t<div class=\"card-footer-item\">\uD83D\uDD54 ", " min</div>\n\t\t\t\t\t\t\t", "\n\t\t\t\t\t\t\t<div class=\"card-footer-item \"><a href=\"/users/", "/\">\uD83D\uDC68\u200D\uD83C\uDF73", "</a></div>\n\t\t\t\t\t\t</footer>\n\t\t\t\t\t</div>"])), recipeData.ID, image !== null && image !== void 0 ? image : '', recipeData.ID, recipeData.NAME, recipeData.USER_REACTION ? 'like-active' : '', recipeData.ID, recipeData.ID, this.getDescription(recipeData.DESCRIPTION), recipeData.TIME, recipeData.CALORIES !== '' ? "<div class=\"card-footer-item\">🔥" + recipeData.CALORIES + " calories</div>" : '', recipeData.UP_CAKE_MODEL_RECIPE_USER_ID, recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME);
 	    }
 	  }, {
@@ -213,8 +212,10 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 	      this.loadList(step).then(function (data) {
-	        if (data[0].length !== _this.recipeList.length || data[0].length === 0) {
-	          _this.recipeList = data[0];
+	        if (_this.recipeList === null || data[0].length !== _this.recipeList.length || data[0].length === 0) {
+	          var _ref;
+	          _this.recipeList = ((_ref = data[0].length !== 0) !== null && _ref !== void 0 ? _ref : _this.recipeList.length === 0) ? data[0] : null;
+	          console.log(_this.recipeList);
 	          _this.imageList = data[1];
 	          _this.userReactions = data[2];
 	          _this.render();
@@ -251,16 +252,16 @@ this.BX.Up = this.BX.Up || {};
 	    key: "render",
 	    value: function render() {
 	      var _this3 = this;
-	      this.rootNode.innerHTML = '';
+	      if (this.recipeList === null) {
+	        this.END_PAGE = true;
+	        this.rootNode.appendChild(new RecipeMessage(this.type).messageNode);
+	        return;
+	      }
 	      this.recipeList.forEach(function (recipeData) {
 	        recipeData['USER_REACTION'] = _this3.userReactions.indexOf(Number(recipeData.ID)) !== -1;
 	        var recipeNode = new RecipeCard(recipeData, _this3.imageList[recipeData.ID], _this3.type, _this3.userId).cardNode;
 	        _this3.rootNode.appendChild(recipeNode);
 	      });
-	      if (this.recipeList.length === 0) {
-	        this.END_PAGE = true;
-	        this.rootNode.appendChild(new RecipeMessage(this.type).messageNode);
-	      }
 	      if (this.userId === null || this.userId <= 0) {
 	        var likes = this.rootNode.getElementsByClassName('like');
 	        while (likes.length) {
@@ -299,6 +300,7 @@ this.BX.Up = this.BX.Up || {};
 	      }
 	      this.END_PAGE = false;
 	      this.recipeList = [];
+	      this.rootNode.innerHTML = '';
 	      this.reload(1);
 	    }
 	  }, {
@@ -307,10 +309,17 @@ this.BX.Up = this.BX.Up || {};
 	      if (!main_core.Type.isStringFilled(title) && title.trim() !== '') {
 	        throw new Error('RecipeList: title should be string');
 	      }
-	      this.title = title.trim();
-	      this.END_PAGE = false;
-	      this.recipeList = [];
-	      this.reload(1);
+	      if (title.trim().length > 3) {
+	        this.title = title.trim();
+	        this.END_PAGE = false;
+	        this.rootNode.innerHTML = '';
+	        this.recipeList = [];
+	        this.reload(1);
+	      } else if (this.title.length > 0) {
+	        this.title = '';
+	        this.rootNode.innerHTML = '';
+	        this.reload(1);
+	      }
 	    }
 	  }, {
 	    key: "deleteRecipe",
