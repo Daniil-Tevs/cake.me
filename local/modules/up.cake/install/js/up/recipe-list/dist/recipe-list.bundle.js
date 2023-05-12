@@ -330,6 +330,7 @@ this.BX.Up = this.BX.Up || {};
 	      if (!main_core.Type.isInteger(id)) {
 	        throw new Error('RecipeCard: id should be int');
 	      }
+	      this.rootNode.innerHTML = '';
 	      BX.ajax.runAction('up:cake.recipe.deleteRecipe', {
 	        data: {
 	          id: id,

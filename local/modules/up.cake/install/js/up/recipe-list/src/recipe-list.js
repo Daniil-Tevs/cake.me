@@ -217,6 +217,7 @@ export class RecipeList
 		{
 			throw new Error('RecipeCard: id should be int');
 		}
+		this.rootNode.innerHTML = '';
 		BX.ajax.runAction('up:cake.recipe.deleteRecipe', {
 				data: {
 					id: id,
