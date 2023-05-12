@@ -210,12 +210,11 @@ this.BX.Up = this.BX.Up || {};
 	      var _this = this;
 	      var step = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 	      this.loadList(step).then(function (data) {
-	        if (_this.recipeList === data[0]) _this.recipeList = [];else _this.recipeList = data[0];
+	        if (_this.recipeList === data[0] || data[0].length === 0) {
+	          _this.recipeList = [];
+	        } else _this.recipeList = data[0].slice(0, _this.RECIPE_GET_NUMBER);
 	        _this.imageList = data[1];
 	        _this.userReactions = data[2];
-	        if (_this.recipeList.length < _this.RECIPE_GET_NUMBER) {
-	          _this.END_PAGE = true;
-	        }
 	        _this.render();
 	      });
 	    }
@@ -251,11 +250,16 @@ this.BX.Up = this.BX.Up || {};
 	        this.rootNode.appendChild(new RecipeMessage(this.type).messageNode);
 	        return;
 	      }
-	      this.recipeList.forEach(function (recipeData) {
-	        recipeData['USER_REACTION'] = _this3.userReactions.indexOf(Number(recipeData.ID)) !== -1;
-	        var recipeNode = new RecipeCard(recipeData, _this3.imageList[recipeData.ID], _this3.type, _this3.userId).cardNode;
-	        _this3.rootNode.appendChild(recipeNode);
-	      });
+	      if (!this.END_PAGE) {
+	        this.recipeList.forEach(function (recipeData) {
+	          recipeData['USER_REACTION'] = _this3.userReactions.indexOf(Number(recipeData.ID)) !== -1;
+	          var recipeNode = new RecipeCard(recipeData, _this3.imageList[recipeData.ID], _this3.type, _this3.userId).cardNode;
+	          _this3.rootNode.appendChild(recipeNode);
+	        });
+	      }
+	      if (this.recipeList.length < this.RECIPE_GET_NUMBER) {
+	        this.END_PAGE = true;
+	      }
 	      if (this.userId === null || this.userId <= 0) {
 	        var likes = this.rootNode.getElementsByClassName('like');
 	        while (likes.length) {

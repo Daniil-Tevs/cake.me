@@ -70,16 +70,15 @@ export class RecipeList
 	{
 		this.loadList(step)
 			.then((data) => {
-				if(this.recipeList === data[0])
+				if(this.recipeList === data[0] || data[0].length === 0)
+				{
 					this.recipeList = [];
+				}
 				else
-					this.recipeList = data[0];
+					this.recipeList = data[0].slice(0,this.RECIPE_GET_NUMBER);
 				this.imageList = data[1];
 				this.userReactions = data[2];
-				if(this.recipeList.length<this.RECIPE_GET_NUMBER)
-				{
-					this.END_PAGE = true;
-				}
+
 				this.render();
 			});
 	}
@@ -115,13 +114,20 @@ export class RecipeList
 			this.rootNode.appendChild((new RecipeMessage(this.type)).messageNode);
 			return;
 		}
+		if(!this.END_PAGE)
+		{
+			this.recipeList.forEach(recipeData => {
+				recipeData['USER_REACTION'] = (this.userReactions.indexOf(Number(recipeData.ID)) !== -1);
+				const recipeNode = (new RecipeCard(recipeData, this.imageList[recipeData.ID], this.type, this.userId)).cardNode;
+				this.rootNode.appendChild(recipeNode);
+				index++;
+			});
+		}
+		if(this.recipeList.length<this.RECIPE_GET_NUMBER)
+		{
+			this.END_PAGE = true;
+		}
 
-		this.recipeList.forEach(recipeData => {
-			recipeData['USER_REACTION'] = (this.userReactions.indexOf(Number(recipeData.ID)) !== -1);
-			const recipeNode = (new RecipeCard(recipeData, this.imageList[recipeData.ID], this.type, this.userId)).cardNode;
-			this.rootNode.appendChild(recipeNode);
-			index++;
-		});
 
 		if (this.userId === null || this.userId <= 0)
 		{
