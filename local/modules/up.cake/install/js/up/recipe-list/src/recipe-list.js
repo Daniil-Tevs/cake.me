@@ -109,7 +109,7 @@ export class RecipeList
 	render()
 	{
 		let index = 1;
-		if (this.recipeList.length === 0 &&  this.rootNode.innerHTML==='' && this.END_PAGE)
+		if (this.recipeList.length === 0 &&  this.rootNode.innerHTML==='')
 		{
 			this.rootNode.appendChild((new RecipeMessage(this.type)).messageNode);
 			return;

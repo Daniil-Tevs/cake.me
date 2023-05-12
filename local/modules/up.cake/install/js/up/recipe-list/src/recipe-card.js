@@ -51,8 +51,8 @@ export class RecipeCard
 							</div>
 						</div>
 						<footer class="card-footer">
-							<div class="card-footer-item">🕔 ${recipeData.TIME} min</div>
-							${(recipeData.CALORIES !== '' && Number(recipeData.CALORIES) !== 0)? "<div class=\"card-footer-item\">🔥" +recipeData.CALORIES + " calories</div>" :'' }
+							<div class="card-footer-item">🕔 ${recipeData.TIME} мин</div>
+							${(recipeData.CALORIES !== '' && Number(recipeData.CALORIES) !== 0)? "<div class=\"card-footer-item\">🔥" +recipeData.CALORIES + ` калорий</div> `:'' }
 							<div class="card-footer-item "><a href="/users/${recipeData.UP_CAKE_MODEL_RECIPE_USER_ID}/">👨‍🍳${recipeData.UP_CAKE_MODEL_RECIPE_USER_NAME + ' ' + recipeData.UP_CAKE_MODEL_RECIPE_USER_LAST_NAME}</a></div>
 						</footer>
 					</div>`;
@@ -76,9 +76,9 @@ export class RecipeCard
 							</div>
 						</div>
 						<footer class="card-footer">
-							<div class="card-footer-item">❤ Likes: ${(recipeData.REACTION !== '')?recipeData.REACTION:0}</div> 	
-							<a href="/recipe/edit/${recipeData.ID}/" class="card-footer-item button profile-button-edit">Edit</a>
-    						<button class="card-footer-item button profile-button-delete" value="${recipeData.ID}" onclick=" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);">Delete</button>
+							<div class="card-footer-item">❤ Лайки: ${(recipeData.REACTION !== '')?recipeData.REACTION:0}</div> 	
+							<a href="/recipe/edit/${recipeData.ID}/" class="card-footer-item button profile-button-edit">Редактирование</a>
+    						<button class="card-footer-item button profile-button-delete" value="${recipeData.ID}" onclick=" window.step = 1 ; window.CakeRecipeList.deleteRecipe(this.value);">Удаление</button>
 						</footer>
 					</div>
 				</div>`;
